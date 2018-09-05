@@ -3,9 +3,11 @@ package com.waykichain
 import com.waykichain.wallet.WaykiNetworkType
 import com.waykichain.wallet.WaykiRegisterAccountTxParams
 import com.waykichain.wallet.WaykiTestNetParams
+import com.waykichain.wallet.base.types.encodeInOldWay
 import com.waykichain.wallet.impl.LegacyWallet
 import org.bitcoinj.core.*
 import org.junit.Test
+import java.io.ByteArrayOutputStream
 
 /**
  * @Author: Richard Chen
@@ -56,12 +58,36 @@ class TestWallet {
     fun testGenerateRegAccountTx() {
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
-        val privKeyWiF = "YAHcraeGRDpvwBWVccV7NLGAU6uK39nNUTip8srbJSu6HKSTfDcC"
-        val address = "wbCG5rXEbEHQaw1FD9pbK1iUsBobxrbiJM"
+//        val privKeyWiF = "YAHcraeGRDpvwBWVccV7NLGAU6uK39nNUTip8srbJSu6HKSTfDcC"
+//        val privKeyWiF = "YBqQKuQQMBeiTUTMoP5ySPzbWpNUDZpRCCCgvS2LnKbF5jzKwg4p"
+        val privKeyWiF = "Y9XMqNzseQFSK32SvMDNF9J7xz1CQmHRsmY1hMYiqZyTck8pYae3"
+//        val address = "wbCG5rXEbEHQaw1FD9pbK1iUsBobxrbiJM"
         val key = DumpedPrivateKey.fromBase58(netParams, privKeyWiF).key
         val txParams = WaykiRegisterAccountTxParams()
+        System.out.println("            ${key.publicKeyAsHex}")
+
+        txParams.userPubKey = key.pubKey
+        txParams.minerPubKey = "".toByteArray()
+        txParams.nValidHeight = 30827+100
         txParams.signTx(key)
-        val tx = wallet.createRegisterTransaction(txParams, key)
+
+        val tx = wallet.createRegisterTransactionRaw(txParams, key)
+
         System.out.println(tx)
+
+//        txParams.signTx(key)
+//        val tx2 = wallet.createRegisterTransactionRaw(txParams, key)
+//        System.out.println(tx2)
+    }
+
+    @Test
+    fun testSnippet() {
+        val ss = ByteArrayOutputStream()
+//        ss.write(VarInt(10000).encode())
+//        ss.write(VarInt(10000).encodeInOldWay())
+        ss.write(10000.toBigInteger().toByteArray())
+        val bytes = ss.toByteArray()
+        val hexStr =  Utils.HEX.encode(bytes)
+        System.out.println(hexStr)
     }
 }

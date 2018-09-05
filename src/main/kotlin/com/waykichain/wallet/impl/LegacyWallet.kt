@@ -15,8 +15,7 @@ import org.bitcoinj.core.LegacyAddress
 class LegacyWallet: LegacyWalletInterface {
 
     override fun generateWalletAddress(networkType: WaykiNetworkType): WalletAddress {
-        val params = if (networkType == WaykiNetworkType.MAIN_NET) WaykiMainNetParams.instance
-            else WaykiTestNetParams.instance
+        val params = if (networkType == WaykiNetworkType.MAIN_NET) WaykiMainNetParams.instance else WaykiTestNetParams.instance
         val ecKey = ECKey()
         val privKey = ecKey.getPrivateKeyAsWiF(params)
         val pubKeyHash = ecKey.pubKeyHash
@@ -27,13 +26,13 @@ class LegacyWallet: LegacyWalletInterface {
         return walletAddress
     }
 
-    override fun createRegisterTransaction(params: WaykiRegisterAccountTxParams, key: ECKey): String {
-        params.pubKey = key.publicKeyAsHex
+    override fun createRegisterTransactionRaw(params: WaykiRegisterAccountTxParams, key: ECKey): String {
+        params.userPubKey = key.pubKey
         return  params.serializeTx()
     }
 
-    override fun createCommonTransaction(params: WaykiCommonTxParams, key: ECKey): String {
-        params.pubKey = key.publicKeyAsHex
+    override fun createCommonTransactionRaw(params: WaykiCommonTxParams, key: ECKey): String {
+        params.userPubKey = key.pubKey
         return  params.serializeTx()
     }
 

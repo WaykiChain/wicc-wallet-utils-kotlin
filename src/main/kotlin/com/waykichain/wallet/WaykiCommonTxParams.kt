@@ -8,10 +8,9 @@
 package com.waykichain.wallet
 
 import com.waykichain.wallet.base.BaseSignTxParams
-import com.waykichain.wallet.base.types.unsigned.Uint64
 import org.bitcoinj.core.ECKey
 
-class WaykiCommonTxParams: BaseSignTxParams() {
+class WaykiCommonTxParams : BaseSignTxParams() {
 
     override fun signTx(key: ECKey): ByteArray {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -26,12 +25,9 @@ class WaykiCommonTxParams: BaseSignTxParams() {
     }
 
 
-    var pubKey = ""
-    var minerPubKey = ""
-
     var srcAddr = ""
     var destAddr = ""
 
-    var value = Uint64()
+    var value = ""
 }
 

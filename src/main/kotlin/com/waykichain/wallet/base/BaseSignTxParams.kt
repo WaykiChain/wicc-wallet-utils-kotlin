@@ -16,10 +16,13 @@ abstract class BaseSignTxParams {
     abstract fun signTx(key: ECKey): ByteArray
 
     var password = ""
-    var nTxType = 0
-    var nVersion = 0
-    var nValidHeight = 0
-    var fees = 10000 // 0.0001 wicc
+    var nTxType = 0L
+    var nVersion = 0L
+    var nValidHeight = 0L
+    var fees = 10000L // 0.0001 wicc
     var signature: ByteArray? = null
+
+    var userPubKey  = ByteArray(33)
+    var minerPubKey: ByteArray? = null
 
 }

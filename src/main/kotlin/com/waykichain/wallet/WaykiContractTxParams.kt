@@ -8,7 +8,6 @@
 package com.waykichain.wallet
 
 import com.waykichain.wallet.base.BaseSignTxParams
-import com.waykichain.wallet.base.types.unsigned.Uint8
 import org.bitcoinj.core.ECKey
 
 class WaykiContractTxParams: BaseSignTxParams() {
@@ -25,8 +24,6 @@ class WaykiContractTxParams: BaseSignTxParams() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    var pubKey = ""
-    var minerPubKey = ""
-    private var contract = ArrayList<Uint8>()
+    private var contract = ArrayList<Byte>()
 
 }
