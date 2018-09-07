@@ -6,13 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d64ac695-f405-4b91-a783-05f983bdc3d6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/waykichain/wallet/LegacyWalletInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/waykichain/wallet/LegacyWalletInterface.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/waykichain/wallet/impl/LegacyWallet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/waykichain/wallet/impl/LegacyWallet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/LegacyWalletInterface.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/LegacyWalletInterface.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/BaseSignTxParams.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/BaseSignTxParams.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiCommonTxParams.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiCommonTxParams.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/impl/LegacyWallet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/impl/LegacyWallet.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/waykichain/wallet/TestWallet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/waykichain/wallet/TestWallet.kt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -137,17 +130,7 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/kotlin/com/waykichain/wallet/TestWallet.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="141" column="90" selection-start-line="141" selection-start-column="90" selection-end-line="141" selection-end-column="90" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -702,56 +685,6 @@
               <item name="kotlin" type="462c0819:PsiDirectoryNode" />
               <item name="wallet" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="wicc-wallet-utils" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wicc-wallet-utils" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-              <item name="wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wicc-wallet-utils" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wicc-wallet-utils" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-              <item name="wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="params" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wicc-wallet-utils" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wicc-wallet-utils" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-              <item name="wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="types" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wicc-wallet-utils" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wicc-wallet-utils" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="wicc-wallet-utils" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wicc-wallet-utils" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wicc-wallet-utils" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wicc-wallet-utils" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-              <item name="wallet" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -761,7 +694,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536326013108" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536326328595" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="/usr/local/bin/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
@@ -988,14 +921,11 @@
       <workItem from="1536056485410" duration="8341000" />
       <workItem from="1536109987334" duration="36058000" />
       <workItem from="1536224902360" duration="123000" />
-      <workItem from="1536225127513" duration="34642000" />
+      <workItem from="1536225127513" duration="34921000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestWallet_testGenerateCommonTx - 2018.09.07 at 20h 42m 13s.xml">
-      <configuration name="TestWallet.testGenerateCommonTx" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="TestWallet_testGenerateCommonTx - 2018.09.07 at 20h 42m 45s.xml">
       <configuration name="TestWallet.testGenerateCommonTx" configurationId="JUnit" />
     </history-entry>
@@ -1023,20 +953,22 @@
     <history-entry file="TestWallet_testGenerateCommonTxForMainNet - 2018.09.07 at 21h 13m 05s.xml">
       <configuration name="TestWallet.testGenerateCommonTxForMainNet" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="TestWallet_testGenerateCommonTxForMainNet - 2018.09.07 at 21h 13m 36s.xml">
+      <configuration name="TestWallet.testGenerateCommonTxForMainNet" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="191381000" />
+    <option name="totallyTimeSpent" value="191660000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="967" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="Capture Tool" order="1" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.22954823" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.22954823" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.501221" side_tool="true" weight="0.27068558" />
@@ -1044,12 +976,12 @@
       <window_info anchor="bottom" id="Spring" order="2" weight="0.32945284" />
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" weight="0.25295508" />
-      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.498779" visible="true" weight="0.29342723" />
+      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.498779" weight="0.29342723" />
       <window_info anchor="bottom" id="Debug" order="6" weight="0.2746479" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="9" weight="0.2363213" />
-      <window_info anchor="bottom" x="37" y="403" width="1643" height="245" id="Terminal" order="10" weight="0.24178404" />
+      <window_info anchor="bottom" x="37" y="403" width="1643" height="245" id="Terminal" order="10" visible="true" weight="0.24178404" />
       <window_info anchor="bottom" id="Build" order="11" weight="0.32978722" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" />
       <window_info anchor="bottom" id="Database Changes" order="13" show_stripe_button="false" />
@@ -1521,8 +1453,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/kotlin/com/waykichain/wallet/TestWallet.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="141" column="90" selection-start-line="141" selection-start-column="90" selection-end-line="141" selection-end-column="90" />
+        <state relative-caret-position="2376">
+          <caret line="158" column="57" lean-forward="true" selection-start-line="158" selection-start-column="57" selection-end-line="158" selection-end-column="57" />
         </state>
       </provider>
     </entry>
