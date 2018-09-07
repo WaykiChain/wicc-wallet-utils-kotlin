@@ -1,12 +1,11 @@
 # wicc-wallet-utils
 
-维基链钱包工具库（Kotlin语言）
+ * 维基链钱包工具库 (WaykiChain Offline Wallet Utils)
+ * 开发语言 (Implementation Language)：Kotlin 
+## 核心功能 (Core Functions)
+* 维基币地址生成 (Key and address generation)
+* 交易离线签名 (Offline Transaction Signing)
 
-## 核心功能
-* 维基币地址生成
-* 余额查询
-* 交易离线签名
-
-## 参考三方项目
+## 参考三方项目 (Reference Projects)
 * https://bitcoinj.github.io/
 * https://github.com/cjstehno/gradle-natives

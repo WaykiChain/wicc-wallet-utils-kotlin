@@ -33,19 +33,16 @@ class LegacyWallet: LegacyWalletInterface {
         val privKey = ecKey.getPrivateKeyAsWiF(params)
         val pubKeyHash = ecKey.pubKeyHash
         val address = LegacyAddress.fromPubKeyHash(params, pubKeyHash).toString()
-
         val walletAddress = WalletAddress(ecKey, privKey, address)
 
         return walletAddress
     }
 
-    override fun createRegisterTransactionRaw(params: WaykiRegisterAccountTxParams, key: ECKey): String {
-        params.userPubKey = key.pubKey
+    override fun createRegisterTransactionRaw(params: WaykiRegisterAccountTxParams): String {
         return  params.serializeTx()
     }
 
-    override fun createCommonTransactionRaw(params: WaykiCommonTxParams, key: ECKey): String {
-        params.userPubKey = key.pubKey
+    override fun createCommonTransactionRaw(params: WaykiCommonTxParams): String {
         return  params.serializeTx()
     }
 

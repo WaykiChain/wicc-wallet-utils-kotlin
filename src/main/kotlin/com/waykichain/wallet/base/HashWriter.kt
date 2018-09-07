@@ -22,6 +22,17 @@ import java.io.ByteArrayOutputStream
 
 class HashWriter: ByteArrayOutputStream() {
 
+    fun add(data: ByteArray?): HashWriter {
+        if (data != null)
+            this.write(data)
+        return this
+    }
+
+    fun add(data: Int): HashWriter {
+        this.write(data)
+        return this
+    }
+
     /** regIdStr: "$regHeight-$regIndex" */
     fun writeRegId(regIdStr: String) {
         val regId = parseRegId(regIdStr)!!

@@ -16,42 +16,33 @@
 
 package com.waykichain.wallet.base.params
 
+import com.waykichain.wallet.base.HashWriter
 import com.waykichain.wallet.base.WaykiTxType
 import org.bitcoin.NativeSecp256k1
 import org.bitcoinj.core.ECKey
-import java.io.ByteArrayOutputStream
 import org.bitcoinj.core.Sha256Hash
 import org.bitcoinj.core.Utils
 import org.bitcoinj.core.VarInt
 
 import com.waykichain.wallet.base.types.encodeInOldWay
 
-class WaykiRegisterAccountTxParams: BaseSignTxParams() {
-
-    init {
-        nTxType = WaykiTxType.TX_REGISTERACCOUNT //2
-        nVersion = 1
-    }
+class WaykiRegisterAccountTxParams(userPubKey: ByteArray, minerPubKey: ByteArray?, nValidHeight: Long, fees: Long):
+        BaseSignTxParams(userPubKey, minerPubKey, nValidHeight, fees, WaykiTxType.TX_REGISTERACCOUNT, 1) {
 
     override fun getSignatureHash(): ByteArray {
-
-        val ss = ByteArrayOutputStream()
-        ss.write(VarInt(nVersion).encodeInOldWay())
-        ss.write(nTxType.value)
-        ss.write(VarInt(nValidHeight).encodeInOldWay())
-
-        ss.write(VarInt(33).encodeInOldWay())
-        ss.write(userPubKey)
-
-        ss.write(VarInt(0).encodeInOldWay())
-//        ss.write(minerPubKey)
-
-        ss.write(VarInt(fees).encodeInOldWay())
+        val ss = HashWriter()
+        ss.add(VarInt(nVersion).encodeInOldWay())
+                .add(nTxType.value)
+                .add(VarInt(nValidHeight).encodeInOldWay())
+                .add(VarInt(33).encodeInOldWay())
+                .add(userPubKey)
+                .add(VarInt(0).encodeInOldWay())
+                .add(minerPubKey)
+                .add(VarInt(fees).encodeInOldWay())
 
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
-        val hashStr = Utils.HEX.encode(hash)
-        System.out.println("hash: $hashStr")
-
+//        val hashStr = Utils.HEX.encode(hash)
+//        System.out.println("hash: $hashStr")
         return hash
     }
 
@@ -65,37 +56,29 @@ class WaykiRegisterAccountTxParams: BaseSignTxParams() {
      * libsecp256k1.so should be in the .libs/ directory
      */
     override fun signTx(key: ECKey): ByteArray {
-
         val sigHash = this.getSignatureHash()
         signature = NativeSecp256k1.sign(sigHash, key.privKeyBytes)
-
         return signature!!
     }
 
     override fun serializeTx(): String {
         assert (signature != null)
-        val ss = ByteArrayOutputStream()
-
-        ss.write(VarInt(nTxType.value.toLong()).encodeInOldWay())
-        ss.write(VarInt(nVersion).encodeInOldWay())
-        ss.write(VarInt(nValidHeight).encodeInOldWay())
-
-        ss.write(33)
-        ss.write(userPubKey)
-
-        ss.write(0)
-        ss.write(minerPubKey)
-
-        ss.write(VarInt(fees).encodeInOldWay())
 
         val sigSize = signature!!.size
-        ss.write(VarInt(sigSize.toLong()).encodeInOldWay())
-        ss.write(signature)
+        val ss = HashWriter()
+        ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())
+                .add(VarInt(nVersion).encodeInOldWay())
+                .add(VarInt(nValidHeight).encodeInOldWay())
+                .add(33)
+                .add(userPubKey)
+                .add(0)
+                .add(minerPubKey)
+                .add(VarInt(fees).encodeInOldWay())
+                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .add(signature)
 
         val bytes = ss.toByteArray()
         val hexStr =  Utils.HEX.encode(bytes)
         return hexStr
-
     }
-
 }

@@ -32,11 +32,11 @@ interface LegacyWalletInterface {
     /**
      * offline creation of Register Account Transaction raw data
      */
-    fun createRegisterTransactionRaw(params: WaykiRegisterAccountTxParams, key: ECKey): String
+    fun createRegisterTransactionRaw(params: WaykiRegisterAccountTxParams): String
 
     /**
      * offline creation of Common Transaction raw data
      */
-    fun createCommonTransactionRaw(params: WaykiCommonTxParams, key: ECKey): String
+    fun createCommonTransactionRaw(params: WaykiCommonTxParams): String
 
 }

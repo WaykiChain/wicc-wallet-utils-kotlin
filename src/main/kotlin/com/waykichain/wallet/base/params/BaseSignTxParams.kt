@@ -19,20 +19,16 @@ package com.waykichain.wallet.base.params
 import com.waykichain.wallet.base.WaykiTxType
 import org.bitcoinj.core.ECKey
 
-abstract class BaseSignTxParams {
+abstract class BaseSignTxParams(var userPubKey: ByteArray?,
+                                var minerPubKey: ByteArray?,
+                                var nValidHeight: Long = 0,
+                                var fees: Long = 10000L, // 0.0001 wicc
+                                var nTxType: WaykiTxType = WaykiTxType.TX_NONE,
+                                var nVersion: Long = 1) {
 
     abstract fun serializeTx(): String
     abstract fun getSignatureHash():  ByteArray
     abstract fun signTx(key: ECKey): ByteArray
 
-    var nTxType = WaykiTxType.TX_NONE
-    var nVersion = 0L
-    var nValidHeight = 0L
-    var fees = 10000L // 0.0001 wicc
     var signature: ByteArray? = null
-
-    var password = ""
-    var userPubKey  = ByteArray(33)
-    var minerPubKey: ByteArray? = null
-
 }

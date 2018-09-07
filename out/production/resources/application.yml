@@ -29,9 +29,6 @@ server:
 spring:
   profiles:
     active: default
-  jpa:
-    show-sql: true
-    database-platform: com.waykichain.hibernate.dialect.MySQL5InnoDBDialect
 
   http:
     multipart:

@@ -25,15 +25,9 @@ import org.bitcoinj.core.Sha256Hash
 import org.bitcoinj.core.Utils
 import org.bitcoinj.core.VarInt
 
-class WaykiContractTxParams: BaseSignTxParams() {
-
-    init {
-        nTxType = WaykiTxType.TX_CONTRACT //4
-        nVersion = 1
-    }
-
+class WaykiContractTxParams(userPubKey: ByteArray, nValidHeight: Long, fees: Long, val value: Long, val srcRegId: String, val destRegId: String, val vContract: ByteArray?):
+        BaseSignTxParams(userPubKey, null, nValidHeight, fees, WaykiTxType.TX_CONTRACT, 1) {
     override fun getSignatureHash(): ByteArray {
-
         val ss = HashWriter()
 
         ss.write(VarInt(nVersion).encodeInOldWay())
@@ -64,7 +58,6 @@ class WaykiContractTxParams: BaseSignTxParams() {
      * libsecp256k1.so should be in the .libs/ directory
      */
     override fun signTx(key: ECKey): ByteArray {
-
         val sigHash = this.getSignatureHash()
         signature = NativeSecp256k1.sign(sigHash, key.privKeyBytes)
 
@@ -93,12 +86,5 @@ class WaykiContractTxParams: BaseSignTxParams() {
 
         val hexStr =  Utils.HEX.encode(ss.toByteArray())
         return hexStr
-
     }
-
-
-    var srcRegId = "" /** (regHeight-regIndex) */
-    var destRegId = "" /** (regHeight-regIndex)  */
-    var value = 0L
-    var vContract: ByteArray? = null
 }

@@ -16,6 +16,7 @@
 
 package com.waykichain.wallet.base.params
 
+import com.waykichain.wallet.base.HashWriter
 import com.waykichain.wallet.base.WaykiRegId
 import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.types.encodeInOldWay
@@ -26,38 +27,29 @@ import org.bitcoinj.core.Utils
 import org.bitcoinj.core.VarInt
 import java.io.ByteArrayOutputStream
 
-class WaykiCommonTxParams : BaseSignTxParams() {
-
-    init {
-        nTxType = WaykiTxType.TX_NONE
-        nVersion = 1
-    }
-
+/**
+ * srcRegId: (regHeight-regIndex)
+ * destAddr: 20-byte PubKeyHash
+ */
+class WaykiCommonTxParams(nValidHeight: Long, fees: Long, val value: Long, val srcRegId: String, val destAddr: ByteArray):
+        BaseSignTxParams(null, null, nValidHeight, fees, WaykiTxType.TX_COMMON, 1) {
     override fun getSignatureHash(): ByteArray {
+        val regId = parseRegId(srcRegId)!! //(regHeight, regIndex)
+        val vContract: ByteArray? = null  //vContract: can be used for sending notes
 
-        val ss = ByteArrayOutputStream()
-
-        ss.write(VarInt(nVersion).encodeInOldWay())
-        ss.write(nTxType.value)
-        ss.write(VarInt(nValidHeight).encodeInOldWay())
-
-        //regData: regHeight, regIndex
-        val regId = parseRegId(srcRegId)!!
-        ss.write(VarInt(4).encodeInOldWay())
-        ss.write(VarInt(regId.regHeight).encodeInOldWay())
-        ss.write(VarInt(regId.regIndex).encodeInOldWay())
-
-        //vDestHash
-        ss.write(VarInt(destAddr!!.size.toLong()).encodeInOldWay())
-        ss.write(destAddr)
-
-        ss.write(VarInt(fees).encodeInOldWay())
-        ss.write(VarInt(value).encodeInOldWay())
-
-        //vContract: can be used for sending notes
-//        val vContract: ByteArray? = null
-        ss.write(VarInt(0).encodeInOldWay())
-//        ss.write(vContract)
+        val ss = HashWriter()
+        ss.add(VarInt(nVersion).encodeInOldWay())
+                .add(nTxType.value)
+                .add(VarInt(nValidHeight).encodeInOldWay())
+                .add(VarInt(4).encodeInOldWay())
+                .add(VarInt(regId.regHeight).encodeInOldWay())
+                .add(VarInt(regId.regIndex).encodeInOldWay())
+                .add(VarInt(destAddr.size.toLong()).encodeInOldWay())
+                .add(destAddr)
+                .add(VarInt(fees).encodeInOldWay())
+                .add(VarInt(value).encodeInOldWay())
+                .add(VarInt(0).encodeInOldWay())
+                .add(vContract)
 
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
         val hashStr = Utils.HEX.encode(hash)
@@ -76,7 +68,6 @@ class WaykiCommonTxParams : BaseSignTxParams() {
      * libsecp256k1.so should be in the .libs/ directory
      */
     override fun signTx(key: ECKey): ByteArray {
-
         val sigHash = this.getSignatureHash()
         signature = NativeSecp256k1.sign(sigHash, key.privKeyBytes)
 
@@ -86,37 +77,28 @@ class WaykiCommonTxParams : BaseSignTxParams() {
     override fun serializeTx(): String {
         assert (signature != null)
 
-        val ss = ByteArrayOutputStream()
-
-        ss.write(VarInt(nTxType.value.toLong()).encodeInOldWay())
-        ss.write(VarInt(nVersion).encodeInOldWay())
-        ss.write(VarInt(nValidHeight).encodeInOldWay())
-
-        //regData: regHeight, regIndex
-        val regId = parseRegId(srcRegId)!!
-        ss.write(VarInt(4).encodeInOldWay())
-        ss.write(VarInt(regId.regHeight).encodeInOldWay())
-        ss.write(VarInt(regId.regIndex).encodeInOldWay())
-
-        //vDestHash
-        ss.write(VarInt(destAddr!!.size.toLong()).encodeInOldWay())
-        ss.write(destAddr)
-
-        ss.write(VarInt(fees).encodeInOldWay())
-        ss.write(VarInt(value).encodeInOldWay())
-
-        //vContract
-        val vContract: ByteArray? = null
-        ss.write(VarInt(0).encodeInOldWay())
-//        ss.write(vContract)
-
+        val regId = parseRegId(srcRegId)!!    //regData: regHeight, regIndex
         val sigSize = signature!!.size
-        ss.write(VarInt(sigSize.toLong()).encodeInOldWay())
-        ss.write(signature)
+        val vContract: ByteArray? = null
+
+        val ss = HashWriter()
+        ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())
+                .add(VarInt(nVersion).encodeInOldWay())
+                .add(VarInt(nValidHeight).encodeInOldWay())
+                .add(VarInt(4).encodeInOldWay())
+                .add(VarInt(regId.regHeight).encodeInOldWay())
+                .add(VarInt(regId.regIndex).encodeInOldWay())
+                .add(VarInt(destAddr.size.toLong()).encodeInOldWay())
+                .add(destAddr)
+                .add(VarInt(fees).encodeInOldWay())
+                .add(VarInt(value).encodeInOldWay())
+                .add(VarInt(0).encodeInOldWay())
+                .add(vContract)
+                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .add(signature)
 
         val hexStr =  Utils.HEX.encode(ss.toByteArray())
         return hexStr
-
     }
 
     fun parseRegId(regId: String): WaykiRegId? {
@@ -135,9 +117,4 @@ class WaykiCommonTxParams : BaseSignTxParams() {
             else -> true
         }
     }
-
-    var srcRegId = "" /** (regHeight-regIndex) */
-    var destAddr: ByteArray? = null /** 20-byte PubKeyHash */
-
-    var value = 0L
 }
