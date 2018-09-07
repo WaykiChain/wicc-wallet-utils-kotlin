@@ -16,14 +16,9 @@
 
 package com.waykichain.wallet.base
 
-import org.bitcoinj.core.ECKey
-
-/**
- * priKey: privateKeyAsWiF
- * pubKey: publicKeyAsHex
- * address: WaykiChain wallet address
- *
- */
-data class WalletAddress(val key: ECKey,
-                         val privKey: String,
-                         val address: String)
+enum class WaykiTxType(val value: Int) {
+    TX_NONE                 (0),
+    TX_REGISTERACCOUNT      (2),
+    TX_COMMON               (3),
+    TX_CONTRACT             (4)
+}

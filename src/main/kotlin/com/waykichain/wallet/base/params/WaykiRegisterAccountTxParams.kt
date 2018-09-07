@@ -1,13 +1,22 @@
-/*
- * Developed by Richard Chen on 9/1/18 12:37 PM
- * Last modified 9/1/18 12:35 PM
- * Copyright (c) 2018. All rights reserved.
+/**
+ * The MIT License (MIT)
  *
+ * Copyright (c) 2018 The Waykichain Core developers
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  */
 
-package com.waykichain.wallet
+package com.waykichain.wallet.base.params
 
-import com.waykichain.wallet.base.BaseSignTxParams
+import com.waykichain.wallet.base.WaykiTxType
 import org.bitcoin.NativeSecp256k1
 import org.bitcoinj.core.ECKey
 import java.io.ByteArrayOutputStream
@@ -20,23 +29,22 @@ import com.waykichain.wallet.base.types.encodeInOldWay
 class WaykiRegisterAccountTxParams: BaseSignTxParams() {
 
     init {
-        nTxType = 2
+        nTxType = WaykiTxType.TX_REGISTERACCOUNT //2
         nVersion = 1
-        minerPubKey = ByteArray(0)
     }
 
     override fun getSignatureHash(): ByteArray {
 
         val ss = ByteArrayOutputStream()
         ss.write(VarInt(nVersion).encodeInOldWay())
-        ss.write(nTxType.toInt())
+        ss.write(nTxType.value)
         ss.write(VarInt(nValidHeight).encodeInOldWay())
 
         ss.write(VarInt(33).encodeInOldWay())
         ss.write(userPubKey)
 
         ss.write(VarInt(0).encodeInOldWay())
-        ss.write(minerPubKey)
+//        ss.write(minerPubKey)
 
         ss.write(VarInt(fees).encodeInOldWay())
 
@@ -68,7 +76,7 @@ class WaykiRegisterAccountTxParams: BaseSignTxParams() {
         assert (signature != null)
         val ss = ByteArrayOutputStream()
 
-        ss.write(VarInt(nTxType).encodeInOldWay())
+        ss.write(VarInt(nTxType.value.toLong()).encodeInOldWay())
         ss.write(VarInt(nVersion).encodeInOldWay())
         ss.write(VarInt(nValidHeight).encodeInOldWay())
 

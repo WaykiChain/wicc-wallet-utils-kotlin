@@ -14,16 +14,26 @@
  * all copies or substantial portions of the Software.
  */
 
-package com.waykichain.wallet.base
+package com.waykichain.wallet.base.params
 
-import org.bitcoinj.core.ECKey
+import org.bitcoinj.params.TestNet3Params
 
 /**
- * priKey: privateKeyAsWiF
- * pubKey: publicKeyAsHex
- * address: WaykiChain wallet address
- *
+ * @Author: Richard Chen
+ * @Date 2018/08/31 下午3:00
  */
-data class WalletAddress(val key: ECKey,
-                         val privKey: String,
-                         val address: String)
+
+class WaykiTestNetParams: TestNet3Params() {
+
+    init {
+        this.packetMagic = 0xd75c7dfd
+        this.addressHeader = 135
+        this.dumpedPrivateKeyHeader = 210
+    }
+
+    private object Holder { val INSTANCE = WaykiTestNetParams() }
+
+    companion object {
+        val instance: WaykiTestNetParams by lazy { Holder.INSTANCE }
+    }
+}

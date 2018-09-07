@@ -14,16 +14,25 @@
  * all copies or substantial portions of the Software.
  */
 
-package com.waykichain.wallet.base
+package com.waykichain.wallet.base.params
 
+import com.waykichain.wallet.base.WaykiTxType
 import org.bitcoinj.core.ECKey
 
-/**
- * priKey: privateKeyAsWiF
- * pubKey: publicKeyAsHex
- * address: WaykiChain wallet address
- *
- */
-data class WalletAddress(val key: ECKey,
-                         val privKey: String,
-                         val address: String)
+abstract class BaseSignTxParams {
+
+    abstract fun serializeTx(): String
+    abstract fun getSignatureHash():  ByteArray
+    abstract fun signTx(key: ECKey): ByteArray
+
+    var nTxType = WaykiTxType.TX_NONE
+    var nVersion = 0L
+    var nValidHeight = 0L
+    var fees = 10000L // 0.0001 wicc
+    var signature: ByteArray? = null
+
+    var password = ""
+    var userPubKey  = ByteArray(33)
+    var minerPubKey: ByteArray? = null
+
+}
