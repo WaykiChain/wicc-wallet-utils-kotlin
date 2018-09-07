@@ -20,6 +20,7 @@ package com.waykichain.wallet
 import com.waykichain.wallet.base.params.WaykiCommonTxParams
 import com.waykichain.wallet.base.WaykiNetworkType
 import com.waykichain.wallet.base.WaykiRegId
+import com.waykichain.wallet.base.params.WaykiMainNetParams
 import com.waykichain.wallet.base.params.WaykiRegisterAccountTxParams
 import com.waykichain.wallet.base.params.WaykiTestNetParams
 import com.waykichain.wallet.base.types.encodeInOldWay
@@ -45,6 +46,10 @@ class TestWallet {
         val privKey = walletAddress.privKey
         val address = walletAddress.address
         logger.info("\n\n$privKey \n$address\n\n")
+        /**
+         * PhKmEa3M6BJERHdStG7nApRwURDnN3W48rhrnnM1fVKbLs3jaYd6
+         * WZ9gVk4sgBuW9oJVtsE2gos5aLXK7rEEwC
+         */
     }
 
     @Test
@@ -62,15 +67,19 @@ class TestWallet {
         val privKeyWiF = "YAHcraeGRDpvwBWVccV7NLGAU6uK39nNUTip8srbJSu6HKSTfDcC"
         val address = "wbCG5rXEbEHQaw1FD9pbK1iUsBobxrbiJM"
 
-        val key2 = DumpedPrivateKey.fromBase58(params, privKeyWiF).key
-        val privKey2 = key2.getPrivateKeyAsWiF(WaykiTestNetParams.instance)
-        val pubKeyHash = key2.pubKeyHash
-        val address2 = LegacyAddress.fromPubKeyHash(params, pubKeyHash)
-        System.out.print("$privKeyWiF \n$privKey2\n$address\n$address2\n\n")
+        val key = DumpedPrivateKey.fromBase58(params, privKeyWiF).key
+
+        val privKeyWiF2 = key.getPrivateKeyAsWiF(WaykiTestNetParams.instance)
+        val address2 = LegacyAddress.fromPubKeyHash(params, key.pubKeyHash).toString()
+        System.out.println("$privKeyWiF \n$privKeyWiF2\n$address\n$address2\n\n")
+
+        val legacyAddress = LegacyAddress.fromBase58(WaykiTestNetParams.instance, address)
+        System.out.println(Utils.HEX.encode(legacyAddress.hash))
+        System.out.println(Utils.HEX.encode(key.pubKeyHash))
     }
 
     @Test
-    fun testGenerateRegisterAccountTx() {
+    fun testGenerateRegisterAccountTxForTestNet() {
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
 //        val privKeyWiF = "YAHcraeGRDpvwBWVccV7NLGAU6uK39nNUTip8srbJSu6HKSTfDcC"
@@ -87,7 +96,22 @@ class TestWallet {
     }
 
     @Test
-    fun testGenerateCommonTx() {
+    fun testGenerateRegisterAccountTxForMainNet() {
+        val wallet = LegacyWallet()
+        val netParams = WaykiMainNetParams.instance
+        val privKeyWiF = "PhKmEa3M6BJERHdStG7nApRwURDnN3W48rhrnnM1fVKbLs3jaYd6"
+        val key = DumpedPrivateKey.fromBase58(netParams, privKeyWiF).key
+        System.out.println("            ${key.publicKeyAsHex}")
+
+        val txParams = WaykiRegisterAccountTxParams(key.pubKey, null, 926112+100, 10000)
+        txParams.signTx(key)
+        val tx = wallet.createRegisterTransactionRaw(txParams)
+        System.out.println(tx)
+
+    }
+
+    @Test
+    fun testGenerateCommonTxForTestNet() {
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
 
@@ -97,10 +121,25 @@ class TestWallet {
 
         val destPrivKeyWif = "YB1ims24GnRCdrB8TJsiDrxos4S5bNS58qetjyFWhSDyxT9phCEa"
         val destKey = DumpedPrivateKey.fromBase58(netParams, destPrivKeyWif).key
-        val destAddress = LegacyAddress.fromPubKeyHash(netParams, destKey.pubKeyHash).toString()
-        System.out.println("Send 1WICC From: $srcAddress To: $destAddress")
+        val destAddr = LegacyAddress.fromPubKeyHash(netParams, destKey.pubKeyHash).toString()
+        System.out.println("Send 1 wicc from: $srcAddress to: $destAddr")
 
-        val txParams = WaykiCommonTxParams(40498, 10000, 100000000, "30947-1", destKey.pubKeyHash)
+        val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 40999, 10000, 100000000, "30947-1", destAddr)
+        txParams.signTx(srcKey)
+        val tx = wallet.createCommonTransactionRaw(txParams)
+        System.out.println(tx)
+    }
+
+    @Test
+    fun testGenerateCommonTxForMainNet() {
+        val wallet = LegacyWallet()
+        val netParams = WaykiMainNetParams.instance
+
+        val srcPrivKeyWiF = "PhKmEa3M6BJERHdStG7nApRwURDnN3W48rhrnnM1fVKbLs3jaYd6"
+        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
+
+        val destAddr = "WQRwCMmQGy2XvpATTai6AtGhrRrdXDQzQh"
+        val txParams = WaykiCommonTxParams(WaykiNetworkType.MAIN_NET, 926165, 10000, 10000, "926152-1", destAddr)
         txParams.signTx(srcKey)
         val tx = wallet.createCommonTransactionRaw(txParams)
         System.out.println(tx)

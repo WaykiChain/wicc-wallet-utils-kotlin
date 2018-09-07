@@ -17,22 +17,23 @@
 package com.waykichain.wallet.base.params
 
 import com.waykichain.wallet.base.HashWriter
+import com.waykichain.wallet.base.WaykiNetworkType
 import com.waykichain.wallet.base.WaykiRegId
 import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.types.encodeInOldWay
 import org.bitcoin.NativeSecp256k1
-import org.bitcoinj.core.ECKey
-import org.bitcoinj.core.Sha256Hash
-import org.bitcoinj.core.Utils
-import org.bitcoinj.core.VarInt
+import org.bitcoinj.core.*
 import java.io.ByteArrayOutputStream
 
 /**
  * srcRegId: (regHeight-regIndex)
  * destAddr: 20-byte PubKeyHash
  */
-class WaykiCommonTxParams(nValidHeight: Long, fees: Long, val value: Long, val srcRegId: String, val destAddr: ByteArray):
+class WaykiCommonTxParams(networkType: WaykiNetworkType, nValidHeight: Long, fees: Long, val value: Long, val srcRegId: String, destAddr: String):
         BaseSignTxParams(null, null, nValidHeight, fees, WaykiTxType.TX_COMMON, 1) {
+    val netParams = if (networkType == WaykiNetworkType.MAIN_NET) WaykiMainNetParams.instance else WaykiTestNetParams.instance
+    val legacyAddress = LegacyAddress.fromBase58(netParams, destAddr)
+
     override fun getSignatureHash(): ByteArray {
         val regId = parseRegId(srcRegId)!! //(regHeight, regIndex)
         val vContract: ByteArray? = null  //vContract: can be used for sending notes
@@ -44,8 +45,8 @@ class WaykiCommonTxParams(nValidHeight: Long, fees: Long, val value: Long, val s
                 .add(VarInt(4).encodeInOldWay())
                 .add(VarInt(regId.regHeight).encodeInOldWay())
                 .add(VarInt(regId.regIndex).encodeInOldWay())
-                .add(VarInt(destAddr.size.toLong()).encodeInOldWay())
-                .add(destAddr)
+                .add(VarInt(legacyAddress.hash.size.toLong()).encodeInOldWay())
+                .add(legacyAddress.hash)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(VarInt(value).encodeInOldWay())
                 .add(VarInt(0).encodeInOldWay())
@@ -75,7 +76,7 @@ class WaykiCommonTxParams(nValidHeight: Long, fees: Long, val value: Long, val s
     }
 
     override fun serializeTx(): String {
-        assert (signature != null)
+        assert(signature != null)
 
         val regId = parseRegId(srcRegId)!!    //regData: regHeight, regIndex
         val sigSize = signature!!.size
@@ -88,8 +89,8 @@ class WaykiCommonTxParams(nValidHeight: Long, fees: Long, val value: Long, val s
                 .add(VarInt(4).encodeInOldWay())
                 .add(VarInt(regId.regHeight).encodeInOldWay())
                 .add(VarInt(regId.regIndex).encodeInOldWay())
-                .add(VarInt(destAddr.size.toLong()).encodeInOldWay())
-                .add(destAddr)
+                .add(VarInt(legacyAddress.hash.size.toLong()).encodeInOldWay())
+                .add(legacyAddress.hash)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(VarInt(value).encodeInOldWay())
                 .add(VarInt(0).encodeInOldWay())
@@ -97,7 +98,7 @@ class WaykiCommonTxParams(nValidHeight: Long, fees: Long, val value: Long, val s
                 .add(VarInt(sigSize.toLong()).encodeInOldWay())
                 .add(signature)
 
-        val hexStr =  Utils.HEX.encode(ss.toByteArray())
+        val hexStr = Utils.HEX.encode(ss.toByteArray())
         return hexStr
     }
 
@@ -112,7 +113,7 @@ class WaykiCommonTxParams(nValidHeight: Long, fees: Long, val value: Long, val s
 
     fun intOrString(str: String): Boolean {
         val v = str.toIntOrNull()
-        return when(v) {
+        return when (v) {
             null -> false
             else -> true
         }

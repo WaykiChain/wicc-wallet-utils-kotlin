@@ -25,10 +25,9 @@ abstract class BaseSignTxParams(var userPubKey: ByteArray?,
                                 var fees: Long = 10000L, // 0.0001 wicc
                                 var nTxType: WaykiTxType = WaykiTxType.TX_NONE,
                                 var nVersion: Long = 1) {
-
-    abstract fun serializeTx(): String
     abstract fun getSignatureHash():  ByteArray
     abstract fun signTx(key: ECKey): ByteArray
+    abstract fun serializeTx(): String
 
     var signature: ByteArray? = null
 }

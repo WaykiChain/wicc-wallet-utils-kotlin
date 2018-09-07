@@ -19,8 +19,8 @@ package com.waykichain.wallet
 import com.waykichain.wallet.base.WalletAddress
 import com.waykichain.wallet.base.WaykiNetworkType
 import com.waykichain.wallet.base.params.WaykiCommonTxParams
+import com.waykichain.wallet.base.params.WaykiContractTxParams
 import com.waykichain.wallet.base.params.WaykiRegisterAccountTxParams
-import org.bitcoinj.core.ECKey
 
 interface LegacyWalletInterface {
 
@@ -38,5 +38,10 @@ interface LegacyWalletInterface {
      * offline creation of Common Transaction raw data
      */
     fun createCommonTransactionRaw(params: WaykiCommonTxParams): String
+
+    /**
+     * offline creation of Contract Transaction raw data
+     */
+    fun createContractTransactionRaw(params: WaykiContractTxParams): String
 
 }

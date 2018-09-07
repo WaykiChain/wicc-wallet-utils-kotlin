@@ -1,26 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/test/kotlin/com/waykichain/wallet/TestWallet.kt" line="126" mnemonic="5" />
+    <bookmark url="file://$PROJECT_DIR$/src/test/kotlin/com/waykichain/wallet/TestWallet.kt" line="165" mnemonic="5" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d64ac695-f405-4b91-a783-05f983bdc3d6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/com/waykichain/wallet/base/WalletAddress.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/waykichain/wallet/base/WalletAddress.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/com/waykichain/wallet/LegacyWalletInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/waykichain/wallet/LegacyWalletInterface.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/classes/com/waykichain/wallet/impl/LegacyWallet.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/com/waykichain/wallet/impl/LegacyWallet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/banner.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/banner.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/logback.groovy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/org.bitcoin.production.checkpoints.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/resources/org.bitcoin.test.checkpoints.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/classes/com/waykichain/TestWallet.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/LegacyWalletInterface.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/LegacyWalletInterface.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/HashWriter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/HashWriter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/BaseSignTxParams.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/BaseSignTxParams.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiCommonTxParams.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiCommonTxParams.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiContractTxParams.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiContractTxParams.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiRegisterAccountTxParams.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiRegisterAccountTxParams.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/impl/LegacyWallet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/impl/LegacyWallet.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/waykichain/wallet/TestWallet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/waykichain/wallet/TestWallet.kt" afterDir="false" />
     </list>
@@ -107,8 +97,8 @@
           <entry key="gitignore" value="1" />
           <entry key="gradle" value="5" />
           <entry key="groovy" value="2" />
-          <entry key="java" value="323" />
-          <entry key="kt" value="323" />
+          <entry key="java" value="333" />
+          <entry key="kt" value="346" />
           <entry key="md" value="2" />
           <entry key="txt" value="6" />
           <entry key="yml" value="2" />
@@ -117,8 +107,8 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Groovy" value="7" />
-          <entry key="JAVA" value="323" />
-          <entry key="Kotlin" value="323" />
+          <entry key="JAVA" value="333" />
+          <entry key="Kotlin" value="346" />
           <entry key="Markdown" value="2" />
           <entry key="PLAIN_TEXT" value="8" />
           <entry key="YAML" value="2" />
@@ -130,7 +120,7 @@
           <entry key="gradle" value="105" />
           <entry key="groovy" value="11" />
           <entry key="java" value="69" />
-          <entry key="kt" value="12464" />
+          <entry key="kt" value="13151" />
           <entry key="md" value="242" />
           <entry key="txt" value="93" />
         </counts>
@@ -139,7 +129,7 @@
         <counts>
           <entry key="Groovy" value="116" />
           <entry key="JAVA" value="69" />
-          <entry key="Kotlin" value="12464" />
+          <entry key="Kotlin" value="13151" />
           <entry key="Markdown" value="242" />
           <entry key="PLAIN_TEXT" value="94" />
         </counts>
@@ -148,32 +138,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiRegisterAccountTxParams.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="70" column="40" lean-forward="true" selection-start-line="70" selection-start-column="40" selection-end-line="70" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/kotlin/com/waykichain/wallet/TestWallet.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
-              <folding>
-                <element signature="e#714#1254#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiCommonTxParams.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="86">
-              <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+            <state relative-caret-position="355">
+              <caret line="141" column="90" selection-start-line="141" selection-start-column="90" selection-end-line="141" selection-end-column="90" />
             </state>
           </provider>
         </entry>
@@ -661,10 +630,10 @@
         <option value="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiMainNetParams.kt" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/HashWriter.kt" />
-        <option value="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/BaseSignTxParams.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiContractTxParams.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiRegisterAccountTxParams.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiCommonTxParams.kt" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/BaseSignTxParams.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/impl/LegacyWallet.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/LegacyWalletInterface.kt" />
         <option value="$PROJECT_DIR$/src/test/kotlin/com/waykichain/wallet/TestWallet.kt" />
@@ -766,25 +735,6 @@
               <item name="wicc-wallet-utils" type="b2602c69:ProjectViewProjectNode" />
               <item name="wicc-wallet-utils" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-              <item name="wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="HashWriter.kt" type="24436e51:KtFileTreeNode" />
-            </path>
-            <path>
-              <item name="wicc-wallet-utils" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wicc-wallet-utils" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-              <item name="wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="impl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="wicc-wallet-utils" type="b2602c69:ProjectViewProjectNode" />
-              <item name="wicc-wallet-utils" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
@@ -811,7 +761,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536316281763" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536326013108" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="/usr/local/bin/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
@@ -858,7 +808,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TestWallet.testGenerateCommonTx">
+  <component name="RunManager" selected="JUnit.TestWallet.testGenerateCommonTxForMainNet">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -890,6 +840,44 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestWallet.testGenerateCommonTxForMainNet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wicc-wallet-utils_test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.waykichain.wallet.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.waykichain.wallet" />
+      <option name="MAIN_CLASS_NAME" value="com.waykichain.wallet.TestWallet" />
+      <option name="METHOD_NAME" value="testGenerateCommonTxForMainNet" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea -Djava.library.path=./src/main/jniLibs/" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestWallet.testGenerateCommonTxForTestNet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wicc-wallet-utils_test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.waykichain.wallet.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.waykichain.wallet" />
+      <option name="MAIN_CLASS_NAME" value="com.waykichain.wallet.TestWallet" />
+      <option name="METHOD_NAME" value="testGenerateCommonTxForTestNet" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea -Djava.library.path=./src/main/jniLibs/" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TestWallet.testGenerateKeyMainNet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="wicc-wallet-utils_test" />
       <extension name="coverage">
@@ -907,7 +895,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestWallet.testGenerateKeyTestNet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestWallet.testGenerateRegisterAccountTxForMainNet" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="wicc-wallet-utils_test" />
       <extension name="coverage">
         <pattern>
@@ -917,24 +905,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.waykichain.wallet" />
       <option name="MAIN_CLASS_NAME" value="com.waykichain.wallet.TestWallet" />
-      <option name="METHOD_NAME" value="testGenerateKeyTestNet" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestWallet.testGenerateRegAccountTx" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="wicc-wallet-utils_test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.waykichain.wallet.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.waykichain.wallet" />
-      <option name="MAIN_CLASS_NAME" value="com.waykichain.wallet.TestWallet" />
-      <option name="METHOD_NAME" value="testGenerateRegAccountTx" />
+      <option name="METHOD_NAME" value="testGenerateRegisterAccountTxForMainNet" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea -Djava.library.path=./src/main/jniLibs/" />
       <option name="PARAMETERS" value="" />
@@ -984,19 +955,20 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="JUnit.TestWallet.testGenerateRegisterAccountTxForMainNet" />
       <item itemvalue="JUnit.TestWallet.testGenerateKeyMainNet" />
-      <item itemvalue="JUnit.TestWallet.testGenerateKeyTestNet" />
-      <item itemvalue="JUnit.TestWallet.testGenerateRegAccountTx" />
       <item itemvalue="JUnit.TestWallet.testGenerateCommonTx" />
       <item itemvalue="JUnit.TestWallet.testImportPrivKey" />
+      <item itemvalue="JUnit.TestWallet.testGenerateCommonTxForTestNet" />
+      <item itemvalue="JUnit.TestWallet.testGenerateCommonTxForMainNet" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestWallet.testGenerateCommonTx" />
+        <item itemvalue="JUnit.TestWallet.testGenerateCommonTxForMainNet" />
         <item itemvalue="JUnit.TestWallet.testGenerateKeyMainNet" />
-        <item itemvalue="JUnit.TestWallet.testGenerateKeyTestNet" />
+        <item itemvalue="JUnit.TestWallet.testGenerateCommonTxForTestNet" />
+        <item itemvalue="JUnit.TestWallet.testGenerateCommonTx" />
         <item itemvalue="JUnit.TestWallet.testImportPrivKey" />
-        <item itemvalue="JUnit.TestWallet.testGenerateRegAccountTx" />
       </list>
     </recent_temporary>
   </component>
@@ -1016,44 +988,44 @@
       <workItem from="1536056485410" duration="8341000" />
       <workItem from="1536109987334" duration="36058000" />
       <workItem from="1536224902360" duration="123000" />
-      <workItem from="1536225127513" duration="27892000" />
+      <workItem from="1536225127513" duration="34642000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestWallet_testGenerateRegAccountTx - 2018.09.07 at 18h 01m 25s.xml">
-      <configuration name="TestWallet.testGenerateRegAccountTx" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestWallet_testGenerateRegAccountTx - 2018.09.07 at 18h 05m 38s.xml">
-      <configuration name="TestWallet.testGenerateRegAccountTx" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="TestWallet_testGenerateCommonTx - 2018.09.07 at 18h 06m 15s.xml">
+    <history-entry file="TestWallet_testGenerateCommonTx - 2018.09.07 at 20h 42m 13s.xml">
       <configuration name="TestWallet.testGenerateCommonTx" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestWallet_testImportPrivKey - 2018.09.07 at 18h 06m 25s.xml">
-      <configuration name="TestWallet.testImportPrivKey" configurationId="JUnit" />
+    <history-entry file="TestWallet_testGenerateCommonTx - 2018.09.07 at 20h 42m 45s.xml">
+      <configuration name="TestWallet.testGenerateCommonTx" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestWallet_testGenerateKeyTestNet - 2018.09.07 at 18h 06m 31s.xml">
-      <configuration name="TestWallet.testGenerateKeyTestNet" configurationId="JUnit" />
+    <history-entry file="TestWallet_testGenerateCommonTxForTestNet - 2018.09.07 at 20h 55m 27s.xml">
+      <configuration name="TestWallet.testGenerateCommonTxForTestNet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestWallet_testGenerateKeyMainNet - 2018.09.07 at 18h 06m 37s.xml">
+    <history-entry file="TestWallet_testGenerateCommonTxForTestNet - 2018.09.07 at 20h 56m 12s.xml">
+      <configuration name="TestWallet.testGenerateCommonTxForTestNet" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestWallet_testGenerateKeyMainNet - 2018.09.07 at 20h 56m 55s.xml">
       <configuration name="TestWallet.testGenerateKeyMainNet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestWallet_testGenerateCommonTx - 2018.09.07 at 18h 08m 33s.xml">
-      <configuration name="TestWallet.testGenerateCommonTx" configurationId="JUnit" />
+    <history-entry file="TestWallet_testGenerateRegisterAccountTxForMainNet - 2018.09.07 at 21h 01m 12s.xml">
+      <configuration name="TestWallet.testGenerateRegisterAccountTxForMainNet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestWallet_testGenerateCommonTx - 2018.09.07 at 18h 12m 47s.xml">
-      <configuration name="TestWallet.testGenerateCommonTx" configurationId="JUnit" />
+    <history-entry file="TestWallet_testGenerateRegisterAccountTxForMainNet - 2018.09.07 at 21h 01m 34s.xml">
+      <configuration name="TestWallet.testGenerateRegisterAccountTxForMainNet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestWallet_testGenerateCommonTx - 2018.09.07 at 18h 13m 36s.xml">
-      <configuration name="TestWallet.testGenerateCommonTx" configurationId="JUnit" />
+    <history-entry file="TestWallet_testGenerateRegisterAccountTxForMainNet - 2018.09.07 at 21h 02m 24s.xml">
+      <configuration name="TestWallet.testGenerateRegisterAccountTxForMainNet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestWallet_testGenerateCommonTx - 2018.09.07 at 18h 13m 43s.xml">
-      <configuration name="TestWallet.testGenerateCommonTx" configurationId="JUnit" />
+    <history-entry file="TestWallet_testGenerateRegisterAccountTxForMainNet - 2018.09.07 at 21h 03m 50s.xml">
+      <configuration name="TestWallet.testGenerateRegisterAccountTxForMainNet" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="TestWallet_testGenerateCommonTxForMainNet - 2018.09.07 at 21h 13m 05s.xml">
+      <configuration name="TestWallet.testGenerateCommonTxForMainNet" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="184631000" />
+    <option name="totallyTimeSpent" value="191381000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="967" extended-state="6" />
@@ -1064,7 +1036,7 @@
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.25702077" />
+      <window_info content_ui="combo" id="Project" order="5" visible="true" weight="0.22954823" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Event Log" order="0" sideWeight="0.501221" side_tool="true" weight="0.27068558" />
@@ -1072,12 +1044,12 @@
       <window_info anchor="bottom" id="Spring" order="2" weight="0.32945284" />
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" weight="0.25295508" />
-      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.498779" visible="true" weight="0.23004694" />
+      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.498779" visible="true" weight="0.29342723" />
       <window_info anchor="bottom" id="Debug" order="6" weight="0.2746479" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="9" weight="0.2363213" />
-      <window_info anchor="bottom" x="37" y="403" width="1643" height="245" id="Terminal" order="10" weight="0.33685446" />
+      <window_info anchor="bottom" x="37" y="403" width="1643" height="245" id="Terminal" order="10" weight="0.24178404" />
       <window_info anchor="bottom" id="Build" order="11" weight="0.32978722" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" />
       <window_info anchor="bottom" id="Database Changes" order="13" show_stripe_button="false" />
@@ -1115,41 +1087,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bitcoin/protocols/payments/Protos.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-218">
-          <caret line="29" column="12" lean-forward="true" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bitcoinj/protocols/payments/PaymentSession.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="111" column="33" selection-start-line="111" selection-start-column="33" selection-end-line="111" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bitcoinj/protocols/package-info.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bitcoinj/protocols/payments/PaymentProtocolException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-189">
-          <caret line="53" column="9" lean-forward="true" selection-start-line="53" selection-start-column="9" selection-end-line="53" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/bitcoinj/protocols/payments/PaymentProtocol.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-199">
-          <caret line="60" column="51" lean-forward="true" selection-start-line="60" selection-start-column="51" selection-end-line="60" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/bitcoinj/wallet/WalletTransaction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
@@ -1400,16 +1337,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/WaykiNetworkType.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="22" column="1" lean-forward="true" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiTestNetParams.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
@@ -1451,16 +1378,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiMainNetParams.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="32" column="5" lean-forward="true" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/WaykiTxType.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
@@ -1471,29 +1388,102 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiContractTxParams.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/bitcoinj/core/PrefixedChecksummedBytes.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
+        <state relative-caret-position="-23">
+          <caret line="64" lean-forward="true" selection-start-line="64" selection-end-line="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/bitcoinj/core/Address.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="37" column="7" lean-forward="true" selection-start-line="37" selection-start-column="7" selection-end-line="37" selection-end-column="7" />
+          <folding>
+            <element signature="e#1131#1132#0" expanded="true" />
+            <element signature="e#1167#1168#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/bitcoinj/core/Base58.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-15">
+          <caret line="122" column="34" lean-forward="true" selection-start-line="122" selection-start-column="34" selection-end-line="122" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/WaykiNetworkType.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="30" lean-forward="true" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/BaseSignTxParams.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/bitcoinj/params/MainNetParams.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+        <state relative-caret-position="182">
+          <caret line="36" column="11" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiMainNetParams.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="20" column="33" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="33" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/bitcoinj/core/LegacyAddress.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="141" column="32" selection-start-line="141" selection-start-column="32" selection-end-line="141" selection-end-column="32" />
+          <folding>
+            <element signature="e#7695#7696#0" expanded="true" />
+            <element signature="e#7759#7760#0" expanded="true" />
+            <element signature="e#8012#8013#0" expanded="true" />
+            <element signature="e#8040#8041#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiContractTxParams.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="41" lean-forward="true" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiCommonTxParams.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="31" column="25" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/BaseSignTxParams.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="429">
+          <caret line="31" column="36" lean-forward="true" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#723#799#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/WalletAddress.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
+        <state relative-caret-position="411">
           <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -1503,18 +1493,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/LegacyWalletInterface.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="41" column="1" lean-forward="true" selection-start-line="41" selection-start-column="1" selection-end-line="41" selection-end-column="1" />
+        <state relative-caret-position="86">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <element signature="e#711#1003#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/impl/LegacyWallet.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="42" column="5" lean-forward="true" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
+        <state relative-caret-position="360">
+          <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -1523,25 +1514,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiRegisterAccountTxParams.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="70" column="40" lean-forward="true" selection-start-line="70" selection-start-column="40" selection-end-line="70" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/waykichain/wallet/base/params/WaykiCommonTxParams.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+        <state relative-caret-position="306">
+          <caret line="39" column="33" lean-forward="true" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/kotlin/com/waykichain/wallet/TestWallet.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
-          <folding>
-            <element signature="e#714#1254#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="355">
+          <caret line="141" column="90" selection-start-line="141" selection-start-column="90" selection-end-line="141" selection-end-column="90" />
         </state>
       </provider>
     </entry>
