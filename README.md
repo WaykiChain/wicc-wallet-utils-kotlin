@@ -10,5 +10,5 @@
 
 ## 参考三方项目 (Reference Projects)
 * https://bitcoinj.github.io/
-* https://github.com/cjstehno/gradle-natives
+* https://github.com/bitcoin/secp256k1
 
