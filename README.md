@@ -1,6 +1,6 @@
 # wicc-wallet-utils
 
-## 维基链离线钱包工具SDK(WaykiChain Offline Wallet Utilities SDK)
+## 维基链离线钱包工具SDK (WaykiChain Offline Wallet Utilities SDK)
 
  * 维基链钱包工具库 (WaykiChain Offline Wallet Utils)
  * 开发语言 (Implementation Language)：Kotlin 
