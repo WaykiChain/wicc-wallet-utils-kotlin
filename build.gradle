@@ -1,6 +1,5 @@
 buildscript {
     ext.kotlin_version = '1.2.60'
-    ext.springBootVersion = '1.5.6.RELEASE'
     repositories {
         mavenCentral()
     }
@@ -18,12 +17,17 @@ plugins {
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java-library'
 apply plugin: "com.stehno.natives"
-
+apply plugin: "kotlin"
 
 // In this section you declare where to find the dependencies of your project
 repositories {
     jcenter()
     mavenCentral()
+}
+
+jar {
+    baseName = 'wicc-wallet-utils'
+    version = '1.0.1'
 }
 
 dependencies {
@@ -60,12 +64,4 @@ dependencies {
 
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
-}
-
-
-
-
-jar {
-    baseName = 'wicc-wallet-utils'
-    version = "$version"
 }

@@ -29,6 +29,11 @@ import org.bitcoinj.core.*
 import org.junit.Test
 import java.io.ByteArrayOutputStream
 import org.slf4j.LoggerFactory
+import com.google.common.base.Joiner
+import org.bitcoinj.params.MainNetParams
+import org.bitcoinj.wallet.DeterministicSeed
+import org.bitcoinj.wallet.Wallet
+
 
 /**
  * @Author: Richard Chen
@@ -145,6 +150,15 @@ class TestWallet {
         System.out.println(tx)
     }
 
+    @Test
+    fun testHDWallet() {
+        val params = MainNetParams.get()
+        val wallet = Wallet(params)
+        val seedHex = wallet.keyChainSeed.toHexString()
+        val root = HDNode.fromSeedHex(seedHex)
+        println("Seed words are: " + Joiner.on(" ").join(seed.mnemonicCode!!))
+        println("Seed birthday is: " + seed.creationTimeSeconds)
+    }
 
     @Test
     fun testSnippet() {
