@@ -13,7 +13,7 @@ class MnemonicUtil {
             } catch (e: org.bitcoinj.crypto.MnemonicException.MnemonicWordException) {
                 throw TokenException(Messages.MNEMONIC_BAD_WORD)
             } catch (e: Exception) {
-                throw TokenException(Messages.MNEMONIC_CHECKSUM_CHECKSUM)
+                throw TokenException(Messages.MNEMONIC_INVALID_CHECKSUM)
             }
         }
 
@@ -27,7 +27,7 @@ class MnemonicUtil {
             } catch (e: org.bitcoinj.crypto.MnemonicException.MnemonicLengthException) {
                 throw TokenException(Messages.MNEMONIC_INVALID_LENGTH)
             } catch (e: Exception) {
-                throw TokenException(Messages.MNEMONIC_CHECKSUM_CHECKSUM)
+                throw TokenException(Messages.MNEMONIC_INVALID_CHECKSUM)
             }
         }
     }
