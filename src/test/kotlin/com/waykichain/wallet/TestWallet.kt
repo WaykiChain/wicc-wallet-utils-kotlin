@@ -31,8 +31,11 @@ import java.io.ByteArrayOutputStream
 import org.slf4j.LoggerFactory
 import com.google.common.base.Joiner
 import org.bitcoinj.params.MainNetParams
+import org.bitcoinj.wallet.DeterministicKeyChain
 import org.bitcoinj.wallet.DeterministicSeed
 import org.bitcoinj.wallet.Wallet
+import org.waykichain.wallet.util.BIP44Util
+import org.waykichain.wallet.util.MnemonicUtil
 
 
 /**
@@ -43,6 +46,25 @@ import org.bitcoinj.wallet.Wallet
 class TestWallet {
 
     private val logger = LoggerFactory.getLogger(javaClass)
+
+    @Test
+    fun  generateMnemonic(){
+        var words= MnemonicUtil.randomMnemonicCodes();
+        logger.info(words.toString())
+    }
+    @Test
+    fun importMnemonic(){
+        var wordList="lounge enable orphan hire mule hunt physical gym else soft ladder crystal"
+        var words=wordList.split(" ")
+        MnemonicUtil.validateMnemonics(words)
+        val seed = DeterministicSeed(words, null, "", 0L)
+        val keyChain = DeterministicKeyChain.builder().seed(seed).build()
+        val networkParameters = WaykiTestNetParams.instance
+        val mainKey = keyChain.getKeyByPath(BIP44Util.generatePath(BIP44Util.WAYKICHAIN_WALLET_PATH + "/0/0"), true)
+        val address = LegacyAddress.fromPubKeyHash(networkParameters, mainKey.pubKeyHash).toString()
+        val ecKey=ECKey.fromPrivate(mainKey.privKey)
+        logger.info("address   "+address+"\n"+"privatekey   "+ecKey.getPrivateKeyAsWiF(networkParameters))
+    }
 
     @Test
     fun testGenerateKeyMainNet() {
@@ -150,15 +172,15 @@ class TestWallet {
         System.out.println(tx)
     }
 
-    @Test
-    fun testHDWallet() {
-        val params = MainNetParams.get()
-        val wallet = Wallet(params)
-        val seedHex = wallet.keyChainSeed.toHexString()
-        val root = HDNode.fromSeedHex(seedHex)
-        println("Seed words are: " + Joiner.on(" ").join(seed.mnemonicCode!!))
-        println("Seed birthday is: " + seed.creationTimeSeconds)
-    }
+//    @Test
+//    fun testHDWallet() {
+//        val params = MainNetParams.get()
+//        val wallet = Wallet(params)
+//        val seedHex = wallet.keyChainSeed.toHexString()
+//        val root = HDNode.fromSeedHex(seedHex)
+//        println("Seed words are: " + Joiner.on(" ").join(seed.mnemonicCode!!))
+//        println("Seed birthday is: " + seed.creationTimeSeconds)
+//    }
 
     @Test
     fun testSnippet() {
