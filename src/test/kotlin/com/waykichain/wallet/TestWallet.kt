@@ -49,21 +49,22 @@ class TestWallet {
 
     @Test
     fun  generateMnemonic(){
-        var words= MnemonicUtil.randomMnemonicCodes();
+        val words= MnemonicUtil.randomMnemonicCodes()
         logger.info(words.toString())
     }
+
     @Test
     fun importMnemonic(){
-        var wordList="lounge enable orphan hire mule hunt physical gym else soft ladder crystal"
-        var words=wordList.split(" ")
+        val wordList = "lounge enable orphan hire mule hunt physical gym else soft ladder crystal"
+        val words = wordList.split(" ")
         MnemonicUtil.validateMnemonics(words)
         val seed = DeterministicSeed(words, null, "", 0L)
         val keyChain = DeterministicKeyChain.builder().seed(seed).build()
         val networkParameters = WaykiTestNetParams.instance
         val mainKey = keyChain.getKeyByPath(BIP44Util.generatePath(BIP44Util.WAYKICHAIN_WALLET_PATH + "/0/0"), true)
         val address = LegacyAddress.fromPubKeyHash(networkParameters, mainKey.pubKeyHash).toString()
-        val ecKey=ECKey.fromPrivate(mainKey.privKey)
-        logger.info("address   "+address+"\n"+"privatekey   "+ecKey.getPrivateKeyAsWiF(networkParameters))
+        val ecKey = ECKey.fromPrivate(mainKey.privKey)
+        logger.info("\nmnemonic: $wordList\naddress:   $address \n privatekey:   ${ecKey.getPrivateKeyAsWiF(networkParameters)}")
     }
 
     @Test
