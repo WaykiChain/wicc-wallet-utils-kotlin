@@ -29,13 +29,11 @@ import org.bitcoinj.core.*
 import org.junit.Test
 import java.io.ByteArrayOutputStream
 import org.slf4j.LoggerFactory
-import com.google.common.base.Joiner
-import org.bitcoinj.params.MainNetParams
 import org.bitcoinj.wallet.DeterministicKeyChain
 import org.bitcoinj.wallet.DeterministicSeed
-import org.bitcoinj.wallet.Wallet
 import org.waykichain.wallet.util.BIP44Util
 import org.waykichain.wallet.util.MnemonicUtil
+import java.util.*
 
 
 /**
@@ -69,7 +67,10 @@ class TestWallet {
 
     @Test
     fun genMainnetAddressFromMnemonic() {
-        val words = "lounge enable orphan hire mule hunt physical gym else soft ladder crystal"
+        System.out.println("Please enter 12-word mnemonic phrase below: \n")
+        val words = Scanner(System.`in`).nextLine()
+        System.out.println("You just entered: {$words}")
+
         val wordList = words.split(" ")
         MnemonicUtil.validateMnemonics(wordList)
 
@@ -170,7 +171,9 @@ class TestWallet {
     fun testGenerateRegisterAccountTxForMainNetGod() {
         val wallet = LegacyWallet()
         val netParams = WaykiMainNetParams.instance
-        val privKeyWiF = "PmKDb8fQ8MtMx5TmnHkJZJm9JiCT3XaYfPMfdUJh378qau6asQ3T"
+        System.out.println("Please enter the private WiF key: ")
+        val privKeyWiF = Scanner(System.`in`).nextLine()
+        System.out.println("You just entered: $privKeyWiF")
         val key = DumpedPrivateKey.fromBase58(netParams, privKeyWiF).key
         System.out.println("            ${key.publicKeyAsHex}")
 
