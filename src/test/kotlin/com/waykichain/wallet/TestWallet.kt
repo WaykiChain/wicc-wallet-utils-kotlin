@@ -139,8 +139,6 @@ class TestWallet {
     fun testGenerateRegisterAccountTxForTestNet() {
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
-//        val privKeyWiF = "YAHcraeGRDpvwBWVccV7NLGAU6uK39nNUTip8srbJSu6HKSTfDcC"
-//        val privKeyWiF = "YBqQKuQQMBeiTUTMoP5ySPzbWpNUDZpRCCCgvS2LnKbF5jzKwg4p"
         val privKeyWiF = "Y9XMqNzseQFSK32SvMDNF9J7xz1CQmHRsmY1hMYiqZyTck8pYae3"
         val key = DumpedPrivateKey.fromBase58(netParams, privKeyWiF).key
         System.out.println("            ${key.publicKeyAsHex}")
@@ -156,11 +154,13 @@ class TestWallet {
     fun testGenerateRegisterAccountTxForMainNet() {
         val wallet = LegacyWallet()
         val netParams = WaykiMainNetParams.instance
-        val privKeyWiF = "PhKmEa3M6BJERHdStG7nApRwURDnN3W48rhrnnM1fVKbLs3jaYd6"
+        System.out.println("Please enter WiF private key: ")
+        val privKeyWiF = Scanner(System.`in`).nextLine()
+        System.out.println("You just entered: {$privKeyWiF}")
         val key = DumpedPrivateKey.fromBase58(netParams, privKeyWiF).key
-        System.out.println("            ${key.publicKeyAsHex}")
 
-        val txParams = WaykiRegisterAccountTxParams(key.pubKey, null, 926112+100, 10000)
+        System.out.println("        ${key.publicKeyAsHex}")
+        val txParams = WaykiRegisterAccountTxParams(key.pubKey, null, 1534024, 10000)
         txParams.signTx(key)
         val tx = wallet.createRegisterTransactionRaw(txParams)
         System.out.println(tx)
