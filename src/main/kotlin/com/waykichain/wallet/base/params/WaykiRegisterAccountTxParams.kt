@@ -29,7 +29,7 @@ import com.waykichain.wallet.base.types.encodeInOldWay
 class WaykiRegisterAccountTxParams(userPubKey: ByteArray, minerPubKey: ByteArray?, nValidHeight: Long, fees: Long):
         BaseSignTxParams(userPubKey, minerPubKey, nValidHeight, fees, WaykiTxType.TX_REGISTERACCOUNT, 1) {
 
-    override fun getSignatureHash(): ByteArray {
+    final override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()
         ss.add(VarInt(nVersion).encodeInOldWay())
                 .add(nTxType.value)
@@ -55,13 +55,13 @@ class WaykiRegisterAccountTxParams(userPubKey: ByteArray, minerPubKey: ByteArray
      * $./autogen.sh && ./configure --enable-experimental --enable-module_ecdh --enable-jni && make clean && make && make check
      * libsecp256k1.so should be in the .libs/ directory
      */
-    override fun signTx(key: ECKey): ByteArray {
+    final override fun signTx(key: ECKey): ByteArray {
         val sigHash = this.getSignatureHash()
         signature = NativeSecp256k1.sign(sigHash, key.privKeyBytes)
         return signature!!
     }
 
-    override fun serializeTx(): String {
+    final override fun serializeTx(): String {
         assert (signature != null)
 
         val sigSize = signature!!.size

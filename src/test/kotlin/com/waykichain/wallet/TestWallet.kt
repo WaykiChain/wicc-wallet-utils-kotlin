@@ -29,10 +29,11 @@ import org.bitcoinj.core.*
 import org.junit.Test
 import java.io.ByteArrayOutputStream
 import org.slf4j.LoggerFactory
-import com.google.common.base.Joiner
-import org.bitcoinj.params.MainNetParams
+import org.bitcoinj.wallet.DeterministicKeyChain
 import org.bitcoinj.wallet.DeterministicSeed
-import org.bitcoinj.wallet.Wallet
+import org.waykichain.wallet.util.BIP44Util
+import org.waykichain.wallet.util.MnemonicUtil
+import java.util.*
 
 
 /**
@@ -43,6 +44,57 @@ import org.bitcoinj.wallet.Wallet
 class TestWallet {
 
     private val logger = LoggerFactory.getLogger(javaClass)
+
+    @Test
+    fun  generateMnemonic(){
+        val words = MnemonicUtil.randomMnemonicCodes()
+        logger.info(words.toString())
+    }
+
+    @Test
+    fun importMnemonic(){
+        val wordList = "lounge enable orphan hire mule hunt physical gym else soft ladder crystal"
+        val words = wordList.split(" ")
+        MnemonicUtil.validateMnemonics(words)
+        val seed = DeterministicSeed(words, null, "", 0L)
+        val keyChain = DeterministicKeyChain.builder().seed(seed).build()
+        val networkParameters = WaykiTestNetParams.instance
+        val mainKey = keyChain.getKeyByPath(BIP44Util.generatePath(BIP44Util.WAYKICHAIN_WALLET_PATH + "/0/0"), true)
+        val address = LegacyAddress.fromPubKeyHash(networkParameters, mainKey.pubKeyHash).toString()
+        val ecKey = ECKey.fromPrivate(mainKey.privKey)
+        logger.info("\nmnemonic: $wordList\naddress:   $address \n Private key: ${ecKey.getPrivateKeyAsWiF(networkParameters)} \nPublic Key: ${ecKey.publicKeyAsHex}")
+    }
+
+    @Test
+    fun genMainnetAddressFromMnemonic() {
+        System.out.println("Please enter 12-word mnemonic phrase below: \n")
+        val words = Scanner(System.`in`).nextLine()
+        System.out.println("You just entered: {$words}")
+
+        val wordList = words.split(" ")
+        MnemonicUtil.validateMnemonics(wordList)
+
+        val seed = DeterministicSeed(wordList, null, "", 0L)
+        val keyChain = DeterministicKeyChain.builder().seed(seed).build()
+        val networkParameters = WaykiMainNetParams.instance
+        val mainKey = keyChain.getKeyByPath(BIP44Util.generatePath(BIP44Util.WAYKICHAIN_WALLET_PATH + "/0/0"), true)
+        val address = LegacyAddress.fromPubKeyHash(networkParameters, mainKey.pubKeyHash).toString()
+        val ecKey = ECKey.fromPrivate(mainKey.privKey)
+        logger.info("\nmnemonic: $words\naddress:   $address \nPrivate key:   ${ecKey.getPrivateKeyAsWiF(networkParameters)} \nPublic Key: ${ecKey.publicKeyAsHex}")
+    }
+
+    @Test
+    fun generateHDWallet(){
+        val words = MnemonicUtil.randomMnemonicCodes()
+        val seed = DeterministicSeed(words, null, "", 0L)
+        val keyChain = DeterministicKeyChain.builder().seed(seed).build()
+        val networkParameters = WaykiMainNetParams.instance
+        val mainKey = keyChain.getKeyByPath(BIP44Util.generatePath(BIP44Util.WAYKICHAIN_WALLET_PATH + "/0/0"), true)
+        val address = LegacyAddress.fromPubKeyHash(networkParameters, mainKey.pubKeyHash).toString()
+        val ecKey = ECKey.fromPrivate(mainKey.privKey)
+        logger.info("\nmnemonic: $words\naddress:   $address \n privatekey:   ${ecKey.getPrivateKeyAsWiF(networkParameters)}")
+
+    }
 
     @Test
     fun testGenerateKeyMainNet() {
@@ -87,8 +139,6 @@ class TestWallet {
     fun testGenerateRegisterAccountTxForTestNet() {
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
-//        val privKeyWiF = "YAHcraeGRDpvwBWVccV7NLGAU6uK39nNUTip8srbJSu6HKSTfDcC"
-//        val privKeyWiF = "YBqQKuQQMBeiTUTMoP5ySPzbWpNUDZpRCCCgvS2LnKbF5jzKwg4p"
         val privKeyWiF = "Y9XMqNzseQFSK32SvMDNF9J7xz1CQmHRsmY1hMYiqZyTck8pYae3"
         val key = DumpedPrivateKey.fromBase58(netParams, privKeyWiF).key
         System.out.println("            ${key.publicKeyAsHex}")
@@ -104,11 +154,30 @@ class TestWallet {
     fun testGenerateRegisterAccountTxForMainNet() {
         val wallet = LegacyWallet()
         val netParams = WaykiMainNetParams.instance
-        val privKeyWiF = "PhKmEa3M6BJERHdStG7nApRwURDnN3W48rhrnnM1fVKbLs3jaYd6"
+        System.out.println("Please enter WiF private key: ")
+        val privKeyWiF = Scanner(System.`in`).nextLine()
+        System.out.println("You just entered: {$privKeyWiF}")
+        val key = DumpedPrivateKey.fromBase58(netParams, privKeyWiF).key
+
+        System.out.println("        ${key.publicKeyAsHex}")
+        val txParams = WaykiRegisterAccountTxParams(key.pubKey, null, 1534024, 10000)
+        txParams.signTx(key)
+        val tx = wallet.createRegisterTransactionRaw(txParams)
+        System.out.println(tx)
+
+    }
+
+    @Test
+    fun testGenerateRegisterAccountTxForMainNetGod() {
+        val wallet = LegacyWallet()
+        val netParams = WaykiMainNetParams.instance
+        System.out.println("Please enter the private WiF key: ")
+        val privKeyWiF = Scanner(System.`in`).nextLine()
+        System.out.println("You just entered: $privKeyWiF")
         val key = DumpedPrivateKey.fromBase58(netParams, privKeyWiF).key
         System.out.println("            ${key.publicKeyAsHex}")
 
-        val txParams = WaykiRegisterAccountTxParams(key.pubKey, null, 926112+100, 10000)
+        val txParams = WaykiRegisterAccountTxParams(key.pubKey, null, 1461025+100, 10000)
         txParams.signTx(key)
         val tx = wallet.createRegisterTransactionRaw(txParams)
         System.out.println(tx)
@@ -149,16 +218,6 @@ class TestWallet {
         val tx = wallet.createCommonTransactionRaw(txParams)
         System.out.println(tx)
     }
-
-//    @Test
-//    fun testHDWallet() {
-//        val params = MainNetParams.get()
-//        val wallet = Wallet(params)
-//        val seedHex = wallet.keyChainSeed.toHexString()
-//        val root = HDNode.fromSeedHex(seedHex)
-//        println("Seed words are: " + Joiner.on(" ").join(seed.mnemonicCode!!))
-//        println("Seed birthday is: " + seed.creationTimeSeconds)
-//    }
 
     @Test
     fun testSnippet() {
