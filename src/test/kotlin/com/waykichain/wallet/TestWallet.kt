@@ -150,15 +150,15 @@ class TestWallet {
         System.out.println(tx)
     }
 
-    @Test
-    fun testHDWallet() {
-        val params = MainNetParams.get()
-        val wallet = Wallet(params)
-        val seedHex = wallet.keyChainSeed.toHexString()
-        val root = HDNode.fromSeedHex(seedHex)
-        println("Seed words are: " + Joiner.on(" ").join(seed.mnemonicCode!!))
-        println("Seed birthday is: " + seed.creationTimeSeconds)
-    }
+//    @Test
+//    fun testHDWallet() {
+//        val params = MainNetParams.get()
+//        val wallet = Wallet(params)
+//        val seedHex = wallet.keyChainSeed.toHexString()
+//        val root = HDNode.fromSeedHex(seedHex)
+//        println("Seed words are: " + Joiner.on(" ").join(seed.mnemonicCode!!))
+//        println("Seed birthday is: " + seed.creationTimeSeconds)
+//    }
 
     @Test
     fun testSnippet() {
