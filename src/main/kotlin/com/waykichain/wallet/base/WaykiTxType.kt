@@ -20,5 +20,12 @@ enum class WaykiTxType(val value: Int) {
     TX_NONE                 (0),
     TX_REGISTERACCOUNT      (2),
     TX_COMMON               (3),
-    TX_CONTRACT             (4)
+    TX_CONTRACT             (4),
+    TX_DELEGATE             (6)
+}
+
+enum class VoteOperType(val value: Int) {
+    NULL_OPER (0),			//
+    ADD_FUND  (1), 		//投票
+    MINUS_FUND  (2), 	//撤销投票
 }

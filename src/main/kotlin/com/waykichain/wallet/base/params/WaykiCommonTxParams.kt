@@ -21,9 +21,7 @@ import com.waykichain.wallet.base.WaykiNetworkType
 import com.waykichain.wallet.base.WaykiRegId
 import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.types.encodeInOldWay
-import org.bitcoin.NativeSecp256k1
 import org.bitcoinj.core.*
-import java.io.ByteArrayOutputStream
 
 /**
  * srcRegId: (regHeight-regIndex)
@@ -70,7 +68,8 @@ class WaykiCommonTxParams(networkType: WaykiNetworkType, nValidHeight: Long, fee
      */
     override fun signTx(key: ECKey): ByteArray {
         val sigHash = this.getSignatureHash()
-        signature = NativeSecp256k1.sign(sigHash, key.privKeyBytes)
+        val ecSig = key.sign(Sha256Hash.wrap(sigHash))
+        signature = ecSig.encodeToDER()//NativeSecp256k1.sign(sigHash, key.privKeyBytes)
 
         return signature!!
     }
