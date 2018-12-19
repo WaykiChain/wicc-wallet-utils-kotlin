@@ -17,19 +17,16 @@
 package com.waykichain.wallet.base.params
 
 import com.waykichain.wallet.base.HashWriter
+import com.waykichain.wallet.base.WaykiNetworkType
 import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.types.encodeInOldWay
-import org.bitcoin.NativeSecp256k1
-import org.bitcoinj.core.ECKey
-import org.bitcoinj.core.Sha256Hash
-import org.bitcoinj.core.Utils
-import org.bitcoinj.core.VarInt
+import org.bitcoinj.core.*
 
-class WaykiContractTxParams(userPubKey: ByteArray, nValidHeight: Long, fees: Long, val value: Long, val srcRegId: String, val destRegId: String, val vContract: ByteArray?):
+class WaykiContractTxParams(userPubKey: ByteArray, nValidHeight: Long, fees: Long, val value: Long, val srcRegId: String,
+                            val destRegId: String, val vContract: ByteArray?):
         BaseSignTxParams(userPubKey, null, nValidHeight, fees, WaykiTxType.TX_CONTRACT, 1) {
     override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()
-
         ss.write(VarInt(nVersion).encodeInOldWay())
         ss.write(VarInt(nTxType.value.toLong()).encodeInOldWay())
         ss.write(VarInt(nValidHeight).encodeInOldWay())
@@ -37,10 +34,8 @@ class WaykiContractTxParams(userPubKey: ByteArray, nValidHeight: Long, fees: Lon
         ss.writeRegId(destRegId)
         ss.write(VarInt(fees).encodeInOldWay())
         ss.write(VarInt(value).encodeInOldWay())
-
         ss.write(VarInt(vContract!!.size.toLong()).encodeInOldWay())
         ss.write(vContract)
-
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
         val hashStr = Utils.HEX.encode(hash)
         System.out.println("hash: $hashStr")
@@ -59,14 +54,13 @@ class WaykiContractTxParams(userPubKey: ByteArray, nValidHeight: Long, fees: Lon
      */
     override fun signTx(key: ECKey): ByteArray {
         val sigHash = this.getSignatureHash()
-        signature = NativeSecp256k1.sign(sigHash, key.privKeyBytes)
-
+        val ecSig = key.sign(Sha256Hash.wrap(sigHash))
+        signature =  ecSig.encodeToDER()//NativeSecp256k1.sign(sigHash, key.privKeyBytes)
         return signature!!
     }
 
     override fun serializeTx(): String {
         assert (signature != null)
-
         val ss = HashWriter()
 
         ss.write(VarInt(nTxType.value.toLong()).encodeInOldWay())
@@ -76,14 +70,11 @@ class WaykiContractTxParams(userPubKey: ByteArray, nValidHeight: Long, fees: Lon
         ss.writeRegId(destRegId)
         ss.write(VarInt(fees).encodeInOldWay())
         ss.write(VarInt(value).encodeInOldWay())
-
         ss.write(VarInt(vContract!!.size.toLong()).encodeInOldWay())
         ss.write(vContract)
-
         val sigSize = signature!!.size
         ss.write(VarInt(sigSize.toLong()).encodeInOldWay())
         ss.write(signature)
-
         val hexStr =  Utils.HEX.encode(ss.toByteArray())
         return hexStr
     }

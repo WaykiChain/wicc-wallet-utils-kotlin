@@ -27,6 +27,17 @@ class HashWriter: ByteArrayOutputStream() {
             this.write(data)
         return this
     }
+    /** Vote: "$voteType-$pubKey-$votes" */
+    fun add(operVoteFund: Array<OperVoteFund>):HashWriter {
+        this.write(VarInt(operVoteFund.size.toLong()).encodeInOldWay())
+        for (oper in operVoteFund){
+        this.write(VarInt(oper.voteType.toLong()).encodeInOldWay())
+        this.write(VarInt(33).encodeInOldWay())
+        this.write(oper.pubKey)
+        this.write(VarInt(oper.voteValue).encodeInOldWay())
+        }
+        return this
+    }
 
     fun add(data: Int): HashWriter {
         this.write(data)
@@ -60,3 +71,4 @@ class HashWriter: ByteArrayOutputStream() {
 }
 
 data class WaykiRegId(var regHeight: Long, var regIndex: Long)
+data class OperVoteFund(var voteType: Int, var pubKey: ByteArray, var voteValue:Long)

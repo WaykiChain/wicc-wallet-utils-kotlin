@@ -18,13 +18,11 @@ package com.waykichain.wallet.base.params
 
 import com.waykichain.wallet.base.HashWriter
 import com.waykichain.wallet.base.WaykiTxType
-import org.bitcoin.NativeSecp256k1
+import com.waykichain.wallet.base.types.encodeInOldWay
 import org.bitcoinj.core.ECKey
 import org.bitcoinj.core.Sha256Hash
 import org.bitcoinj.core.Utils
 import org.bitcoinj.core.VarInt
-
-import com.waykichain.wallet.base.types.encodeInOldWay
 
 class WaykiRegisterAccountTxParams(userPubKey: ByteArray, minerPubKey: ByteArray?, nValidHeight: Long, fees: Long):
         BaseSignTxParams(userPubKey, minerPubKey, nValidHeight, fees, WaykiTxType.TX_REGISTERACCOUNT, 1) {
@@ -57,7 +55,8 @@ class WaykiRegisterAccountTxParams(userPubKey: ByteArray, minerPubKey: ByteArray
      */
     final override fun signTx(key: ECKey): ByteArray {
         val sigHash = this.getSignatureHash()
-        signature = NativeSecp256k1.sign(sigHash, key.privKeyBytes)
+        val ecSig =key.sign(Sha256Hash.wrap(sigHash))
+        signature = ecSig.encodeToDER()//NativeSecp256k1.sign(sigHash, key.privKeyBytes)
         return signature!!
     }
 

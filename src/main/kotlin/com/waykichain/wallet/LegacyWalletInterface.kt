@@ -20,6 +20,7 @@ import com.waykichain.wallet.base.WalletAddress
 import com.waykichain.wallet.base.WaykiNetworkType
 import com.waykichain.wallet.base.params.WaykiCommonTxParams
 import com.waykichain.wallet.base.params.WaykiContractTxParams
+import com.waykichain.wallet.base.params.WaykiDelegateTxParams
 import com.waykichain.wallet.base.params.WaykiRegisterAccountTxParams
 
 interface LegacyWalletInterface {
@@ -43,5 +44,10 @@ interface LegacyWalletInterface {
      * offline creation of Contract Transaction raw data
      */
     fun createContractTransactionRaw(params: WaykiContractTxParams): String
+
+    /**
+     * offline creation of Delegate Transaction raw data
+     */
+    fun createDelegateTransactionRaw(params: WaykiDelegateTxParams): String
 
 }
