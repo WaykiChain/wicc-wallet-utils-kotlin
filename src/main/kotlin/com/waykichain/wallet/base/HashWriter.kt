@@ -45,11 +45,15 @@ class HashWriter: ByteArrayOutputStream() {
     }
 
     /** regIdStr: "$regHeight-$regIndex" */
-    fun writeRegId(regIdStr: String) {
+    fun writeRegId(regIdStr: String): HashWriter {
         val regId = parseRegId(regIdStr)!!
-        this.write(VarInt(4).encodeInOldWay())
-        this.write(VarInt(regId.regHeight).encodeInOldWay())
-        this.write(VarInt(regId.regIndex).encodeInOldWay())
+        val heightBytes = VarInt(regId.regHeight).encodeInOldWay()
+        val indexBytes = VarInt(regId.regIndex).encodeInOldWay()
+
+        this.write(VarInt((heightBytes.size.toLong() + indexBytes.size.toLong())).encodeInOldWay())
+        this.write(heightBytes)
+        this.write(indexBytes)
+        return this
     }
 
     fun parseRegId(regId: String): WaykiRegId? {
