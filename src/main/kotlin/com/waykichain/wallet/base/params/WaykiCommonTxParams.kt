@@ -33,21 +33,18 @@ class WaykiCommonTxParams(networkType: WaykiNetworkType, nValidHeight: Long, fee
     val legacyAddress = LegacyAddress.fromBase58(netParams, destAddr)
 
     override fun getSignatureHash(): ByteArray {
-        val regId = parseRegId(srcRegId)!! //(regHeight, regIndex)
         val vContract: ByteArray? = null  //vContract: can be used for sending notes
 
         val ss = HashWriter()
         ss.add(VarInt(nVersion).encodeInOldWay())
                 .add(nTxType.value)
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .add(VarInt(4).encodeInOldWay())
-                .add(VarInt(regId.regHeight).encodeInOldWay())
-                .add(VarInt(regId.regIndex).encodeInOldWay())
+                .writeRegId(srcRegId)
                 .add(VarInt(legacyAddress.hash.size.toLong()).encodeInOldWay())
                 .add(legacyAddress.hash)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(VarInt(value).encodeInOldWay())
-                .add(VarInt(0).encodeInOldWay())
+                .add(VarInt(0).encodeInOldWay()) // write contract
                 .add(vContract)
 
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
@@ -76,8 +73,6 @@ class WaykiCommonTxParams(networkType: WaykiNetworkType, nValidHeight: Long, fee
 
     override fun serializeTx(): String {
         assert(signature != null)
-
-        val regId = parseRegId(srcRegId)!!    //regData: regHeight, regIndex
         val sigSize = signature!!.size
         val vContract: ByteArray? = null
 
@@ -85,9 +80,7 @@ class WaykiCommonTxParams(networkType: WaykiNetworkType, nValidHeight: Long, fee
         ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())
                 .add(VarInt(nVersion).encodeInOldWay())
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .add(VarInt(4).encodeInOldWay())
-                .add(VarInt(regId.regHeight).encodeInOldWay())
-                .add(VarInt(regId.regIndex).encodeInOldWay())
+                .writeRegId(srcRegId)
                 .add(VarInt(legacyAddress.hash.size.toLong()).encodeInOldWay())
                 .add(legacyAddress.hash)
                 .add(VarInt(fees).encodeInOldWay())

@@ -13,14 +13,11 @@ import org.bitcoinj.core.VarInt
 class WaykiDelegateTxParams(val srcRegId: String, var voteLists: Array<OperVoteFund>, fees: Long, nValidHeight: Long) :
         BaseSignTxParams(null, null, nValidHeight, fees, WaykiTxType.TX_DELEGATE, 1) {
     override fun getSignatureHash(): ByteArray {
-        val regId = parseRegId(srcRegId)!!
         val ss = HashWriter()
         ss.add(VarInt(nVersion).encodeInOldWay())
                 .add(nTxType.value)
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .add(VarInt(4).encodeInOldWay())
-                .add(VarInt(regId.regHeight).encodeInOldWay())
-                .add(VarInt(regId.regIndex).encodeInOldWay())
+                .writeRegId(srcRegId)
                 .add(voteLists)
                 .add(VarInt(fees).encodeInOldWay())
 
@@ -41,16 +38,13 @@ class WaykiDelegateTxParams(val srcRegId: String, var voteLists: Array<OperVoteF
     override fun serializeTx(): String {
         assert(signature != null)
 
-        val regId = parseRegId(srcRegId)!!
         val sigSize = signature!!.size
 
         val ss = HashWriter()
         ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())
                 .add(VarInt(nVersion).encodeInOldWay())
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .add(VarInt(4).encodeInOldWay())
-                .add(VarInt(regId.regHeight).encodeInOldWay())
-                .add(VarInt(regId.regIndex).encodeInOldWay())
+                .writeRegId(srcRegId)
                 .add(voteLists)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(VarInt(sigSize.toLong()).encodeInOldWay())
