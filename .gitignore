@@ -4,3 +4,4 @@ out
 /build
 .DS_Store
 *.iml
+test/kotlin/com/waykichain/wallet/RunWallet.kt

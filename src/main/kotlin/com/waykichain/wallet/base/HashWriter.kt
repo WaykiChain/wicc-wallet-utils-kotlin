@@ -30,11 +30,11 @@ class HashWriter: ByteArrayOutputStream() {
     /** Vote: "$voteType-$pubKey-$votes" */
     fun add(operVoteFund: Array<OperVoteFund>):HashWriter {
         this.write(VarInt(operVoteFund.size.toLong()).encodeInOldWay())
-        for (oper in operVoteFund){
-        this.write(VarInt(oper.voteType.toLong()).encodeInOldWay())
-        this.write(VarInt(33).encodeInOldWay())
-        this.write(oper.pubKey)
-        this.write(VarInt(oper.voteValue).encodeInOldWay())
+        for (oper in operVoteFund) {
+            this.write(VarInt(oper.voteType.toLong()).encodeInOldWay())
+            this.write(VarInt(33).encodeInOldWay())
+            this.write(oper.pubKey)
+            this.write(VarInt(oper.voteValue).encodeInOldWay())
         }
         return this
     }
@@ -49,8 +49,9 @@ class HashWriter: ByteArrayOutputStream() {
         val regId = parseRegId(regIdStr)!!
         val heightBytes = VarInt(regId.regHeight).encodeInOldWay()
         val indexBytes = VarInt(regId.regIndex).encodeInOldWay()
+        val regIdLen = heightBytes.size.toLong() + indexBytes.size.toLong()
 
-        this.write(VarInt((heightBytes.size.toLong() + indexBytes.size.toLong())).encodeInOldWay())
+        this.write(VarInt(regIdLen).encodeInOldWay())
         this.write(heightBytes)
         this.write(indexBytes)
         return this

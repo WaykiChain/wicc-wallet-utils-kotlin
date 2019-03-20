@@ -52,13 +52,20 @@ class TestWallet {
 
     @Test
     fun  generateMnemonic(){
-        val words = MnemonicUtil.randomMnemonicCodes()
+        var words: List<String>
+        while (true) {
+            words = MnemonicUtil.randomMnemonicCodes()
+            if (words[0] == "vote")
+                break
+        }
+
         logger.info(words.toString())
     }
 
     @Test
     fun importMnemonic(){
-        val wordList = "lounge enable orphan hire mule hunt physical gym else soft ladder crystal"
+        //val wordList = "lounge enable orphan hire mule hunt physical gym else soft ladder crystal"
+        val wordList = "vote despair mind rescue crumble choice garden elite venture cattle oxygen voyage"
         val words = wordList.split(" ")
         MnemonicUtil.validateMnemonics(words)
         val seed = DeterministicSeed(words, null, "", 0L)
@@ -152,7 +159,7 @@ class TestWallet {
         val txParams = WaykiRegisterAccountTxParams(key.pubKey, null, 429821, 10000)
         txParams.signTx(key)
         val tx = wallet.createRegisterTransactionRaw(txParams)
-        logger.info(tx)
+        logger.info("${tx.length} - $tx")
 
     }
 
@@ -166,10 +173,10 @@ class TestWallet {
         val key = DumpedPrivateKey.fromBase58(netParams, privKeyWiF).key
 
         System.out.println("        ${key.publicKeyAsHex}")
-        val txParams = WaykiRegisterAccountTxParams(key.pubKey, null, 1534024, 10000)
+        val txParams = WaykiRegisterAccountTxParams(key.pubKey, null, 2235511, 10000)
         txParams.signTx(key)
         val tx = wallet.createRegisterTransactionRaw(txParams)
-        System.out.println(tx)
+        logger.info("${tx.length} - $tx")
 
     }
 
@@ -186,7 +193,7 @@ class TestWallet {
         val txParams = WaykiRegisterAccountTxParams(key.pubKey, null, 1461025+100, 10000)
         txParams.signTx(key)
         val tx = wallet.createRegisterTransactionRaw(txParams)
-        logger.info(tx)
+        logger.info("${tx.length} - $tx")
 
     }
 
@@ -207,7 +214,7 @@ class TestWallet {
         val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 429637, 100660, 100000000,"423318-1",destAddr )//"30947-1", destAddr)
         txParams.signTx(srcKey)
         val tx = wallet.createCommonTransactionRaw(txParams)
-        logger.info(tx)
+        logger.info("${tx.length} - $tx")
     }
 
     @Test
@@ -216,13 +223,21 @@ class TestWallet {
         val netParams = WaykiMainNetParams.instance
 
         val srcPrivKeyWiF = "PhKmEa3M6BJERHdStG7nApRwURDnN3W48rhrnnM1fVKbLs3jaYd6"
-        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
+//        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key //ECKey
+
+        val privateKey = Utils.HEX.decode("11d0d715a2f813caed9236dcc67d0cef38b9dbc4afa7d9b5dfefeec5747870d5")
+        val srcECKey = ECKey.fromPrivate(privateKey)
+        val srcPrivKey = srcECKey.getPrivateKeyAsWiF(WaykiMainNetParams.instance)
+        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKey).key
+        val srcPubKey = LegacyAddress.fromPubKeyHash(netParams, srcKey.pubKeyHash).toString()
+        logger.info ("srcPubKey: $srcPubKey \n srcPrivKey: $srcPrivKey")
+
 
         val destAddr = "WQRwCMmQGy2XvpATTai6AtGhrRrdXDQzQh"
-        val txParams = WaykiCommonTxParams(WaykiNetworkType.MAIN_NET, 926165, 10000, 10000, "926152-1", destAddr)
+        val txParams = WaykiCommonTxParams(WaykiNetworkType.MAIN_NET, 1926165, 10000, 10000, "926152-1", destAddr)
         txParams.signTx(srcKey)
         val tx = wallet.createCommonTransactionRaw(txParams)
-        logger.info(tx)
+        logger.info("${tx.length} - $tx")
     }
 
     @Test
@@ -270,6 +285,7 @@ class TestWallet {
         val tx = wallet.createDelegateTransactionRaw(txParams)
         logger.info(tx)
     }
+
 
     @Test
     fun testGenerateRevokeDelegateTx() {
