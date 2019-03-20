@@ -3,11 +3,8 @@ package com.waykichain.wallet
 import com.waykichain.wallet.base.OperVoteFund
 import com.waykichain.wallet.base.VoteOperType
 import com.waykichain.wallet.base.params.WaykiDelegateTxParams
-import com.waykichain.wallet.base.params.WaykiMainNetParams
 import com.waykichain.wallet.impl.LegacyWallet
-import org.bitcoinj.core.DumpedPrivateKey
 import org.bitcoinj.core.ECKey
-import org.bitcoinj.core.LegacyAddress
 import org.bitcoinj.wallet.DeterministicKeyChain
 import org.bitcoinj.wallet.DeterministicSeed
 import org.junit.Test
