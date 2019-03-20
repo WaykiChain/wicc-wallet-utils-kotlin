@@ -328,7 +328,7 @@ class TestWallet {
         val value=100000000L //锁仓一个WICC
         val header="f202" //需要调用的方法
         val appid="450687-1"//合约锁仓90天合约的ID
-        val contract=header+ContractUtil.to2HexString4byte(value)+"00000000"
+        val contract = header + ContractUtil.to2HexString4byte(value) + "00000000"
         logger.info(contract)
         val contractByte=ContractUtil.hexString2binaryString(contract)
         val txParams = WaykiContractTxParams(srcKey.pubKey,494454, 100000, value, "926152-1",appid,contractByte)
