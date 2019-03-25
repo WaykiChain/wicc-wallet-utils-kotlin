@@ -9,7 +9,17 @@
 * 维基币地址生成 (Key and address generation)
 * 交易离线签名 (Offline Transaction Signing)
 
-## 运行参数设置
+## 如何编译打包 (How to build)
+* 执行命令 (Execution Command)
+```
+gradle jar -PallInOne
+```
+
+* 输出(output): 
+
+```build/libs/wicc-wallet-utils-1.2.0.jar```
+
+## 运行参数设置 (Deprecated)
 
 * VM options： (Deprecated since C++ library is no longer used) 
 ```
