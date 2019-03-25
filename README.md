@@ -10,7 +10,8 @@
 * 交易离线签名 (Offline Transaction Signing)
 
 ## 运行参数设置
-* VM options： java 运行参数里面添加如下示例参数
+
+* VM options： (Deprecated since C++ library is no longer used) 
 ```
 -Djava.library.path=/Users/richardchen/dev/src/github-src/wicc-wallet-utils/src/main/jniLibs
 ```
