@@ -22,42 +22,43 @@ class ContractUtil{
     }
 
     fun fillZero(str: String, maxlength: Int): String {
-        val filllenth = maxlength - str.length
+        val fillLenth = maxlength - str.length
         val sb = StringBuilder(str)
-        for (i in 0 until filllenth) {
+        for (i in 0 until fillLenth) {
             sb.append("0")
         }
         return sb.toString()
     }
 
-        /**
-         * 16进制转二进制
-         */
-        fun hexString2binaryString(hexString: String?): ByteArray? {
-            var hexString = hexString
-            if (hexString == null || hexString == "") {
-                return null
-            }
-            hexString = hexString.toUpperCase()
-            val length = hexString.length / 2
-            val hexChars = hexString.toCharArray()
-            val d = ByteArray(length)
-            for (i in 0 until length) {
-                val pos = i * 2
-                d[i] = (charToByte(hexChars[pos]).toInt() shl 4 or charToByte(hexChars[pos + 1]).toInt()).toByte()
-            }
-            return d
+    /**
+     * 16进制转二进制
+     */
+    fun hexString2binaryString(hexStringIn: String): ByteArray? {
+        if ( hexStringIn == "")
+            return null
+
+        val hexString = hexStringIn.toUpperCase()
+        val length = hexString.length / 2
+        val hexChars = hexString.toCharArray()
+        val d = ByteArray(length)
+
+        for (i in 0 until length) {
+            val pos = i * 2
+            d[i] = (charToByte(hexChars[pos]).toInt() shl 4 or charToByte(hexChars[pos + 1]).toInt()).toByte()
         }
 
-        /**
-         * Convert char to byte
-         *
-         * @param c char
-         * @return byte
-         */
-         fun charToByte(c: Char): Byte {
-            return "0123456789ABCDEF".indexOf(c).toByte()
-        }
+        return d
+    }
+
+    /**
+     * Convert char to byte
+     *
+     * @param c char
+     * @return byte
+     */
+     fun charToByte(c: Char): Byte {
+        return "0123456789ABCDEF".indexOf(c).toByte()
+    }
     }
 
 
