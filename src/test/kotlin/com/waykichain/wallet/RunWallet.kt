@@ -24,8 +24,8 @@ class RunWallet {
         val srcRegId = "2235518-1"
         val fees = 10000L
 
-        val voteAmount = 3530000 * coinUnit
-        val validHeight = 2322670L
+        val voteAmount = 248000 * coinUnit
+        val validHeight = 2385353L
 
 
         val delegatePubKeyList = arrayOf(
@@ -55,7 +55,7 @@ class RunWallet {
         txParams.signTx(srcKey)
         val tx = wallet.createDelegateTransactionRaw(txParams)
 
-        logger.info(tx)
+        logger.info("Raw Tx String: \n$tx")
     }
 
     private fun getMainnetEcKeyFromMnecode(): ECKey {
@@ -63,7 +63,7 @@ class RunWallet {
         val words = Scanner(System.`in`).nextLine()
         System.out.println("You just entered: {$words}")
 
-        val wordList = words.split(", ")
+        val wordList = if (words.contains(",")) words.split(", ") else words.split(" ")
         MnemonicUtil.validateMnemonics(wordList)
 
         val seed = DeterministicSeed(wordList, null, "", 0L)
