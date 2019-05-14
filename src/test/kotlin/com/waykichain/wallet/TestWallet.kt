@@ -320,4 +320,23 @@ class TestWallet {
         val tx = wallet.createContractTransactionRaw(txParams)
         logger.info(tx)
     }
+
+    @Test
+    fun signMessageByPrivateKey() {  //私钥签名公钥验证
+        val msg = "Waykichain"
+        val netParams = WaykiTestNetParams.instance
+        val srcPrivKeyWiF = "Y9XMqNzseQFSK32SvMDNF9J7xz1CQmHRsmY1hMYiqZyTck8pYae3"
+        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
+        logger.info(srcKey.publicKeyAsHex)
+        val hash = Sha256Hash.hashTwice(msg.toByteArray())
+        val ecSig = srcKey.sign(Sha256Hash.wrap(Utils.HEX.encode(hash)))//私钥签名
+        val signature =  ecSig.encodeToDER()
+        val ecKey = ECKey.fromPublicOnly(Utils.HEX.decode(srcKey.publicKeyAsHex))
+        try {
+            val vertify=  ecKey.verify(hash, signature);//公钥验证
+            logger.info("验证成功"+vertify)
+        } catch (e: Exception) {
+            e.printStackTrace();
+        }
+    }
 }
