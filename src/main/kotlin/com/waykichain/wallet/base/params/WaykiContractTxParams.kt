@@ -23,8 +23,8 @@ import com.waykichain.wallet.base.types.encodeInOldWay
 import org.bitcoinj.core.*
 
 class WaykiContractTxParams(userPubKey: ByteArray, nValidHeight: Long, fees: Long, val value: Long, val srcRegId: String,
-                            val destRegId: String, val vContract: ByteArray?):
-        BaseSignTxParams(userPubKey, null, nValidHeight, fees, WaykiTxType.TX_CONTRACT, 1) {
+                            val destRegId: String, val vContract: ByteArray?,feeSymbol:String):
+        BaseSignTxParams(feeSymbol,userPubKey, null, nValidHeight, fees, WaykiTxType.TX_CONTRACT, 1) {
     override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()
         ss.write(VarInt(nVersion).encodeInOldWay())

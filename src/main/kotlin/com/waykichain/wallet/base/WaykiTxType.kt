@@ -17,15 +17,35 @@
 package com.waykichain.wallet.base
 
 enum class WaykiTxType(val value: Int) {
-    TX_NONE                 (0),
-    TX_REGISTERACCOUNT      (2),
-    TX_COMMON               (3),
-    TX_CONTRACT             (4),
-    TX_DELEGATE             (6)
+    TX_NONE(0),
+    TX_REGISTERACCOUNT(2),
+    TX_COMMON(3),
+    TX_CONTRACT(4),
+    TX_DELEGATE(6),
+    TX_CDPSTAKE(21),
+    TX_CDPREDEEM(22),
+    TX_CDPLIQUIDATE(23)
+}
+
+enum class CoinType(val type: String) {
+    WICC("WICC"),
+    WUSD("WUSD"),
+    WGRT("WICC"),
+    WCNY("WCNY"),
+    WBTC("WBTC"),
+    WETH("WETH"),
+    WEOS("WEOS"),
+    USD("USD"),
+    CNY("CNY"),
+    EUR("EUR"),
+    BTC("BTC"),
+    USDT("USDT"),
+    GOLD("GOLD"),
+    KWH("KWH")
 }
 
 enum class VoteOperType(val value: Int) {
-    NULL_OPER (0),			//
-    ADD_FUND  (1), 		//投票
-    MINUS_FUND  (2), 	//撤销投票
+    NULL_OPER(0),            //
+    ADD_FUND(1),        //投票
+    MINUS_FUND(2),    //撤销投票
 }

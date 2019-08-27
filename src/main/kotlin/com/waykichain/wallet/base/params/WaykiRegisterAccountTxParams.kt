@@ -24,8 +24,8 @@ import org.bitcoinj.core.Sha256Hash
 import org.bitcoinj.core.Utils
 import org.bitcoinj.core.VarInt
 
-class WaykiRegisterAccountTxParams(userPubKey: ByteArray, minerPubKey: ByteArray?, nValidHeight: Long, fees: Long):
-        BaseSignTxParams(userPubKey, minerPubKey, nValidHeight, fees, WaykiTxType.TX_REGISTERACCOUNT, 1) {
+class WaykiRegisterAccountTxParams(userPubKey: ByteArray, minerPubKey: ByteArray?, nValidHeight: Long, fees: Long,feeSymbol:String):
+        BaseSignTxParams(feeSymbol,userPubKey, minerPubKey, nValidHeight, fees, WaykiTxType.TX_REGISTERACCOUNT, 1) {
 
     final override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()

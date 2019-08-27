@@ -27,8 +27,8 @@ import org.bitcoinj.core.*
  * srcRegId: (regHeight-regIndex)
  * destAddr: 20-byte PubKeyHash
  */
-class WaykiCommonTxParams(networkType: WaykiNetworkType, nValidHeight: Long, fees: Long, val value: Long, val srcRegId: String, destAddr: String):
-        BaseSignTxParams(null, null, nValidHeight, fees, WaykiTxType.TX_COMMON, 1) {
+class WaykiCommonTxParams(networkType: WaykiNetworkType, nValidHeight: Long, fees: Long, val value: Long, val srcRegId: String, destAddr: String,feeSymbol:String):
+        BaseSignTxParams(feeSymbol,null, null, nValidHeight, fees, WaykiTxType.TX_COMMON, 1) {
     val netParams = if (networkType == WaykiNetworkType.MAIN_NET) WaykiMainNetParams.instance else WaykiTestNetParams.instance
     val legacyAddress = LegacyAddress.fromBase58(netParams, destAddr)
 
