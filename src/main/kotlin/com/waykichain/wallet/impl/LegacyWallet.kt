@@ -44,6 +44,10 @@ class LegacyWallet: LegacyWalletInterface {
         return  params.serializeTx()
     }
 
+    override fun createUCoinTransactionRaw(params: WaykiUCoinTxParams): String {
+        return  params.serializeTx()
+    }
+
     override fun createContractTransactionRaw(params: WaykiContractTxParams): String {
         return  params.serializeTx()
     }
@@ -61,6 +65,17 @@ class LegacyWallet: LegacyWalletInterface {
     }
 
     override fun createCdpLiquidateTransactionRaw(params: WaykiCdpLiquidateTxParams): String {
+        return  params.serializeTx()
+    }
+    override fun createDexLimitTransactionRaw(params: WaykiDexLimitTxParams): String {
+        return  params.serializeTx()
+    }
+
+    override fun createDexMarketTransactionRaw(params: WaykiDexMarketTxParams): String {
+        return  params.serializeTx()
+    }
+
+    override fun createDexCancelOrderTransactionRaw(params: WaykiDexCancelOrderTxParams): String {
         return  params.serializeTx()
     }
 }

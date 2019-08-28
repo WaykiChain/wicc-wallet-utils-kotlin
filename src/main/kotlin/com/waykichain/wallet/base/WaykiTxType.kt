@@ -22,9 +22,18 @@ enum class WaykiTxType(val value: Int) {
     TX_COMMON(3),
     TX_CONTRACT(4),
     TX_DELEGATE(6),
+
+    TX_UCOIN_TRANSFER(11),
+
     TX_CDPSTAKE(21),
     TX_CDPREDEEM(22),
-    TX_CDPLIQUIDATE(23)
+    TX_CDPLIQUIDATE(23),
+
+    DEX_CANCEL_ORDER_TX      ( 88 ),//!< dex cancel order Tx
+    DEX_BUY_LIMIT_ORDER_TX   ( 84), //!< dex buy limit price order Tx
+    DEX_SELL_LIMIT_ORDER_TX  ( 85 ),//!< dex sell limit price order Tx
+    DEX_BUY_MARKET_ORDER_TX  ( 86 ),//!< dex buy market price order Tx
+    DEX_SELL_MARKET_ORDER_TX ( 87), //!< dex sell market price order Tx
 }
 
 enum class CoinType(val type: String) {

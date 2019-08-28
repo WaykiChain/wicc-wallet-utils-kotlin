@@ -74,7 +74,7 @@ class HashWriter : ByteArrayOutputStream() {
         val regId = parseRegId(userIdStr)
         if (regId != null) {
             writeRegId(userIdStr)
-        } else {
+        } else if(pubKey!=null){
             this.write(pubKey!!.size)
             this.write(pubKey!!.reversedArray())
         }

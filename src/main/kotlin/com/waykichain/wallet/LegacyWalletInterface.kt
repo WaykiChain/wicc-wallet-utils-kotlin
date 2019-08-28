@@ -63,4 +63,32 @@ interface LegacyWalletInterface {
      fun createCdpLiquidateTransactionRaw(params: WaykiCdpLiquidateTxParams): String {
         return  params.serializeTx()
     }
+
+    /**
+     * offline creation of UCoin Transaction raw data
+     */
+    fun createUCoinTransactionRaw(params: WaykiUCoinTxParams): String {
+        return  params.serializeTx()
+    }
+
+    /**
+     * offline creation of Dex limit Transaction raw data
+     */
+    fun createDexLimitTransactionRaw(params: WaykiDexLimitTxParams): String {
+        return  params.serializeTx()
+    }
+
+    /**
+     * offline creation of Dex market Transaction raw data
+     */
+     fun createDexMarketTransactionRaw(params: WaykiDexMarketTxParams): String {
+        return  params.serializeTx()
+    }
+
+    /**
+     * offline creation of Dex cancel order Transaction raw data
+     */
+     fun createDexCancelOrderTransactionRaw(params: WaykiDexCancelOrderTxParams): String {
+        return  params.serializeTx()
+    }
 }
