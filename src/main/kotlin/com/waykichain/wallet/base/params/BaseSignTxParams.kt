@@ -21,7 +21,7 @@ import com.waykichain.wallet.base.WaykiTxType
 import org.bitcoinj.core.ECKey
 
 abstract class BaseSignTxParams(var feeSymbol: String=CoinType.WICC.type,
-                                var userPubKey: ByteArray?,
+                                var userPubKey: String?,
                                 var minerPubKey: ByteArray?,
                                 var nValidHeight: Long = 0,
                                 var fees: Long = 10000L, // 0.0001 wicc

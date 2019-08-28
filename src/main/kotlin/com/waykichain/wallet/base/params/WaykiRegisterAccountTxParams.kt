@@ -24,16 +24,16 @@ import org.bitcoinj.core.Sha256Hash
 import org.bitcoinj.core.Utils
 import org.bitcoinj.core.VarInt
 
-class WaykiRegisterAccountTxParams(userPubKey: ByteArray, minerPubKey: ByteArray?, nValidHeight: Long, fees: Long,feeSymbol:String):
+class WaykiRegisterAccountTxParams(userPubKey: String, minerPubKey: ByteArray?, nValidHeight: Long, fees: Long,feeSymbol:String):
         BaseSignTxParams(feeSymbol,userPubKey, minerPubKey, nValidHeight, fees, WaykiTxType.TX_REGISTERACCOUNT, 1) {
-
     final override fun getSignatureHash(): ByteArray {
+        val pubKey=Utils.HEX.decode(userPubKey)
         val ss = HashWriter()
         ss.add(VarInt(nVersion).encodeInOldWay())
                 .add(nTxType.value)
                 .add(VarInt(nValidHeight).encodeInOldWay())
                 .add(VarInt(33).encodeInOldWay())
-                .add(userPubKey)
+                .add(pubKey)
                 .add(VarInt(0).encodeInOldWay())
                 .add(minerPubKey)
                 .add(VarInt(fees).encodeInOldWay())
@@ -62,14 +62,14 @@ class WaykiRegisterAccountTxParams(userPubKey: ByteArray, minerPubKey: ByteArray
 
     final override fun serializeTx(): String {
         assert (signature != null)
-
+        val pubKey=Utils.HEX.decode(userPubKey)
         val sigSize = signature!!.size
         val ss = HashWriter()
         ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())
                 .add(VarInt(nVersion).encodeInOldWay())
                 .add(VarInt(nValidHeight).encodeInOldWay())
                 .add(33)
-                .add(userPubKey)
+                .add(pubKey)
                 .add(0)
                 .add(minerPubKey)
                 .add(VarInt(fees).encodeInOldWay())

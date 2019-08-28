@@ -21,15 +21,26 @@ import org.bitcoinj.core.VarInt
 import org.bouncycastle.util.encoders.Hex
 import java.io.ByteArrayOutputStream
 
-class HashWriter: ByteArrayOutputStream() {
+class HashWriter : ByteArrayOutputStream() {
+
+
+    fun add(data: String?): HashWriter {
+        if (data != null) {
+            val arr = data.toByteArray()
+            this.write(VarInt(arr.size.toLong()).encodeInOldWay())
+            this.write(data.toByteArray())
+        }
+        return this
+    }
 
     fun add(data: ByteArray?): HashWriter {
         if (data != null)
             this.write(data)
         return this
     }
+
     /** Vote: "$voteType-$pubKey-$votes" */
-    fun add(operVoteFund: Array<OperVoteFund>):HashWriter {
+    fun add(operVoteFund: Array<OperVoteFund>): HashWriter {
         this.write(VarInt(operVoteFund.size.toLong()).encodeInOldWay())
         for (oper in operVoteFund) {
             this.write(VarInt(oper.voteType.toLong()).encodeInOldWay())
@@ -58,33 +69,41 @@ class HashWriter: ByteArrayOutputStream() {
         return this
     }
 
-    fun writeUserId(userIdStr: String,pubKey:ByteArray?): HashWriter {
-        val regId = parseRegId(userIdStr)!!
-        if(regId!=null){
+    fun writeUserId(userIdStr: String, pubKey: ByteArray?): HashWriter {
+
+        val regId = parseRegId(userIdStr)
+        if (regId != null) {
             writeRegId(userIdStr)
-        }else{
-            this.write(pubKey?.reversedArray())
+        } else {
+            this.write(pubKey!!.size)
+            this.write(pubKey!!.reversedArray())
         }
         return this
     }
 
     fun parseRegId(regId: String): WaykiRegId? {
-        val arr = regId.split("-")
-        if (!intOrString(arr[0])) return null
-        if (!intOrString(arr[1])) return null
-        val height = arr[0].toLong()
-        val index = arr[1].toLong()
-        return WaykiRegId(height, index)
+        val arr = regId?.split("-")
+        if (arr.size > 1) {
+            if (!intOrString(arr[0])) return null
+            if (!intOrString(arr[1])) return null
+            val height = arr[0].toLong()
+            val index = arr[1].toLong()
+            return WaykiRegId(height, index)
+        } else {
+            return null
+        }
     }
 
     fun intOrString(str: String): Boolean {
         val v = str.toIntOrNull()
-        return when(v) {
+        return when (v) {
             null -> false
             else -> true
         }
     }
 }
 
+const val cdpHash = "0000000000000000000000000000000000000000000000000000000000000000"
+
 data class WaykiRegId(var regHeight: Long, var regIndex: Long)
-data class OperVoteFund(var voteType: Int, var pubKey: ByteArray, var voteValue:Long)
+data class OperVoteFund(var voteType: Int, var pubKey: ByteArray, var voteValue: Long)

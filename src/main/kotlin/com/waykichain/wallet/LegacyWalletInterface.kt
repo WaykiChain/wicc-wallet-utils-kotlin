@@ -18,10 +18,7 @@ package com.waykichain.wallet
 
 import com.waykichain.wallet.base.WalletAddress
 import com.waykichain.wallet.base.WaykiNetworkType
-import com.waykichain.wallet.base.params.WaykiCommonTxParams
-import com.waykichain.wallet.base.params.WaykiContractTxParams
-import com.waykichain.wallet.base.params.WaykiDelegateTxParams
-import com.waykichain.wallet.base.params.WaykiRegisterAccountTxParams
+import com.waykichain.wallet.base.params.*
 
 interface LegacyWalletInterface {
 
@@ -50,4 +47,20 @@ interface LegacyWalletInterface {
      */
     fun createDelegateTransactionRaw(params: WaykiDelegateTxParams): String
 
+    /**
+     * offline creation of Cdp Stake Transaction raw data
+     */
+    fun createCdpStakeTransactionRaw(params: WaykiCdpStakeTxParams): String
+
+    /**
+     * offline creation of Cdp Redeem Transaction raw data
+     */
+    fun createCdpRedeemTransactionRaw(params: WaykiCdpRedeemTxParams): String
+
+    /**
+     * offline creation of Cdp Liquidate Transaction raw data
+     */
+     fun createCdpLiquidateTransactionRaw(params: WaykiCdpLiquidateTxParams): String {
+        return  params.serializeTx()
+    }
 }
