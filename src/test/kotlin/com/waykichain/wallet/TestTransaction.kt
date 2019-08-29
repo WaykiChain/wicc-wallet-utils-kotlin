@@ -43,13 +43,13 @@ class TestTransaction {
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
 
-        val srcPrivKeyWiF = "Y9XMqNzseQFSK32SvMDNF9J7xz1CQmHRsmY1hMYiqZyTck8pYae3"
+        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
-        val srcAddress = LegacyAddress.fromPubKeyHash(netParams, srcKey.pubKeyHash).toString()
-
-        val destAddr = "wWXYkAhNdNdv5LBEavQB1aUJeYqApNc2YW"
-
-        val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 429637, 100660, 100000000, "423318-1", destAddr, CoinType.WICC.type)//"30947-1", destAddr)
+        val pubKey = srcKey.publicKeyAsHex
+        val destAddr = "wWTStcDL4gma6kPziyHhFGAP6xUzKpA5if"
+        val memo=""
+        val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 34550, pubKey,10000,
+                1100000000000, "", destAddr,memo)
         txParams.signTx(srcKey)
         val tx = wallet.createCommonTransactionRaw(txParams)
         logger.info("${tx.length} - $tx")
@@ -73,10 +73,11 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKey).key
         val srcPubKey = LegacyAddress.fromPubKeyHash(netParams, srcKey.pubKeyHash).toString()
         logger.info("srcPubKey: $srcPubKey \n srcPrivKey: $srcPrivKey")
-
-
+        val pubKey = srcKey.publicKeyAsHex
+        val memo="测试转账"
         val destAddr = "WQRwCMmQGy2XvpATTai6AtGhrRrdXDQzQh"
-        val txParams = WaykiCommonTxParams(WaykiNetworkType.MAIN_NET, 1926165, 10000, 10000, "926152-1", destAddr, CoinType.WICC.type)
+        val txParams = WaykiCommonTxParams(WaykiNetworkType.MAIN_NET, 1926165, pubKey,10000, 10000,
+                "926152-1", destAddr, memo)
         txParams.signTx(srcKey)
         val tx = wallet.createCommonTransactionRaw(txParams)
         logger.info("${tx.length} - $tx")
@@ -92,7 +93,7 @@ class TestTransaction {
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
 
-        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
+        val srcPrivKeyWiF = "Y9XMqNzseQFSK32SvMDNF9J7xz1CQmHRsmY1hMYiqZyTck8pYae3"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val pubKey = srcKey.publicKeyAsHex  //user publickey hex string
         val nValidHeight = 283308L
@@ -100,7 +101,7 @@ class TestTransaction {
         val coinAmount = 100000000L    //transfer amount
         val feeSymbol = CoinType.WICC.type
         val fees = 100000L
-        val regid = "0-1"
+        val regid = ""
         val destAddr = "wWXYkAhNdNdv5LBEavQB1aUJeYqApNc2YW"
         val memo = "转账"
         val txParams = WaykiUCoinTxParams(WaykiNetworkType.TEST_NET, nValidHeight, regid, pubKey, destAddr, coinSymbol, coinAmount, feeSymbol, fees, memo)

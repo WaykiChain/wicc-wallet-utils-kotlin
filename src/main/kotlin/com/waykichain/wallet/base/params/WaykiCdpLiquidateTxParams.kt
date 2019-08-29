@@ -22,7 +22,7 @@ class WaykiCdpLiquidateTxParams(nValidHeight: Long, fees: Long = 1000L,
     override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()
         val cdpTxHex = Utils.HEX.decode(cdpTxid).reversedArray()
-        val pubKey = Utils.HEX.decode(userPubKey).reversedArray()
+        val pubKey = Utils.HEX.decode(userPubKey)
         ss.add(VarInt(nVersion).encodeInOldWay())
                 .add(nTxType.value)
                 .add(VarInt(nValidHeight).encodeInOldWay())
@@ -49,7 +49,7 @@ class WaykiCdpLiquidateTxParams(nValidHeight: Long, fees: Long = 1000L,
         assert(signature != null)
         val sigSize = signature!!.size
         val cdpTxHex = Utils.HEX.decode(cdpTxid).reversedArray()
-        val pubKey = Utils.HEX.decode(userPubKey).reversedArray()
+        val pubKey = Utils.HEX.decode(userPubKey)
         val ss = HashWriter()
         ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())
                 .add(VarInt(nVersion).encodeInOldWay())

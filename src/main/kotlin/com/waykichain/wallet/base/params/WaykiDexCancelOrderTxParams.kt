@@ -20,7 +20,7 @@ class WaykiDexCancelOrderTxParams(nValidHeight: Long, fees: Long,val userId: Str
 
     override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()
-        val pubKey = Utils.HEX.decode(userPubKey).reversedArray()
+        val pubKey = Utils.HEX.decode(userPubKey)
         val orderIdByte = Utils.HEX.decode(orderId).reversedArray()
         ss.add(VarInt(nVersion).encodeInOldWay())
                 .add(nTxType.value)
@@ -46,7 +46,7 @@ class WaykiDexCancelOrderTxParams(nValidHeight: Long, fees: Long,val userId: Str
     override fun serializeTx(): String {
         assert(signature != null)
         val sigSize = signature!!.size
-        val pubKey = Utils.HEX.decode(userPubKey).reversedArray()
+        val pubKey = Utils.HEX.decode(userPubKey)
         val orderIdByte = Utils.HEX.decode(orderId).reversedArray()
         val ss = HashWriter()
         ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())

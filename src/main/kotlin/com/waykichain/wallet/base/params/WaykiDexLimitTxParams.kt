@@ -21,7 +21,7 @@ class WaykiDexLimitTxParams(nValidHeight: Long, fees: Long,val userId: String, u
 
     override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()
-        val pubKey = Utils.HEX.decode(userPubKey).reversedArray()
+        val pubKey = Utils.HEX.decode(userPubKey)
         ss.add(VarInt(nVersion).encodeInOldWay())
                 .add(nTxType.value)
                 .add(VarInt(nValidHeight).encodeInOldWay())
@@ -49,7 +49,7 @@ class WaykiDexLimitTxParams(nValidHeight: Long, fees: Long,val userId: String, u
     override fun serializeTx(): String {
         assert(signature != null)
         val sigSize = signature!!.size
-        val pubKey = Utils.HEX.decode(userPubKey).reversedArray()
+        val pubKey = Utils.HEX.decode(userPubKey)
         val ss = HashWriter()
         ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())
                 .add(VarInt(nVersion).encodeInOldWay())

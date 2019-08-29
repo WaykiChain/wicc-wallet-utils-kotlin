@@ -76,7 +76,7 @@ class HashWriter : ByteArrayOutputStream() {
             writeRegId(userIdStr)
         } else if(pubKey!=null){
             this.write(pubKey!!.size)
-            this.write(pubKey!!.reversedArray())
+            this.write(pubKey)
         }
         return this
     }
