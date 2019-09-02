@@ -151,5 +151,4 @@ class TestWallet {
         val hexStr =  Utils.HEX.encode(bytes)
         System.out.println(hexStr)
     }
-
 }
