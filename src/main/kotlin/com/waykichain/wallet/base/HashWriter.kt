@@ -18,7 +18,6 @@ package com.waykichain.wallet.base
 
 import com.waykichain.wallet.base.types.encodeInOldWay
 import org.bitcoinj.core.VarInt
-import org.bouncycastle.util.encoders.Hex
 import java.io.ByteArrayOutputStream
 
 class HashWriter : ByteArrayOutputStream() {
@@ -74,11 +73,20 @@ class HashWriter : ByteArrayOutputStream() {
         val regId = parseRegId(userIdStr)
         if (regId != null) {
             writeRegId(userIdStr)
-        } else if(pubKey!=null){
+        } else if (pubKey != null) {
             this.write(pubKey!!.size)
             this.write(pubKey)
         }
         return this
+    }
+
+    fun intToByteArray(i: Int): ByteArray {
+        val result = ByteArray(4)
+        result[0] = (i shr 24 and 0xFF).toByte()
+        result[1] = (i shr 16 and 0xFF).toByte()
+        result[2] = (i shr 8 and 0xFF).toByte()
+        result[3] = (i and 0xFF).toByte()
+        return result
     }
 
     fun parseRegId(regId: String): WaykiRegId? {

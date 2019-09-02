@@ -21,6 +21,7 @@ enum class WaykiTxType(val value: Int) {
     TX_REGISTERACCOUNT(2),
     TX_COMMON(3),
     TX_CONTRACT(4),
+    LCONTRACT_DEPLOY_TX(5),
     TX_DELEGATE(6),
 
     TX_UCOIN_TRANSFER(11),

@@ -16,7 +16,10 @@
 
 package com.waykichain.wallet.base.params
 
-import com.waykichain.wallet.base.*
+import com.waykichain.wallet.base.CoinType
+import com.waykichain.wallet.base.HashWriter
+import com.waykichain.wallet.base.WaykiNetworkType
+import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.types.encodeInOldWay
 import org.bitcoinj.core.*
 

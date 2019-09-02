@@ -17,24 +17,20 @@
 
 package com.waykichain.wallet
 
-import com.waykichain.wallet.base.*
+import com.waykichain.wallet.base.WaykiNetworkType
+import com.waykichain.wallet.base.WaykiRegId
+import com.waykichain.wallet.base.params.WaykiMainNetParams
+import com.waykichain.wallet.base.params.WaykiTestNetParams
 import com.waykichain.wallet.base.types.encodeInOldWay
 import com.waykichain.wallet.impl.LegacyWallet
 import org.bitcoinj.core.*
-import org.junit.Test
-import java.io.ByteArrayOutputStream
-import org.slf4j.LoggerFactory
-
-import com.waykichain.wallet.base.params.*
-import com.waykichain.wallet.util.ContractUtil
-import org.bitcoinj.params.MainNetParams
-
 import org.bitcoinj.wallet.DeterministicKeyChain
 import org.bitcoinj.wallet.DeterministicSeed
+import org.junit.Test
+import org.slf4j.LoggerFactory
 import org.waykichain.wallet.util.BIP44Util
 import org.waykichain.wallet.util.MnemonicUtil
-
-import java.math.BigInteger
+import java.io.ByteArrayOutputStream
 import java.util.*
 
 

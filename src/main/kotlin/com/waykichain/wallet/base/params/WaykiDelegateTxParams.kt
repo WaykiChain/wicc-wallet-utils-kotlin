@@ -1,8 +1,8 @@
 package com.waykichain.wallet.base.params
 
+import com.waykichain.wallet.base.CoinType
 import com.waykichain.wallet.base.HashWriter
 import com.waykichain.wallet.base.OperVoteFund
-import com.waykichain.wallet.base.WaykiRegId
 import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.types.encodeInOldWay
 import org.bitcoinj.core.ECKey
@@ -10,14 +10,15 @@ import org.bitcoinj.core.Sha256Hash
 import org.bitcoinj.core.Utils
 import org.bitcoinj.core.VarInt
 
-class WaykiDelegateTxParams(val srcRegId: String, var voteLists: Array<OperVoteFund>, fees: Long, nValidHeight: Long,feeSymbol:String) :
-        BaseSignTxParams(feeSymbol,null, null, nValidHeight, fees, WaykiTxType.TX_DELEGATE, 1) {
+class WaykiDelegateTxParams(val srcRegId: String,pubKey:String,  var voteLists: Array<OperVoteFund>, fees: Long, nValidHeight: Long) :
+        BaseSignTxParams(CoinType.WICC.type,pubKey, null, nValidHeight, fees, WaykiTxType.TX_DELEGATE, 1) {
     override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()
+        val publicKey= Utils.HEX.decode(userPubKey)
         ss.add(VarInt(nVersion).encodeInOldWay())
                 .add(nTxType.value)
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .writeRegId(srcRegId)
+                .writeUserId(srcRegId,publicKey)
                 .add(voteLists)
                 .add(VarInt(fees).encodeInOldWay())
 
@@ -39,12 +40,12 @@ class WaykiDelegateTxParams(val srcRegId: String, var voteLists: Array<OperVoteF
         assert(signature != null)
 
         val sigSize = signature!!.size
-
+        val publicKey= Utils.HEX.decode(userPubKey)
         val ss = HashWriter()
         ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())
                 .add(VarInt(nVersion).encodeInOldWay())
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .writeRegId(srcRegId)
+                .writeUserId(srcRegId,publicKey)
                 .add(voteLists)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(VarInt(sigSize.toLong()).encodeInOldWay())
@@ -54,20 +55,4 @@ class WaykiDelegateTxParams(val srcRegId: String, var voteLists: Array<OperVoteF
         return hexStr
     }
 
-    fun parseRegId(regId: String): WaykiRegId? {
-        val arr = regId.split("-")
-        if (!intOrString(arr[0])) return null
-        if (!intOrString(arr[1])) return null
-        val height = arr[0].toLong()
-        val index = arr[1].toLong()
-        return WaykiRegId(height, index)
-    }
-
-    fun intOrString(str: String): Boolean {
-        val v = str.toIntOrNull()
-        return when (v) {
-            null -> false
-            else -> true
-        }
-    }
 }

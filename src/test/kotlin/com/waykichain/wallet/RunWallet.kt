@@ -1,6 +1,5 @@
 package com.waykichain.wallet
 
-import com.waykichain.wallet.base.CoinType
 import com.waykichain.wallet.base.OperVoteFund
 import com.waykichain.wallet.base.VoteOperType
 import com.waykichain.wallet.base.params.WaykiDelegateTxParams
@@ -52,7 +51,7 @@ class RunWallet {
             voteArr.add(vote)
         }
 
-        val txParams = WaykiDelegateTxParams(srcRegId, voteArr.toTypedArray(), fees, validHeight,CoinType.WICC.type)
+        val txParams = WaykiDelegateTxParams(srcRegId,srcKey.publicKeyAsHex, voteArr.toTypedArray(), fees, validHeight)
         txParams.signTx(srcKey)
         val tx = wallet.createDelegateTransactionRaw(txParams)
 

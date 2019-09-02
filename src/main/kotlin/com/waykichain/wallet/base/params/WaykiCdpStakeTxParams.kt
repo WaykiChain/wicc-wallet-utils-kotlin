@@ -4,7 +4,10 @@ import com.waykichain.wallet.base.HashWriter
 import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.cdpHash
 import com.waykichain.wallet.base.types.encodeInOldWay
-import org.bitcoinj.core.*
+import org.bitcoinj.core.ECKey
+import org.bitcoinj.core.Sha256Hash
+import org.bitcoinj.core.Utils
+import org.bitcoinj.core.VarInt
 
 /**
  * srcRegId: (regHeight-regIndex PubKeyHash)

@@ -10,7 +10,7 @@ import org.bitcoinj.core.LegacyAddress
 import org.bitcoinj.core.Utils
 import org.junit.Test
 import org.slf4j.LoggerFactory
-import java.util.*
+
 
 class TestTransaction {
     private val logger = LoggerFactory.getLogger(javaClass)
@@ -37,6 +37,7 @@ class TestTransaction {
     /*
     * 测试网转账交易
     * Test network transfer
+    * fee Minimum 0.0001 wicc
     * */
     @Test
     fun testGenerateCommonTxForTestNet() {
@@ -47,7 +48,7 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val pubKey = srcKey.publicKeyAsHex
         val destAddr = "wWTStcDL4gma6kPziyHhFGAP6xUzKpA5if"
-        val memo=""
+        val memo="test transfer"
         val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 34550, pubKey,10000,
                 1100000000000, "", destAddr,memo)
         txParams.signTx(srcKey)
@@ -58,6 +59,7 @@ class TestTransaction {
     /*
     * 主网转账交易
     * Main network transfer
+    * fee Minimum 0.0001 wicc
     * */
     @Test
     fun testGenerateCommonTxForMainNet() {
@@ -87,16 +89,17 @@ class TestTransaction {
     /*
    * 多币种转账交易 ,支持多种币种转账
    * Test nUniversal Coin Transfer Tx
+   * fee Minimum 0.0001 wicc
    * */
     @Test
     fun testGenerateUCoinTransferTx() {
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
 
-        val srcPrivKeyWiF = "Y9XMqNzseQFSK32SvMDNF9J7xz1CQmHRsmY1hMYiqZyTck8pYae3"
+        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val pubKey = srcKey.publicKeyAsHex  //user publickey hex string
-        val nValidHeight = 283308L
+        val nValidHeight = 440601L
         val coinSymbol = CoinType.WICC.type  //coind symbol
         val coinAmount = 100000000L    //transfer amount
         val feeSymbol = CoinType.WICC.type
@@ -113,6 +116,7 @@ class TestTransaction {
     /*
     * 投票交易
     * Voting transaction
+    * fee Minimum 0.0001 wicc
     * */
     @Test
     fun testGenerateDelegateTx() {
@@ -138,15 +142,16 @@ class TestTransaction {
         val array4 = OperVoteFund(VoteOperType.ADD_FUND.value, destKey1.pubKey, 200000000)
         val array5 = OperVoteFund(VoteOperType.ADD_FUND.value, destKey2.pubKey, 200000000)
         val array6 = arrayOf(array4, array5)
-        val txParams = WaykiDelegateTxParams("25813-1", array6, 10000000, 479796, CoinType.WICC.type)
+        val txParams = WaykiDelegateTxParams("25813-1",srcKey.publicKeyAsHex, array6, 10000000, 479796)
         txParams.signTx(srcKey)
         val tx = wallet.createDelegateTransactionRaw(txParams)
         logger.info(tx)
     }
 
     /*
-    * 合约交易
+    * 合约调用交易
     * Contract transaction sample
+    * fee Minimum 0.0001 wicc
     * */
     @Test
     fun testGenerateContractTx() {
@@ -382,10 +387,11 @@ class TestTransaction {
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
-        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
+        val srcPrivKeyWiF = "Y9XMqNzseQFSK32SvMDNF9J7xz1CQmHRsmY1hMYiqZyTck8pYae3"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
+        println(userPubKey)
         val dexOrderId="009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //dex order tx hash
         val txParams = WaykiDexCancelOrderTxParams(nValidHeight, fee, userId, userPubKey,
                 feeSymbol,dexOrderId)
@@ -393,5 +399,6 @@ class TestTransaction {
         val tx = wallet.createDexCancelOrderTransactionRaw(txParams)
         logger.info(tx)
     }
+
 
 }

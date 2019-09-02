@@ -91,4 +91,5 @@ interface LegacyWalletInterface {
      fun createDexCancelOrderTransactionRaw(params: WaykiDexCancelOrderTxParams): String {
         return  params.serializeTx()
     }
+
 }

@@ -1,12 +1,10 @@
 package org.waykichain.wallet.util
 
 import com.google.common.collect.ImmutableList
-import com.waykichain.wallet.base.params.WaykiTestNetParams
 import org.bitcoinj.core.ECKey
 import org.bitcoinj.core.LegacyAddress
 import org.bitcoinj.core.NetworkParameters
 import org.bitcoinj.crypto.ChildNumber
-import org.bitcoinj.crypto.DeterministicKey
 import org.bitcoinj.wallet.DeterministicKeyChain
 import org.bitcoinj.wallet.DeterministicSeed
 import java.util.*
