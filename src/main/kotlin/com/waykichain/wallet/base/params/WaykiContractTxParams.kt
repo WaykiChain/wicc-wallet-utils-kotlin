@@ -17,20 +17,23 @@
 package com.waykichain.wallet.base.params
 
 import com.waykichain.wallet.base.HashWriter
-import com.waykichain.wallet.base.WaykiNetworkType
 import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.types.encodeInOldWay
-import org.bitcoinj.core.*
+import org.bitcoinj.core.ECKey
+import org.bitcoinj.core.Sha256Hash
+import org.bitcoinj.core.Utils
+import org.bitcoinj.core.VarInt
 
-class WaykiContractTxParams(userPubKey: ByteArray, nValidHeight: Long, fees: Long, val value: Long, val srcRegId: String,
-                            val destRegId: String, val vContract: ByteArray?):
-        BaseSignTxParams(userPubKey, null, nValidHeight, fees, WaykiTxType.TX_CONTRACT, 1) {
+class WaykiContractTxParams(userPubKey: String, nValidHeight: Long, fees: Long, val value: Long, val srcRegId: String,
+                            val destRegId: String, val vContract: ByteArray?,feeSymbol:String):
+        BaseSignTxParams(feeSymbol,userPubKey, null, nValidHeight, fees, WaykiTxType.TX_CONTRACT, 1) {
     override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()
+        val publicKey= Utils.HEX.decode(userPubKey)
         ss.write(VarInt(nVersion).encodeInOldWay())
         ss.write(VarInt(nTxType.value.toLong()).encodeInOldWay())
         ss.write(VarInt(nValidHeight).encodeInOldWay())
-        ss.writeRegId(srcRegId)
+        ss.writeUserId(srcRegId,publicKey)
         ss.writeRegId(destRegId)
         ss.write(VarInt(fees).encodeInOldWay())
         ss.write(VarInt(value).encodeInOldWay())
@@ -43,15 +46,6 @@ class WaykiContractTxParams(userPubKey: ByteArray, nValidHeight: Long, fees: Lon
         return hash
     }
 
-    /**
-     * run this test with -Djava.library.path=$PATH_LIBSECP256K1_DIR where $PATH_LIBSECP256K1_DIR is a directory that
-     * contains libsecp256k1.so. For example:
-     * mvn test  -DargLine="-Djava.library.path=$PATH_LIBSECP256K1_DIR"
-     * To create libsecp256k1.so:
-     * clone libsecp256k1
-     * $./autogen.sh && ./configure --enable-experimental --enable-module_ecdh --enable-jni && make clean && make && make check
-     * libsecp256k1.so should be in the .libs/ directory
-     */
     override fun signTx(key: ECKey): ByteArray {
         val sigHash = this.getSignatureHash()
         val ecSig = key.sign(Sha256Hash.wrap(sigHash))
@@ -62,11 +56,11 @@ class WaykiContractTxParams(userPubKey: ByteArray, nValidHeight: Long, fees: Lon
     override fun serializeTx(): String {
         assert (signature != null)
         val ss = HashWriter()
-
+        val publicKey= Utils.HEX.decode(userPubKey)
         ss.write(VarInt(nTxType.value.toLong()).encodeInOldWay())
         ss.write(VarInt(nVersion).encodeInOldWay())
         ss.write(VarInt(nValidHeight).encodeInOldWay())
-        ss.writeRegId(srcRegId)
+        ss.writeUserId(srcRegId,publicKey)
         ss.writeRegId(destRegId)
         ss.write(VarInt(fees).encodeInOldWay())
         ss.write(VarInt(value).encodeInOldWay())

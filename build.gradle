@@ -27,7 +27,7 @@ repositories {
 
 jar {
     baseName = 'wicc-wallet-utils'
-    version = '1.2.0'
+    version = '2.0.0'
 
     manifestContentCharset 'utf-8'
     metadataCharset 'utf-8'
@@ -35,7 +35,7 @@ jar {
         attributes "Main-Class": "com.waykichain.wallet"
     }
 
-    if (project.hasProperty("allInOne")) {
+    if (project.hasProperty("wiccBuildJar")) {
         from {
             configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
         }

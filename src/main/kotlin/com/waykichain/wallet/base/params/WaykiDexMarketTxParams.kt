@@ -1,8 +1,6 @@
 package com.waykichain.wallet.base.params
 
-import com.waykichain.wallet.base.CoinType
 import com.waykichain.wallet.base.HashWriter
-import com.waykichain.wallet.base.OperVoteFund
 import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.types.encodeInOldWay
 import org.bitcoinj.core.ECKey
@@ -10,18 +8,28 @@ import org.bitcoinj.core.Sha256Hash
 import org.bitcoinj.core.Utils
 import org.bitcoinj.core.VarInt
 
-class WaykiDelegateTxParams(val srcRegId: String,pubKey:String,  var voteLists: Array<OperVoteFund>, fees: Long, nValidHeight: Long) :
-        BaseSignTxParams(CoinType.WICC.type,pubKey, null, nValidHeight, fees, WaykiTxType.TX_DELEGATE, 1) {
+/**
+ * srcRegId: (regHeight-regIndex PubKeyHash)
+ * destAddr: 20-byte PubKeyHash
+ * fee Minimum 0.0001 wicc
+ */
+class WaykiDexMarketTxParams(nValidHeight: Long, fees: Long,val userId: String, userPubKey: String?, feeSymbol: String,
+                            val coinSymbol: String,val assetSymbol: String,val assetAmount: Long,
+                            txType:WaykiTxType) :
+        BaseSignTxParams(feeSymbol, userPubKey, null, nValidHeight, fees, txType, 1) {
+
     override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()
-        val publicKey= Utils.HEX.decode(userPubKey)
+        val pubKey = Utils.HEX.decode(userPubKey)
         ss.add(VarInt(nVersion).encodeInOldWay())
                 .add(nTxType.value)
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .writeUserId(srcRegId,publicKey)
-                .add(voteLists)
+                .writeUserId(userId, pubKey)
+                .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
-
+                .add(coinSymbol)
+                .add(assetSymbol)
+                .add(VarInt(assetAmount).encodeInOldWay())
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
         val hashStr = Utils.HEX.encode(hash)
         System.out.println("hash: $hashStr")
@@ -38,21 +46,22 @@ class WaykiDelegateTxParams(val srcRegId: String,pubKey:String,  var voteLists: 
 
     override fun serializeTx(): String {
         assert(signature != null)
-
         val sigSize = signature!!.size
-        val publicKey= Utils.HEX.decode(userPubKey)
+        val pubKey = Utils.HEX.decode(userPubKey)
         val ss = HashWriter()
         ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())
                 .add(VarInt(nVersion).encodeInOldWay())
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .writeUserId(srcRegId,publicKey)
-                .add(voteLists)
+                .writeUserId(userId, pubKey)
+                .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
+                .add(coinSymbol)
+                .add(assetSymbol)
+                .add(VarInt(assetAmount).encodeInOldWay())
                 .add(VarInt(sigSize.toLong()).encodeInOldWay())
                 .add(signature)
 
         val hexStr = Utils.HEX.encode(ss.toByteArray())
         return hexStr
     }
-
 }

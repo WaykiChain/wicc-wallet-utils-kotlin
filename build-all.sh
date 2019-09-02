@@ -1,1 +1,1 @@
-gradle jar -PallInOne
+gradle jar -PwiccBuildJar

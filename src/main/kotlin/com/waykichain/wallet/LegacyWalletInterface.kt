@@ -18,10 +18,7 @@ package com.waykichain.wallet
 
 import com.waykichain.wallet.base.WalletAddress
 import com.waykichain.wallet.base.WaykiNetworkType
-import com.waykichain.wallet.base.params.WaykiCommonTxParams
-import com.waykichain.wallet.base.params.WaykiContractTxParams
-import com.waykichain.wallet.base.params.WaykiDelegateTxParams
-import com.waykichain.wallet.base.params.WaykiRegisterAccountTxParams
+import com.waykichain.wallet.base.params.*
 
 interface LegacyWalletInterface {
 
@@ -49,5 +46,50 @@ interface LegacyWalletInterface {
      * offline creation of Delegate Transaction raw data
      */
     fun createDelegateTransactionRaw(params: WaykiDelegateTxParams): String
+
+    /**
+     * offline creation of Cdp Stake Transaction raw data
+     */
+    fun createCdpStakeTransactionRaw(params: WaykiCdpStakeTxParams): String
+
+    /**
+     * offline creation of Cdp Redeem Transaction raw data
+     */
+    fun createCdpRedeemTransactionRaw(params: WaykiCdpRedeemTxParams): String
+
+    /**
+     * offline creation of Cdp Liquidate Transaction raw data
+     */
+     fun createCdpLiquidateTransactionRaw(params: WaykiCdpLiquidateTxParams): String {
+        return  params.serializeTx()
+    }
+
+    /**
+     * offline creation of UCoin Transaction raw data
+     */
+    fun createUCoinTransactionRaw(params: WaykiUCoinTxParams): String {
+        return  params.serializeTx()
+    }
+
+    /**
+     * offline creation of Dex limit Transaction raw data
+     */
+    fun createDexLimitTransactionRaw(params: WaykiDexLimitTxParams): String {
+        return  params.serializeTx()
+    }
+
+    /**
+     * offline creation of Dex market Transaction raw data
+     */
+     fun createDexMarketTransactionRaw(params: WaykiDexMarketTxParams): String {
+        return  params.serializeTx()
+    }
+
+    /**
+     * offline creation of Dex cancel order Transaction raw data
+     */
+     fun createDexCancelOrderTransactionRaw(params: WaykiDexCancelOrderTxParams): String {
+        return  params.serializeTx()
+    }
 
 }
