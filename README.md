@@ -17,7 +17,7 @@ gradle jar -PallInOne
 
 * 输出(output): 
 
-```build/libs/wicc-wallet-utils-1.2.0.jar```
+```build/libs/wicc-wallet-utils-2.0.0.jar```
 
 ## 运行参数设置 (Deprecated)
 
