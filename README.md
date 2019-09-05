@@ -137,14 +137,15 @@ TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller
         //WRC20 Transfer
         //WRC20转账
         val wallet = LegacyWallet()
-        val netParams = WaykiMainNetParams.instance
+        val netParams = WaykiTestNetParams.instance
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val regId = "926152-1"
-        val appId = "128711-1"
-        val wrc20Amount = 10000 // transfer 10000 WRC
-        val contractByte = ContractUtil.transformWRC20Amount(wrc20Amount)
-        val txParams = WaykiContractTxParams(srcKey.publicKeyAsHex, 494454, 100000, 0, regId, appid, contractByte, CoinType.WICC.type)
+        val appId = "128711-1" //Contract Regid
+        val wrc20Amount = 10000L // transfer 10000 WRC Token
+        val destAddress="wNPWqv9bvFCnMm1ddiQdH7fUwUk2Qgrs2N"
+        val contractByte = ContractUtil.transferWRC20Contract(wrc20Amount,destAddress)
+        val txParams = WaykiContractTxParams(srcKey.publicKeyAsHex, 494454, 100000, 0, regId, appId, contractByte, CoinType.WICC.type)
         txParams.signTx(srcKey)
         val tx = wallet.createContractTransactionRaw(txParams)
 ````
