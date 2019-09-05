@@ -8,35 +8,23 @@
 ## 核心功能 (Core Functions)
 * 维基币地址生成 (Key and address generation)
 * 交易离线签名 (Offline Transaction Signing)
-
-## 如何编译打包 (How to build)
-* 执行命令 (Execution Command)
-```
-gradle jar -PwiccBuildJar
-```
-
-* 输出(output): 
-
-```build/libs/wicc-wallet-utils-2.0.0.jar```
-
 ## 使用方式（Usage）
-
 ### 创建钱包（WaykiChain Create Wallet）
 生成助记词和私钥管理你的钱包
 Generate mnemonics and private keys to manage your wallet.
 
-- [生成助记词 GenerateMnemonics. You will get 12 words](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestWallet.kt)
+- [1.生成助记词 GenerateMnemonics. You will get 12 words](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestWallet.kt)
 ```kotlin
   var words = MnemonicUtil.randomMnemonicCodes()
 ```
-- [生成钱包 generate wallet from mnemonic](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestWallet.kt)
+- [2.生成钱包 generate wallet from mnemonic](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestWallet.kt)
 ```kotlin
   val words = "vote despair mind rescue crumble choice garden elite venture cattle oxygen voyage"
   val networkParameters = WaykiTestNetParams.instance //generate Testnet Address From Mnemonic
   //val networkParameters = WaykiMainNetParams.instance //generate Mainnet Address From Mnemonic
   val wallet= BIP44Util.generateWaykiWallet(words,networkParameters)
 ```
-- [导入私钥 Import private key](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestWallet.kt)
+- [3.导入私钥 Import private key](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestWallet.kt)
 ```kotlin
  val params = WaykiTestNetParams.instance //TestNet
  val privKeyWiF = "YAHcraeGRDpvwBWVccV7NLGAU6uK39nNUTip8srbJSu6HKSTfDcC"
@@ -65,7 +53,7 @@ MainNet<https://baas.wiccdev.org/v2/api/swagger-ui.html#!/block-controller/getBl
 TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller/getBlockCountUsingPOST>
 
 #### WaykiChain Transaction
-- [钱包注册交易 （Sign Register Account Transaction）](https://githuCb.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
+- [1.钱包注册交易 （Sign Register Account Transaction）](https://githuCb.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
 
 **The register transaction is not required, you can activate wallet by public key in other transactions**
 ```kotlin
@@ -77,7 +65,7 @@ TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller
         txParams.signTx(key)
         val tx = wallet.createRegisterTransactionRaw(txParams)
 ```
-- [钱包转账交易 （Sign Common Transaction）](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt).
+- [2.钱包转账交易 （Sign Common Transaction）](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt).
 ```kotlin
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
@@ -90,41 +78,7 @@ TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller
         txParams.signTx(srcKey)
         val tx = wallet.createCommonTransactionRaw(txParams)
 ```
-
-- [钱包投票交易 （Sign Delegate Transaction）](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
-```kotlin
-        val wallet = LegacyWallet()
-        val netParams = WaykiTestNetParams.instance 
-        val srcPrivKeyWiF = "Y6CFeJthSWMPRRcEu734u4ovBfjRp3ytngt9iGEfsMvqxPmKo2Vy"
-        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
-        val srcAddress = LegacyAddress.fromPubKeyHash(netParams, srcKey.pubKeyHash).toString()
-        val votedPubKey=Utils.HEX.decode("2ba8329bc5507c867bdc9be0ce487419de3c6737ae6754657db62f2df02ff07f")//public key as hex string
-        //VoteOperType.ADD_FUND  投票
-        //VoteOperType.MINUS_FUND //撤销投票
-        val array1 = OperVoteFund(VoteOperType.ADD_FUND.value, votedPubKey, 200000000)
-        val array2 = arrayOf(array1)
-        val txParams = WaykiDelegateTxParams("25813-1",srcKey.publicKeyAsHex, array2, 10000000, 479796)
-        txParams.signTx(srcKey)
-        val tx = wallet.createDelegateTransactionRaw(txParams)
-```
-- [调用合约交易 （Sign Invoke Contract Transaction）](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
-```kotlin
-        //以锁仓为例 锁仓90天
-        val wallet = LegacyWallet()
-        val netParams = WaykiMainNetParams.instance
-        val srcPrivKeyWiF = "PhKmEa3M6BJERHdStG7nApRwURDnN3W48rhrnnM1fVKbLs3jaYd6"
-        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
-        logger.info(LegacyAddress.fromPubKeyHash(netParams, srcKey.pubKeyHash).toString())
-        val value = 100000000L //锁仓一个WICC
-        val header = "f202" //需要调用的方法
-        val appid = "450687-1"//合约锁仓90天合约的ID
-        val contract = header + ContractUtil.to2HexString4byte(value) + "00000000"
-        val contractByte = ContractUtil.hexString2binaryString(contract)
-        val txParams = WaykiContractTxParams(srcKey.publicKeyAsHex, 494454, 100000, value, "926152-1", appid, contractByte, CoinType.WICC.type)
-        txParams.signTx(srcKey)
-        val tx = wallet.createContractTransactionRaw(txParams)
-```
-- [多币种转账交易 （Sign UCoinTransfer Transaction）](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
+- [3.多币种转账交易 （Sign UCoinTransfer Transaction）](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
 ```kotlin
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
@@ -144,13 +98,63 @@ TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller
         txParams.signTx(srcKey)
         val tx = wallet.createUCoinTransactionRaw(txParams)
 ```
+- [4.钱包投票交易 （Sign Delegate Transaction）](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
+```kotlin
+        val wallet = LegacyWallet()
+        val netParams = WaykiTestNetParams.instance 
+        val srcPrivKeyWiF = "Y6CFeJthSWMPRRcEu734u4ovBfjRp3ytngt9iGEfsMvqxPmKo2Vy"
+        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
+        val srcAddress = LegacyAddress.fromPubKeyHash(netParams, srcKey.pubKeyHash).toString()
+        val votedPubKey=Utils.HEX.decode("2ba8329bc5507c867bdc9be0ce487419de3c6737ae6754657db62f2df02ff07f")//public key as hex string
+        //VoteOperType.ADD_FUND  投票
+        //VoteOperType.MINUS_FUND //撤销投票
+        val array1 = OperVoteFund(VoteOperType.ADD_FUND.value, votedPubKey, 200000000)
+        val array2 = arrayOf(array1)
+        val txParams = WaykiDelegateTxParams("25813-1",srcKey.publicKeyAsHex, array2, 10000000, 479796)
+        txParams.signTx(srcKey)
+        val tx = wallet.createDelegateTransactionRaw(txParams)
+```
+- [5.调用合约交易 （Sign Invoke Contract Transaction）](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)  
+
+     []**WRC20 Asset Invoke**(https://www.wiccdev.org/book/zh-hans/Contract/ico_sample.html#%E5%AF%B9%E4%BB%A3%E5%B8%81%E8%BF%9B%E8%A1%8C%E8%BD%AC%E8%B4%A6)
+````kotlin
+        //Activate WRC20 Assets
+        //激活WRC20资产
+        val wallet = LegacyWallet()
+        val netParams = WaykiMainNetParams.instance
+        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
+        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
+        val regId = "926152-1"
+        val appId = "128711-1"
+        val contract = "f0110000"
+        val contractByte = ContractUtil.hexString2binaryString(contract)
+        val txParams = WaykiContractTxParams(srcKey.publicKeyAsHex, 494454, 100000, 0, regId, appid, contractByte, CoinType.WICC.type)
+        txParams.signTx(srcKey)
+        val tx = wallet.createContractTransactionRaw(txParams)
+````
+   
+````kotlin
+        //WRC20 Transfer
+        //WRC20转账
+        val wallet = LegacyWallet()
+        val netParams = WaykiMainNetParams.instance
+        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
+        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
+        val regId = "926152-1"
+        val appId = "128711-1"
+        val wrc20Amount = 10000 // transfer 10000 WRC
+        val contractByte = ContractUtil.transformWRC20Amount(wrc20Amount)
+        val txParams = WaykiContractTxParams(srcKey.publicKeyAsHex, 494454, 100000, 0, regId, appid, contractByte, CoinType.WICC.type)
+        txParams.signTx(srcKey)
+        val tx = wallet.createContractTransactionRaw(txParams)
+````
 #### CDP Transaction
 持有WICC的任何用户都可以向CDP（抵押债务位置）发送WICC以获得一定百分比的WUSD.一个用户只能拥有一个CDP，除非之前的CDP已被销毁。
 
 Any user holding a WICC can send a WICC to the CDP (Collaterized Debt Position) to obtain a certain percentage of WUSD.a user can only have one cdp unless the previous cdp has been destroyed.
 
 - [CDP抵押交易签名 (Sign Cdp Stake Transaction)](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
-```kotlin
+````kotlin
         val nValidHeight = 283308L
         val fee = 100000L
         val userId = "0-1" //wallet regid
@@ -170,7 +174,7 @@ Any user holding a WICC can send a WICC to the CDP (Collaterized Debt Position) 
         val txParams = WaykiCdpStakeTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, bCoinSymbol, sCoinSymbol, bCoinToStake, sCoinToMint)
         txParams.signTx(srcKey)
         val tx = wallet.createCdpStakeTransactionRaw(txParams)
-```
+````
 - [CDP赎回交易签名 (Sign Cdp Redeem Transaction)](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
 ```kotlin
         val nValidHeight = 283308L
@@ -317,6 +321,15 @@ Any user holding a WICC can send a WICC to the CDP (Collaterized Debt Position) 
         txParams.signTx(srcKey)
         val tx = wallet.createDexCancelOrderTransactionRaw(txParams)
 ```
+## 如何编译打包 (How to build)
+* 执行命令 (Execution Command)
+```
+gradle jar -PwiccBuildJar
+```
+
+* 输出(output): 
+
+```build/libs/wicc-wallet-utils-2.0.0.jar```
 
 ## 参考三方项目 (Reference Projects)
 * https://bitcoinj.github.io/
