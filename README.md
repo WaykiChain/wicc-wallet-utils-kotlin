@@ -47,12 +47,12 @@ TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/transaction-cont
 MainNet<https://baas.wiccdev.org/v2/api/swagger-ui.html#!/block-controller/getBlockCountUsingPOST>,  
 TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller/getBlockCountUsingPOST>
 
-[**WICC交易单位说明 (WICC Transaction Unit description)**](https://wicc-devbook.readthedocs.io/zh_CN/latest/Problem/question/)
-
 #### WaykiChain Transaction
+   [**WICC交易单位说明 (WICC Transaction Unit description)**](https://wicc-devbook.readthedocs.io/zh_CN/latest/Problem/question/)
 - [1.钱包注册交易 （Sign Register Account Transaction）](https://githuCb.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
 
-**The register transaction is not required, you can activate wallet by public key in other transactions**
+**钱包注册交易已不是必须的，你可以在其他交易通过公钥激活你的钱包。  
+(The register transaction is not required, you can activate wallet by public key in other transactions)**
 ```kotlin
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
