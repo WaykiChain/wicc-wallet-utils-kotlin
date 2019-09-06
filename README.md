@@ -77,8 +77,8 @@ TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller
 ```
 - [3.多币种转账交易 （Sign UCoinTransfer Transaction）](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
 ```kotlin
-         //Cointype:Supported (WICC WUSD  WGRT) 
-         //Feetype:Supported (WICC WUSD  WGRT) 
+         //CoinSymbol:Supported (WICC WUSD  WGRT) 
+         //FeeSymbol:Supported (WICC WUSD  WGRT) 
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
