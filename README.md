@@ -40,17 +40,14 @@ Signing a transaction with a private key,you can submit your offline signature r
 |   TestNetwork | https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/  |  
 |   ProdNetwork | https://baas.wiccdev.org/v2/api/swagger-ui.html#!/       |                                |
 
-**提交交易 Submit raw string:**
-
-Mainnet <https://baas.wiccdev.org/v2/api/swagger-ui.html#!/transaction-controller/offlinTransactionUsingPOST> ,
-
-TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/transaction-controller/offlinTransactionUsingPOST>,
-
-** 获得区块高度 Get block height:**
-
-MainNet<https://baas.wiccdev.org/v2/api/swagger-ui.html#!/block-controller/getBlockCountUsingPOST>,
-
+**提交交易 Submit raw string:**  
+Mainnet <https://baas.wiccdev.org/v2/api/swagger-ui.html#!/transaction-controller/offlinTransactionUsingPOST> ,  
+TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/transaction-controller/offlinTransactionUsingPOST>  
+**获得区块高度 Get block height:**  
+MainNet<https://baas.wiccdev.org/v2/api/swagger-ui.html#!/block-controller/getBlockCountUsingPOST>,  
 TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller/getBlockCountUsingPOST>
+
+[**WICC交易单位说明 (WICC Transaction Unit description)**](https://wicc-devbook.readthedocs.io/zh_CN/latest/Problem/question/)
 
 #### WaykiChain Transaction
 - [1.钱包注册交易 （Sign Register Account Transaction）](https://githuCb.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
@@ -90,7 +87,7 @@ TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller
         val coinSymbol = CoinType.WICC.type  //coind symbol
         val coinAmount = 100000000L    //transfer amount
         val feeSymbol = CoinType.WICC.type
-        val fees = 100000L
+        val fees = 100000L //Minimum  fee 10000sawi
         val regid = ""
         val destAddr = "wWXYkAhNdNdv5LBEavQB1aUJeYqApNc2YW"
         val memo = "转账"
@@ -116,7 +113,7 @@ TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller
 ```
 - [5.调用合约交易 （Sign Invoke Contract Transaction）](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)  
 
-     []**WRC20 Asset Invoke**(https://www.wiccdev.org/book/zh-hans/Contract/ico_sample.html#%E5%AF%B9%E4%BB%A3%E5%B8%81%E8%BF%9B%E8%A1%8C%E8%BD%AC%E8%B4%A6)
+     [**WRC20 Asset Invoke**](https://www.wiccdev.org/book/zh-hans/Contract/ico_sample.html#%E5%AF%B9%E4%BB%A3%E5%B8%81%E8%BF%9B%E8%A1%8C%E8%BD%AC%E8%B4%A6)
 ````kotlin
         //Activate WRC20 Assets
         //激活WRC20资产
