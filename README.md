@@ -51,7 +51,7 @@ TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller
    [**WICC交易单位说明 (WICC Transaction Unit description)**](https://wicc-devbook.readthedocs.io/zh_CN/latest/Problem/question/)
 - [1.钱包注册交易 （Sign Register Account Transaction）](https://githuCb.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
 
-**钱包注册交易已不是必须的，你可以在其他交易通过公钥激活你的钱包。  
+**钱包注册交易已不是必须的，你可以在其他交易通过公钥参数激活你的钱包。  
 (The register transaction is not required, you can activate wallet by public key in other transactions)**
 ```kotlin
         val wallet = LegacyWallet()
@@ -68,7 +68,7 @@ TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller
         val netParams = WaykiTestNetParams.instance
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
-        val pubKey = srcKey.publicKeyAsHex
+        val pubKey = srcKey.publicKeyAsHex  //user public key 
         val destAddr = "wWTStcDL4gma6kPziyHhFGAP6xUzKpA5if"
         val memo="test transfer"
         val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 34550, pubKey,10000,1100000000000, "0-1", destAddr,memo)
@@ -77,20 +77,21 @@ TestNet <https://baas-test.wiccdev.org/v2/api/swagger-ui.html#!/block-controller
 ```
 - [3.多币种转账交易 （Sign UCoinTransfer Transaction）](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
 ```kotlin
+         //Cointype:Supported (WICC WUSD  WGRT) 
+         //Feetype:Supported (WICC WUSD  WGRT) 
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
-
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val pubKey = srcKey.publicKeyAsHex  //user publickey hex string
         val nValidHeight = 440601L
-        val coinSymbol = CoinType.WICC.type  //coind symbol
+        val coinSymbol = CoinType.WICC.type  //coin symbol
         val coinAmount = 100000000L    //transfer amount
         val feeSymbol = CoinType.WICC.type
         val fees = 100000L //Minimum  fee 10000sawi
-        val regid = ""
+        val regid = "0-1"  // User regid 
         val destAddr = "wWXYkAhNdNdv5LBEavQB1aUJeYqApNc2YW"
-        val memo = "转账"
+        val memo = "test transfer" //transfer memo
         val txParams = WaykiUCoinTxParams(WaykiNetworkType.TEST_NET, nValidHeight, regid, pubKey, destAddr, coinSymbol, coinAmount, feeSymbol, fees, memo)
         txParams.signTx(srcKey)
         val tx = wallet.createUCoinTransactionRaw(txParams)
