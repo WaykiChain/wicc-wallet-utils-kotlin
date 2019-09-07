@@ -2,6 +2,7 @@ package com.waykichain.wallet.util
 
 import org.bitcoinj.core.Base58
 import org.bitcoinj.core.Utils
+import java.nio.ByteBuffer
 
 class ContractUtil {
 
@@ -101,4 +102,10 @@ fun String.toHexString(): String {
         sb.append(s4)
     }
     return sb.toString()//0x表示十六进制
+}
+
+fun Long.longToBytes(): ByteArray {
+    val buffer = ByteBuffer.allocate(8)
+    buffer.putLong(0, this)
+    return buffer.array()
 }

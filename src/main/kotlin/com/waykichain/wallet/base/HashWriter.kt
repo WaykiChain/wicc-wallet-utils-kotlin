@@ -16,9 +16,15 @@
 
 package com.waykichain.wallet.base
 
+import com.waykichain.wallet.base.params.WaykiMainNetParams
+import com.waykichain.wallet.base.params.WaykiTestNetParams
 import com.waykichain.wallet.base.types.encodeInOldWay
+import com.waykichain.wallet.util.longToBytes
+import org.bitcoinj.core.LegacyAddress
 import org.bitcoinj.core.VarInt
 import java.io.ByteArrayOutputStream
+import java.io.DataOutputStream
+import java.nio.ByteBuffer
 
 class HashWriter : ByteArrayOutputStream() {
 
@@ -80,13 +86,38 @@ class HashWriter : ByteArrayOutputStream() {
         return this
     }
 
-    fun intToByteArray(i: Int): ByteArray {
-        val result = ByteArray(4)
-        result[0] = (i shr 24 and 0xFF).toByte()
-        result[1] = (i shr 16 and 0xFF).toByte()
-        result[2] = (i shr 8 and 0xFF).toByte()
-        result[3] = (i and 0xFF).toByte()
-        return result
+    fun addAsset(asset: CAsset, networkType: WaykiNetworkType): HashWriter {
+        val netParams = if (networkType == WaykiNetworkType.MAIN_NET) WaykiMainNetParams.instance else WaykiTestNetParams.instance
+        val legacyAddress = LegacyAddress.fromBase58(netParams, asset.ownerAddress)
+        val buff = HashWriter()
+        val mintable = if (asset.minTable) 1 else 0
+        buff.add(asset.symbol)
+        buff.write(VarInt(legacyAddress.hash.size.toLong()).encodeInOldWay())
+        buff.write(legacyAddress.hash)
+        buff.add(asset.name)
+        buff.write(mintable)
+        buff.write(VarInt(asset.totalSupply).encodeInOldWay())
+        this.write(buff.toByteArray())
+        return this
+    }
+
+    fun updateAsset(data: AssetUpdateData): HashWriter {
+        when (data.enumAsset.type) {
+            1 ->{
+            this.write(1)
+            this.parseRegId(data.value.toString())
+            };
+            2 ->{
+                this.write(2)
+                this.add(data.value.toString())
+            };
+            3 ->{
+                this.write(3)
+                val amount=VarInt(data.value as Long).encodeInOldWay()
+                this.write(amount)
+            };
+        }
+        return this
     }
 
     fun parseRegId(regId: String): WaykiRegId? {
@@ -115,3 +146,4 @@ const val cdpHash = "00000000000000000000000000000000000000000000000000000000000
 
 data class WaykiRegId(var regHeight: Long, var regIndex: Long)
 data class OperVoteFund(var voteType: Int, var pubKey: ByteArray, var voteValue: Long)
+data class CAsset(var symbol: String, var ownerAddress: String, var name: String, var totalSupply: Long, var minTable: Boolean)

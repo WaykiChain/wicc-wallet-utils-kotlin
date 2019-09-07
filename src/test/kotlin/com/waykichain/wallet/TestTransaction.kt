@@ -156,19 +156,17 @@ class TestTransaction {
     @Test
     fun testGenerateUCoinContractTx() {
         val wallet = LegacyWallet()
-        val netParams = WaykiMainNetParams.instance
+        val netParams = WaykiTestNetParams.instance
 
-        val srcPrivKeyWiF = "PhKmEa3M6BJERHdStG7nApRwURDnN3W48rhrnnM1fVKbLs3jaYd6"
+        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         logger.info(LegacyAddress.fromPubKeyHash(netParams, srcKey.pubKeyHash).toString())
 
-        val value = 100000000L //锁仓一个WICC
-        val header = "f202" //需要调用的方法
-        val appid = "450687-1"//合约锁仓90天合约的ID
-        val contract = header + ContractUtil.to2HexString4byte(value) + "00000000"
-        logger.info(contract)
-        val contractByte = ContractUtil.hexString2binaryString(contract)
-        val txParams = WaykiUCoinContractTxParams(srcKey.publicKeyAsHex, 494454, 100000, value, "926152-1",
+        val value = 100000000L
+        val appid = "450687-1"
+        val contractByte = ContractUtil.hexString2binaryString("f001")
+        val txParams = WaykiUCoinContractTxParams(srcKey.publicKeyAsHex, 494454,
+                100000, value, "926152-1",
                 appid, contractByte, CoinType.WICC.type,CoinType.WUSD.type)
         txParams.signTx(srcKey)
         val tx = wallet.createUCoinContractInvokeRaw(txParams)
@@ -423,5 +421,50 @@ class TestTransaction {
         logger.info(tx)
     }
 
+    /*
+    * 资产发布
+    * Asset release
+    * */
+    @Test
+    fun testCAssetIssueTx(){
+        val nValidHeight = 571812L
+        val fee = 10000L
+        val userId = "0-1" //wallet regid
+        val feeSymbol = CoinType.WICC.type  //fee symbol
+        val wallet = LegacyWallet()
+        val netParams = WaykiTestNetParams.instance
+        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
+        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
+        //if no wallet regid ,you can use wallet public key
+        val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
+        val asset=CAsset("SimonTest","wbCG5rXEbEHQaw1FD9pbK1iUsBobxrbiJM","SimonTest",1000000000000000,true)
+        val txParams = WaykiAssetIssueTxParams(WaykiNetworkType.TEST_NET,nValidHeight,userPubKey, fee, userId,
+                feeSymbol,asset)
+        txParams.signTx(srcKey)
+        val tx = wallet.createAssetIssueRaw(txParams)
+        logger.info(tx)
+    }
+
+    @Test
+    fun testCAssetUpdateTx(){
+        val nValidHeight = 571812L
+        val fee = 10000L
+        val userId = "0-1" //wallet regid
+        val feeSymbol = CoinType.WICC.type  //fee symbol
+        val wallet = LegacyWallet()
+        val netParams = WaykiTestNetParams.instance
+        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
+        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
+        //if no wallet regid ,you can use wallet public key
+        val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
+       // val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,"0-2")
+        //val asset=AssetUpdateData(AssetUpdateType.NAME,"TestCoin")
+        val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L)
+        val txParams = WaykiAssetUpdateTxParams(WaykiNetworkType.TEST_NET,nValidHeight,userPubKey, fee, userId,
+                feeSymbol,"SimonTest",asset)
+        txParams.signTx(srcKey)
+        val tx = wallet.createAssetUpdateRaw(txParams)
+        logger.info(tx)
+    }
 
 }
