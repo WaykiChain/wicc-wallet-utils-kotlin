@@ -35,7 +35,7 @@ class WaykiAssetIssueTxParams(val networkType: WaykiNetworkType, nValidHeight: L
                 .writeUserId(srcRegId,publicKey)
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
-                .addAsset(asset,networkType)
+                .addAsset(asset)
 
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
         val hashStr = Utils.HEX.encode(hash)
@@ -63,7 +63,7 @@ class WaykiAssetIssueTxParams(val networkType: WaykiNetworkType, nValidHeight: L
                 .writeUserId(srcRegId,publicKey)
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
-                .addAsset(asset,networkType)
+                .addAsset(asset)
                 .add(VarInt(sigSize.toLong()).encodeInOldWay())
                 .add(signature)
 

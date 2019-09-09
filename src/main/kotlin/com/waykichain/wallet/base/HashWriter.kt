@@ -86,14 +86,11 @@ class HashWriter : ByteArrayOutputStream() {
         return this
     }
 
-    fun addAsset(asset: CAsset, networkType: WaykiNetworkType): HashWriter {
-        val netParams = if (networkType == WaykiNetworkType.MAIN_NET) WaykiMainNetParams.instance else WaykiTestNetParams.instance
-        val legacyAddress = LegacyAddress.fromBase58(netParams, asset.ownerAddress)
+    fun addAsset(asset: CAsset): HashWriter {
         val buff = HashWriter()
         val mintable = if (asset.minTable) 1 else 0
         buff.add(asset.symbol)
-        buff.write(VarInt(legacyAddress.hash.size.toLong()).encodeInOldWay())
-        buff.write(legacyAddress.hash)
+        buff.writeRegId(asset.ownerRegid)
         buff.add(asset.name)
         buff.write(mintable)
         buff.write(VarInt(asset.totalSupply).encodeInOldWay())
@@ -146,4 +143,4 @@ const val cdpHash = "00000000000000000000000000000000000000000000000000000000000
 
 data class WaykiRegId(var regHeight: Long, var regIndex: Long)
 data class OperVoteFund(var voteType: Int, var pubKey: ByteArray, var voteValue: Long)
-data class CAsset(var symbol: String, var ownerAddress: String, var name: String, var totalSupply: Long, var minTable: Boolean)
+data class CAsset(var symbol: String, var ownerRegid: String, var name: String, var totalSupply: Long, var minTable: Boolean)

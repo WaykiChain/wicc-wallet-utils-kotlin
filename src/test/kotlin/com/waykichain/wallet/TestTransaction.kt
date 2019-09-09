@@ -437,7 +437,7 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-        val asset=CAsset("SimonTest","wbCG5rXEbEHQaw1FD9pbK1iUsBobxrbiJM","SimonTest",1000000000000000,true)
+        val asset=CAsset("SimonTest","0-1","SimonTest",1000000000000000,true)
         val txParams = WaykiAssetIssueTxParams(WaykiNetworkType.TEST_NET,nValidHeight,userPubKey, fee, userId,
                 feeSymbol,asset)
         txParams.signTx(srcKey)
