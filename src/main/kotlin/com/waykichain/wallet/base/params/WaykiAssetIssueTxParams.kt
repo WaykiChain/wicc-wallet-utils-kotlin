@@ -19,12 +19,14 @@ package com.waykichain.wallet.base.params
 import com.waykichain.wallet.base.*
 import com.waykichain.wallet.base.types.encodeInOldWay
 import org.bitcoinj.core.*
+import org.waykichain.wallet.util.Messages
+import org.waykichain.wallet.util.TokenException
 
 /**
  * srcRegId: (regHeight-regIndex)
  * destAddr: 20-byte PubKeyHash
  */
-class WaykiAssetIssueTxParams(val networkType: WaykiNetworkType, nValidHeight: Long,pubKey:String, fees: Long,val srcRegId: String, feeSymbol: String,val asset:CAsset):
+class WaykiAssetIssueTxParams(nValidHeight: Long,pubKey:String, fees: Long,val srcRegId: String, feeSymbol: String,val asset:CAsset):
         BaseSignTxParams(feeSymbol,pubKey, null, nValidHeight, fees, WaykiTxType.ASSET_ISSUE_TX, 1) {
     override fun getSignatureHash(): ByteArray {
         val publicKey= Utils.HEX.decode(userPubKey)
@@ -54,6 +56,8 @@ class WaykiAssetIssueTxParams(val networkType: WaykiNetworkType, nValidHeight: L
 
     override fun serializeTx(): String {
         assert(signature != null)
+        val symbolMatch=asset.symbol.matches(SYMBOL_MATCH.toRegex())
+        if(!symbolMatch) throw TokenException(Messages.SYMBOLNOTMATCH)
         val sigSize = signature!!.size
         val publicKey=Utils.HEX.decode(userPubKey)
         val ss = HashWriter()

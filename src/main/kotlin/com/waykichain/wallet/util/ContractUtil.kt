@@ -109,3 +109,22 @@ fun Long.longToBytes(): ByteArray {
     buffer.putLong(0, this)
     return buffer.array()
 }
+
+fun Long.unLongToShortByteArray(littleEndian:Boolean):ByteArray{
+    val bytes = ByteArray(2)
+    for (i in 0..1) {
+        val i1 = (if (littleEndian) i else 1 - i) shl 3
+        bytes[i] = (this shr i1 and 0xff).toByte()
+    }
+    return bytes
+}
+
+fun Long.unLongToIntByteArray(littleEndian:Boolean) :ByteArray{
+    val bytes = ByteArray(4)
+    for (i in 0 until 4) {
+        val i1 = (if(littleEndian)  i else (3 - i)) shl 3
+        bytes[i] =  ((this shr i1) and 0xff).toByte()
+    }
+    return bytes;
+}
+

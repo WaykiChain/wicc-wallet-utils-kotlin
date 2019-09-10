@@ -109,4 +109,8 @@ interface LegacyWalletInterface {
     fun createAssetUpdateRaw(params: WaykiAssetUpdateTxParams): String {
         return  params.serializeTx()
     }
+
+    fun createDeployContractRaw(params: WaykiDeployContractTxParams): String {
+        return  params.serializeTx()
+    }
 }

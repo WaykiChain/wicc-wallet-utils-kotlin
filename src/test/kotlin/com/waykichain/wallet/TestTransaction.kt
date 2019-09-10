@@ -10,6 +10,7 @@ import org.bitcoinj.core.LegacyAddress
 import org.bitcoinj.core.Utils
 import org.junit.Test
 import org.slf4j.LoggerFactory
+import java.io.File
 
 
 class TestTransaction {
@@ -424,6 +425,8 @@ class TestTransaction {
     /*
     * 资产发布
     * Asset release
+    * symbol 大写字母A-Z 1-7 位 [A_Z]
+    * Symbol Capital letter A-Z 1-7 digits [A_Z]
     * */
     @Test
     fun testCAssetIssueTx(){
@@ -437,14 +440,22 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-        val asset=CAsset("SimonTest","0-1","SimonTest",1000000000000000,true)
-        val txParams = WaykiAssetIssueTxParams(WaykiNetworkType.TEST_NET,nValidHeight,userPubKey, fee, userId,
+
+        val symbol="STOKEN"
+        val asset=CAsset(symbol,"0-1","SS TOKEN",1000000000000000,true)
+        val txParams = WaykiAssetIssueTxParams(nValidHeight,userPubKey, fee, userId,
                 feeSymbol,asset)
         txParams.signTx(srcKey)
         val tx = wallet.createAssetIssueRaw(txParams)
         logger.info(tx)
     }
 
+    /*
+   * 资产发布
+   * Asset Update
+   * asset_symbol 大写字母A-Z 1-7 位 [A_Z]
+   * Symbol Capital letter A-Z 1-7 digits [A_Z]
+   * */
     @Test
     fun testCAssetUpdateTx(){
         val nValidHeight = 571812L
@@ -457,13 +468,36 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-       // val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,"0-2")
-        //val asset=AssetUpdateData(AssetUpdateType.NAME,"TestCoin")
-        val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L)
-        val txParams = WaykiAssetUpdateTxParams(WaykiNetworkType.TEST_NET,nValidHeight,userPubKey, fee, userId,
-                feeSymbol,"SimonTest",asset)
+       // val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,"0-2")  //update asset owner
+        //val asset=AssetUpdateData(AssetUpdateType.NAME,"TestCoin") // update asset name
+        val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L) //update asset number
+        val txParams = WaykiAssetUpdateTxParams(nValidHeight,userPubKey, fee, userId,
+                feeSymbol,"STOKEN",asset)
         txParams.signTx(srcKey)
         val tx = wallet.createAssetUpdateRaw(txParams)
+        logger.info(tx)
+    }
+
+
+    /*
+   * 合约发布交易
+   * Deploy Contract transaction sample
+   * fee Minimum 1.1 wicc
+   * */
+    @Test
+    fun testDeployContractTx() {
+        val wallet = LegacyWallet()
+        val netParams = WaykiTestNetParams.instance
+        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
+        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
+        val regId = "0-1"
+        val file=File("hello.lua")
+        val contractByte = file.readBytes() ;
+        val description = "description script"
+        val txParams = WaykiDeployContractTxParams( 663832, 1100000000, regId,
+                contractByte,  description)
+        txParams.signTx(srcKey)
+        val tx = wallet.createDeployContractRaw(txParams)
         logger.info(tx)
     }
 

@@ -19,21 +19,23 @@ package com.waykichain.wallet.base.params
 import com.waykichain.wallet.base.*
 import com.waykichain.wallet.base.types.encodeInOldWay
 import org.bitcoinj.core.*
+import org.waykichain.wallet.util.Messages
+import org.waykichain.wallet.util.TokenException
 
 /**
  * srcRegId: (regHeight-regIndex)
  * destAddr: 20-byte PubKeyHash
  */
-class WaykiAssetUpdateTxParams(val networkType: WaykiNetworkType, nValidHeight: Long,pubKey:String, fees: Long,val srcRegId: String, feeSymbol: String,
-                               val asset_symbol: String,val asset:AssetUpdateData):
-        BaseSignTxParams(feeSymbol,pubKey, null, nValidHeight, fees, WaykiTxType.ASSET_UPDATE_TX, 1) {
+class WaykiAssetUpdateTxParams(nValidHeight: Long, pubKey: String, fees: Long, val srcRegId: String, feeSymbol: String,
+                               val asset_symbol: String, val asset: AssetUpdateData) :
+        BaseSignTxParams(feeSymbol, pubKey, null, nValidHeight, fees, WaykiTxType.ASSET_UPDATE_TX, 1) {
     override fun getSignatureHash(): ByteArray {
-        val publicKey= Utils.HEX.decode(userPubKey)
+        val publicKey = Utils.HEX.decode(userPubKey)
         val ss = HashWriter()
         ss.add(VarInt(nVersion).encodeInOldWay())
                 .add(nTxType.value)
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .writeUserId(srcRegId,publicKey)
+                .writeUserId(srcRegId, publicKey)
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(asset_symbol)
@@ -56,13 +58,15 @@ class WaykiAssetUpdateTxParams(val networkType: WaykiNetworkType, nValidHeight: 
 
     override fun serializeTx(): String {
         assert(signature != null)
+        val symbolMatch = asset_symbol.matches(SYMBOL_MATCH.toRegex())
+        if (!symbolMatch) throw TokenException(Messages.SYMBOLNOTMATCH)
         val sigSize = signature!!.size
-        val publicKey=Utils.HEX.decode(userPubKey)
+        val publicKey = Utils.HEX.decode(userPubKey)
         val ss = HashWriter()
         ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())
                 .add(VarInt(nVersion).encodeInOldWay())
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .writeUserId(srcRegId,publicKey)
+                .writeUserId(srcRegId, publicKey)
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(asset_symbol)

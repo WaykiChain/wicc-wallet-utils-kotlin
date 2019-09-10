@@ -90,4 +90,7 @@ class LegacyWallet: LegacyWalletInterface {
         return  params.serializeTx()
     }
 
+    override fun createDeployContractRaw(params: WaykiDeployContractTxParams): String {
+        return  params.serializeTx()
+    }
 }
