@@ -196,7 +196,7 @@ Any user holding a WICC can send a WICC to the CDP (Collaterized Debt Position) 
 ```
 - [CDP清算交易 (Sign CDP Liquidate Transaction)](https://github.com/WaykiChain/wicc-wallet-utils-kotlin/blob/master/src/test/kotlin/com/waykichain/wallet/TestTransaction.kt)
 ```kotlin
-         val nValidHeight = 283308L
+        val nValidHeight = 283308L
         val fee = 100000L
         val userId = "0-1" //wallet regid
         val cdpTxid = "009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
