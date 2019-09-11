@@ -92,4 +92,25 @@ interface LegacyWalletInterface {
         return  params.serializeTx()
     }
 
+    /**
+     * offline creation of UCoin contract Invoke
+     */
+     fun createUCoinContractInvokeRaw(params: WaykiUCoinContractTxParams): String {
+        return  params.serializeTx()
+    }
+
+    /*
+    *
+    * */
+     fun createAssetIssueRaw(params: WaykiAssetIssueTxParams): String {
+        return  params.serializeTx()
+    }
+
+    fun createAssetUpdateRaw(params: WaykiAssetUpdateTxParams): String {
+        return  params.serializeTx()
+    }
+
+    fun createDeployContractRaw(params: WaykiDeployContractTxParams): String {
+        return  params.serializeTx()
+    }
 }

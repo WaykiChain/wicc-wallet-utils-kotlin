@@ -24,17 +24,22 @@ enum class WaykiTxType(val value: Int) {
     LCONTRACT_DEPLOY_TX(5),
     TX_DELEGATE(6),
 
+    ASSET_ISSUE_TX(9),    //!< a user issues onchain asset
+    ASSET_UPDATE_TX(10),   //!< a user update onchain asset
+
     TX_UCOIN_TRANSFER(11),
+    UCONTRACT_DEPLOY_TX(14),   //!< universal VM contract deployment
+    UCONTRACT_INVOKE_TX(15),   //!< universal VM contract invocation
 
     TX_CDPSTAKE(21),
     TX_CDPREDEEM(22),
     TX_CDPLIQUIDATE(23),
 
-    DEX_CANCEL_ORDER_TX      ( 88 ),//!< dex cancel order Tx
-    DEX_BUY_LIMIT_ORDER_TX   ( 84), //!< dex buy limit price order Tx
-    DEX_SELL_LIMIT_ORDER_TX  ( 85 ),//!< dex sell limit price order Tx
-    DEX_BUY_MARKET_ORDER_TX  ( 86 ),//!< dex buy market price order Tx
-    DEX_SELL_MARKET_ORDER_TX ( 87), //!< dex sell market price order Tx
+    DEX_CANCEL_ORDER_TX(88),//!< dex cancel order Tx
+    DEX_BUY_LIMIT_ORDER_TX(84), //!< dex buy limit price order Tx
+    DEX_SELL_LIMIT_ORDER_TX(85),//!< dex sell limit price order Tx
+    DEX_BUY_MARKET_ORDER_TX(86),//!< dex buy market price order Tx
+    DEX_SELL_MARKET_ORDER_TX(87), //!< dex sell market price order Tx
 }
 
 enum class CoinType(val type: String) {
@@ -59,3 +64,13 @@ enum class VoteOperType(val value: Int) {
     ADD_FUND(1),        //投票
     MINUS_FUND(2),    //撤销投票
 }
+
+enum class AssetUpdateType(val type: Int) {
+    UPDATE_NONE(0),
+    OWNER_UID(1),
+    NAME(2),
+    MINT_AMOUNT(3)
+}
+
+data class AssetUpdateData(var enumAsset: AssetUpdateType, var value: Any)
+

@@ -23,6 +23,7 @@ import com.waykichain.wallet.base.params.WaykiMainNetParams
 import com.waykichain.wallet.base.params.WaykiTestNetParams
 import com.waykichain.wallet.base.types.encodeInOldWay
 import com.waykichain.wallet.impl.LegacyWallet
+import com.waykichain.wallet.util.ContractUtil
 import org.bitcoinj.core.*
 import org.bitcoinj.wallet.DeterministicKeyChain
 import org.bitcoinj.wallet.DeterministicSeed
@@ -149,6 +150,6 @@ class TestWallet {
 //        ss.write(10000.toBigInteger().toByteArray())
         val bytes = ss.toByteArray()
         val hexStr =  Utils.HEX.encode(bytes)
-        System.out.println(hexStr)
+       // System.out.println(hexStr)
     }
 }
