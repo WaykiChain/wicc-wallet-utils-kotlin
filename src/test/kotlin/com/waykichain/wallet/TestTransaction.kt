@@ -442,7 +442,8 @@ class TestTransaction {
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
 
         val symbol="STOKEN"
-        val asset=CAsset(symbol,"0-1","SS TOKEN",1000000000000000,true)
+        val ownerAddress = LegacyAddress.fromBase58(netParams, "wLKf2NqwtHk3BfzK5wMDfbKYN1SC3weyR4")
+        val asset=CAsset(symbol,ownerAddress,"SS TOKEN",1000000000000000,true)
         val txParams = WaykiAssetIssueTxParams(nValidHeight,userPubKey, fee, userId,
                 feeSymbol,asset)
         txParams.signTx(srcKey)
@@ -468,9 +469,13 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-       // val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,"0-2")  //update asset owner
+
+        val ownerAddress = LegacyAddress.fromBase58(netParams, "wLKf2NqwtHk3BfzK5wMDfbKYN1SC3weyR4")
+        val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,ownerAddress)  //update asset owner
+
         //val asset=AssetUpdateData(AssetUpdateType.NAME,"TestCoin") // update asset name
-        val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L) //update asset number
+
+       // val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L) //update asset number
         val txParams = WaykiAssetUpdateTxParams(nValidHeight,userPubKey, fee, userId,
                 feeSymbol,"STOKEN",asset)
         txParams.signTx(srcKey)

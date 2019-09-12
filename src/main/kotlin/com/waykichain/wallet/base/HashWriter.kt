@@ -20,8 +20,11 @@ import com.waykichain.wallet.base.types.encodeInOldWay
 import com.waykichain.wallet.util.longToBytes
 import com.waykichain.wallet.util.unLongToIntByteArray
 import com.waykichain.wallet.util.unLongToShortByteArray
+import org.bitcoinj.core.Base58
+import org.bitcoinj.core.LegacyAddress
 import org.bitcoinj.core.VarInt
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 class HashWriter : ByteArrayOutputStream() {
 
@@ -87,7 +90,8 @@ class HashWriter : ByteArrayOutputStream() {
         val buff = HashWriter()
         val mintable = if (asset.minTable) 1 else 0
         buff.add(asset.symbol)
-        buff.writeRegId(asset.ownerRegid)
+        buff.writeCompactSize(asset.ownerAddress.hash.size.toLong())
+        buff.write(asset.ownerAddress.hash)
         buff.add(asset.name)
         buff.write(mintable)
         buff.write(VarInt(asset.totalSupply).encodeInOldWay())
@@ -99,7 +103,9 @@ class HashWriter : ByteArrayOutputStream() {
         when (data.enumAsset.type) {
             1 -> {
                 this.write(1)
-                this.parseRegId(data.value.toString())
+                val addrBytes=(data.value as LegacyAddress).hash
+                this.writeCompactSize(addrBytes.size.toLong())
+                this.write(addrBytes)
             };
             2 -> {
                 this.write(2)
@@ -177,4 +183,4 @@ const val SYMBOL_MATCH="[A-Z]{1,7}$"
 
 data class WaykiRegId(var regHeight: Long, var regIndex: Long)
 data class OperVoteFund(var voteType: Int, var pubKey: ByteArray, var voteValue: Long)
-data class CAsset(var symbol: String, var ownerRegid: String, var name: String, var totalSupply: Long, var minTable: Boolean)
+data class CAsset(var symbol: String, var ownerAddress: LegacyAddress, var name: String, var totalSupply: Long, var minTable: Boolean)

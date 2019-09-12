@@ -26,7 +26,7 @@ import org.waykichain.wallet.util.TokenException
  * srcRegId: (regHeight-regIndex)
  * destAddr: 20-byte PubKeyHash
  */
-class WaykiAssetIssueTxParams(nValidHeight: Long,pubKey:String, fees: Long,val srcRegId: String, feeSymbol: String,val asset:CAsset):
+class WaykiAssetIssueTxParams( nValidHeight: Long,pubKey:String, fees: Long,val srcRegId: String, feeSymbol: String,val asset:CAsset):
         BaseSignTxParams(feeSymbol,pubKey, null, nValidHeight, fees, WaykiTxType.ASSET_ISSUE_TX, 1) {
     override fun getSignatureHash(): ByteArray {
         val publicKey= Utils.HEX.decode(userPubKey)
