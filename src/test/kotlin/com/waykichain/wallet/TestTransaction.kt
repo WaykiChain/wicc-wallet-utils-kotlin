@@ -241,7 +241,7 @@ class TestTransaction {
         val cdpTxid = "009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val sCoinsToRepay = 50000000L  //repay amount
-        val redeemSymbol = CoinType.WICC.type  //redeem symbol
+        val redeemSymbol = CoinType.WICC.type  //redeem asset symbol
         val bCoinsToRedeem = 100000000L   //redeem amount
 
         val wallet = LegacyWallet()
@@ -270,7 +270,7 @@ class TestTransaction {
         val cdpTxid = "009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val sCoinsToLiquidate = 10000000L  //Liquidate amount
-        val liquidateAssetSymbol = CoinType.WICC.type  //fee symbol
+        val liquidateAssetSymbol = CoinType.WICC.type  //Asset symbol
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
