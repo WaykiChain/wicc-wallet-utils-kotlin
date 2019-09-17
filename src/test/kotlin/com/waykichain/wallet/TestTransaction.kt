@@ -101,7 +101,7 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val pubKey = srcKey.publicKeyAsHex  //user publickey hex string
         val nValidHeight = 727745L
-        val coinSymbol = "SSSSSSS"//CoinType.WICC.type  //coind symbol
+        val coinSymbol = CoinType.WICC.type  //coind symbol
         val coinAmount = 10000L    //transfer amount
         val feeSymbol = CoinType.WICC.type
         val fees = 100000L
