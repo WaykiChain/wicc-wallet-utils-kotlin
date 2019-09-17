@@ -46,7 +46,7 @@ public class TestTx {
         WaykiTestNetParams netParams = WaykiTestNetParams.Companion.getInstance(); // Test net params
         String srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13";// private key
         ECKey srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).getKey();
-        String pubKey = srcKey.getPrivateKeyAsHex(); //wallet public key
+        String pubKey = srcKey.getPublicKeyAsHex(); //wallet public key
         String destAddr = "wWTStcDL4gma6kPziyHhFGAP6xUzKpA5if";//dest address
         String memo="test transfer";//transfer memo
         WaykiCommonTxParams txParams =new WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 34550, pubKey,10000,
