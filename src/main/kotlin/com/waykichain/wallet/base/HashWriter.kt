@@ -44,6 +44,15 @@ class HashWriter : ByteArrayOutputStream() {
         return this
     }
 
+    fun addCdpAssets(map:Map<String,Long>):HashWriter{
+        map.forEach{
+            item->
+            this.add(item.key)
+            this.add(VarInt(item.value).encodeInOldWay())
+        }
+        return this
+    }
+
     /** Vote: "$voteType-$pubKey-$votes" */
     fun add(operVoteFund: Array<OperVoteFund>): HashWriter {
         this.write(VarInt(operVoteFund.size.toLong()).encodeInOldWay())

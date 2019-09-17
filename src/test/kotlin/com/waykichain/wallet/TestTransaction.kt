@@ -100,13 +100,13 @@ class TestTransaction {
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val pubKey = srcKey.publicKeyAsHex  //user publickey hex string
-        val nValidHeight = 440601L
-        val coinSymbol = CoinType.WICC.type  //coind symbol
-        val coinAmount = 100000000L    //transfer amount
+        val nValidHeight = 727745L
+        val coinSymbol = "SSSSSSS"//CoinType.WICC.type  //coind symbol
+        val coinAmount = 10000L    //transfer amount
         val feeSymbol = CoinType.WICC.type
         val fees = 100000L
-        val regid = ""
-        val destAddr = "wWXYkAhNdNdv5LBEavQB1aUJeYqApNc2YW"
+        val regid = "0-1"
+        val destAddr = "wNDue1jHcgRSioSDL4o1AzXz3D72gCMkP6"
         val memo = "转账"
         val txParams = WaykiUCoinTxParams(WaykiNetworkType.TEST_NET, nValidHeight, regid, pubKey, destAddr, coinSymbol, coinAmount, feeSymbol, fees, memo)
         txParams.signTx(srcKey)
@@ -166,8 +166,8 @@ class TestTransaction {
         val value = 100000000L
         val appid = "450687-1"
         val contractByte = ContractUtil.hexString2binaryString("f001")
-        val txParams = WaykiUCoinContractTxParams(srcKey.publicKeyAsHex, 494454,
-                100000, value, "926152-1",
+        val txParams = WaykiUCoinContractTxParams(srcKey.publicKeyAsHex, 727702,
+                100000, value, "0-1",
                 appid, contractByte, CoinType.WICC.type,CoinType.WUSD.type)
         txParams.signTx(srcKey)
         val tx = wallet.createUCoinContractInvokeRaw(txParams)
@@ -221,7 +221,8 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-        val txParams = WaykiCdpStakeTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, bCoinSymbol, sCoinSymbol, bCoinToStake, sCoinToMint)
+        val map= mapOf<String,Long>(Pair(bCoinSymbol,bCoinToStake));
+        val txParams = WaykiCdpStakeTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, map ,sCoinSymbol,sCoinToMint)
         txParams.signTx(srcKey)
         val tx = wallet.createCdpStakeTransactionRaw(txParams)
         logger.info(tx)
@@ -240,6 +241,7 @@ class TestTransaction {
         val cdpTxid = "009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val sCoinsToRepay = 50000000L  //repay amount
+        val redeemSymbol = CoinType.WICC.type  //redeem symbol
         val bCoinsToRedeem = 100000000L   //redeem amount
 
         val wallet = LegacyWallet()
@@ -248,7 +250,8 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-        val txParams = WaykiCdpRedeemTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, sCoinsToRepay, bCoinsToRedeem)
+        val map= mapOf<String,Long>(Pair(redeemSymbol,bCoinsToRedeem));
+        val txParams = WaykiCdpRedeemTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, sCoinsToRepay, map)
         txParams.signTx(srcKey)
         val tx = wallet.createCdpRedeemTransactionRaw(txParams)
         logger.info(tx)
@@ -267,14 +270,14 @@ class TestTransaction {
         val cdpTxid = "009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val sCoinsToLiquidate = 10000000L  //Liquidate amount
-
+        val liquidateAssetSymbol = CoinType.WICC.type  //fee symbol
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-        val txParams = WaykiCdpLiquidateTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, sCoinsToLiquidate)
+        val txParams = WaykiCdpLiquidateTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, sCoinsToLiquidate,liquidateAssetSymbol)
         txParams.signTx(srcKey)
         val tx = wallet.createCdpLiquidateTransactionRaw(txParams)
         logger.info(tx)
@@ -430,7 +433,7 @@ class TestTransaction {
     * */
     @Test
     fun testCAssetIssueTx(){
-        val nValidHeight = 571812L
+        val nValidHeight = 713621L
         val fee = 10000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
@@ -441,7 +444,7 @@ class TestTransaction {
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
 
-        val symbol="STOKEN"
+        val symbol="STOKENF"
         val ownerAddress = LegacyAddress.fromBase58(netParams, "wLKf2NqwtHk3BfzK5wMDfbKYN1SC3weyR4")
         val asset=CAsset(symbol,ownerAddress,"SS TOKEN",1000000000000000,true)
         val txParams = WaykiAssetIssueTxParams(nValidHeight,userPubKey, fee, userId,
@@ -471,11 +474,11 @@ class TestTransaction {
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
 
         val ownerAddress = LegacyAddress.fromBase58(netParams, "wLKf2NqwtHk3BfzK5wMDfbKYN1SC3weyR4")
-        val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,ownerAddress)  //update asset owner
+       // val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,ownerAddress)  //update asset owner
 
-        //val asset=AssetUpdateData(AssetUpdateType.NAME,"TestCoin") // update asset name
+       // val asset=AssetUpdateData(AssetUpdateType.NAME,"TestCoin") // update asset name
 
-       // val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L) //update asset number
+       val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L) //update asset number
         val txParams = WaykiAssetUpdateTxParams(nValidHeight,userPubKey, fee, userId,
                 feeSymbol,"STOKEN",asset)
         txParams.signTx(srcKey)
@@ -499,7 +502,7 @@ class TestTransaction {
         val file=File("hello.lua")
         val contractByte = file.readBytes() ;
         val description = "description script"
-        val txParams = WaykiDeployContractTxParams( 663832, 1100000000, regId,
+        val txParams = WaykiDeployContractTxParams( 723575, 1100000000, regId,
                 contractByte,  description)
         txParams.signTx(srcKey)
         val tx = wallet.createDeployContractRaw(txParams)

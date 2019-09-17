@@ -16,8 +16,8 @@ import org.bitcoinj.core.VarInt
  */
 class WaykiCdpStakeTxParams(nValidHeight: Long, fees: Long = 1000L,
                             val userId: String, userPubKey: String, val cdpTxid: String? = cdpHash,
-                            feeSymbol: String, val bCoinSymbol: String, val sCoinSymbol: String,
-                            val bCoinToStake: Long, val sCoinToMint: Long) :
+                            feeSymbol: String, val assetMap:Map<String,Long>,val sCoinSymbol: String,
+                           val sCoinToMint: Long) :
         BaseSignTxParams(feeSymbol, userPubKey, null, nValidHeight, fees, WaykiTxType.TX_CDPSTAKE, 1) {
 
     override fun getSignatureHash(): ByteArray {
@@ -31,9 +31,9 @@ class WaykiCdpStakeTxParams(nValidHeight: Long, fees: Long = 1000L,
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(cdpTxHex)
-                .add(bCoinSymbol)
+                .add(VarInt(assetMap?.size.toLong()).encodeInOldWay())
+                .addCdpAssets(assetMap)
                 .add(sCoinSymbol)
-                .add(VarInt(bCoinToStake).encodeInOldWay())
                 .add(VarInt(sCoinToMint).encodeInOldWay())
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
         val hashStr = Utils.HEX.encode(hash)
@@ -62,9 +62,9 @@ class WaykiCdpStakeTxParams(nValidHeight: Long, fees: Long = 1000L,
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(cdpTxHex)
-                .add(bCoinSymbol)
+                .add(VarInt(assetMap.size.toLong()).encodeInOldWay())
+                .addCdpAssets(assetMap)
                 .add(sCoinSymbol)
-                .add(VarInt(bCoinToStake).encodeInOldWay())
                 .add(VarInt(sCoinToMint).encodeInOldWay())
                 .add(VarInt(sigSize.toLong()).encodeInOldWay())
                 .add(signature)
