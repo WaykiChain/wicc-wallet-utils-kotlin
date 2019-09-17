@@ -2,10 +2,7 @@ package com.waykichain.wallet;
 
 import com.waykichain.wallet.base.CoinType;
 import com.waykichain.wallet.base.WaykiNetworkType;
-import com.waykichain.wallet.base.params.WaykiCommonTxParams;
-import com.waykichain.wallet.base.params.WaykiTestNetParams;
-import com.waykichain.wallet.base.params.WaykiUCoinContractTxParams;
-import com.waykichain.wallet.base.params.WaykiUCoinTxParams;
+import com.waykichain.wallet.base.params.*;
 import com.waykichain.wallet.impl.LegacyWallet;
 import com.waykichain.wallet.util.ContractUtil;
 import org.bitcoinj.core.DumpedPrivateKey;
@@ -21,17 +18,26 @@ import java.util.List;
 
 public class TestTx {
     private Logger logger = LoggerFactory.getLogger(TestTx.class);
+
+    /*
+    * 生成助记词
+    * generate Mnemonic
+    * */
     @Test
     public void generateMnemonic(){
       List<String> words=MnemonicUtil.Companion.randomMnemonicCodes();
       logger.info(words.toString());
     }
 
+    /*
+    * 生成钱包
+    * generate wicc Wallet
+    * */
     @Test
     public void generateWalletFromMnemonic(){
         String words = "vote despair mind rescue crumble choice garden elite venture cattle oxygen voyage";
         WaykiTestNetParams networkParameters = WaykiTestNetParams.Companion.getInstance(); //generate Testnet Address From Mnemonic
-        //val networkParameters = WaykiMainNetParams.instance //generate Mainnet Address From Mnemonic
+       // WaykiMainNetParams networkParameters = WaykiMainNetParams.Companion.getInstance(); //generate Mainnet Address From Mnemonic
         BIP44Util.WaykiWallet wallet= BIP44Util.Companion.generateWaykiWallet(words,networkParameters);
         logger.info("PrivateKey:"+wallet.getPrivateKey()+"\n"+"Address:"+wallet.getAddress()+"\n"+"PublicKeyKey:"+wallet.getPubKey()+"\n");
     }
