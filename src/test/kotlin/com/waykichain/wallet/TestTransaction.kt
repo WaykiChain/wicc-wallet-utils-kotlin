@@ -11,6 +11,7 @@ import org.bitcoinj.core.Utils
 import org.junit.Test
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.util.*
 
 
 class TestTransaction {
@@ -108,7 +109,11 @@ class TestTransaction {
         val regid = "0-1"
         val destAddr = "wNDue1jHcgRSioSDL4o1AzXz3D72gCMkP6"
         val memo = "转账"
-        val txParams = WaykiUCoinTxParams(WaykiNetworkType.TEST_NET, nValidHeight, regid, pubKey, destAddr, coinSymbol, coinAmount, feeSymbol, fees, memo)
+
+        val dest1=UCoinDest(LegacyAddress.fromBase58(netParams,destAddr),coinSymbol,coinAmount)
+        val dests= arrayListOf<UCoinDest>(dest1)
+
+        val txParams = WaykiUCoinTxParams(nValidHeight, regid, pubKey, dests.toList() , feeSymbol, fees, memo)
         txParams.signTx(srcKey)
         val tx = wallet.createUCoinTransactionRaw(txParams)
         logger.info("$tx")

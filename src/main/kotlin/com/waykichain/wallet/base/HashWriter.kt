@@ -185,6 +185,18 @@ class HashWriter : ByteArrayOutputStream() {
             else -> true
         }
     }
+
+    fun addUCoinDestAddr(dests:List<UCoinDest>):HashWriter{
+        this.write(VarInt(dests.size.toLong()).encodeInOldWay())
+        for (dest in dests) {
+            val aa=dest.destAddress.hash
+            this.write(VarInt(aa.size.toLong()).encodeInOldWay())
+            this.write(dest.destAddress.hash)
+            this.add(dest.coinSymbol)
+            this.write(VarInt(dest.transferAmount).encodeInOldWay())
+        }
+        return this
+    }
 }
 
 const val cdpHash = "0000000000000000000000000000000000000000000000000000000000000000"
@@ -192,4 +204,5 @@ const val SYMBOL_MATCH="[A-Z]{1,7}$"
 
 data class WaykiRegId(var regHeight: Long, var regIndex: Long)
 data class OperVoteFund(var voteType: Int, var pubKey: ByteArray, var voteValue: Long)
+data class UCoinDest(var destAddress: LegacyAddress, var coinSymbol: String, var transferAmount: Long)
 data class CAsset(var symbol: String, var ownerAddress: LegacyAddress, var name: String, var totalSupply: Long, var minTable: Boolean)

@@ -1,6 +1,7 @@
 package com.waykichain.wallet;
 
 import com.waykichain.wallet.base.CoinType;
+import com.waykichain.wallet.base.UCoinDest;
 import com.waykichain.wallet.base.WaykiNetworkType;
 import com.waykichain.wallet.base.params.*;
 import com.waykichain.wallet.impl.LegacyWallet;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.waykichain.wallet.util.BIP44Util;
 import org.waykichain.wallet.util.MnemonicUtil;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TestTx {
@@ -75,15 +77,19 @@ public class TestTx {
         String srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13";
          ECKey  srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).getKey();
         String pubKey = srcKey.getPublicKeyAsHex();  //user publickey hex string
-        Long nValidHeight = 727745L;
+        Long nValidHeight = 838L;
         String coinSymbol = CoinType.WICC.getType();  //coind symbol
-        Long coinAmount = 10000L ;   //transfer amount
+        Long coinAmount = 1000000000L ;   //transfer amount
         String feeSymbol = CoinType.WICC.getType();
         Long fees = 100000L;
         String regid = "0-1";
-        String destAddr = "wNDue1jHcgRSioSDL4o1AzXz3D72gCMkP6";
-        String memo = "转账";
-        WaykiUCoinTxParams txParams = new WaykiUCoinTxParams(WaykiNetworkType.TEST_NET, nValidHeight, regid, pubKey, destAddr, coinSymbol, coinAmount, feeSymbol, fees, memo);
+        String destAddr = "wiEEFm8v9UqCucynQWw1sdk57iBf57jjYF";
+        String memo = "";
+
+        UCoinDest dest1=new UCoinDest(LegacyAddress.fromBase58(netParams,destAddr),coinSymbol,coinAmount);
+        List<UCoinDest> dests= Arrays.asList(dest1);
+
+        WaykiUCoinTxParams txParams = new WaykiUCoinTxParams(nValidHeight, regid, pubKey, dests, feeSymbol, fees, memo);
         txParams.signTx(srcKey);
         String tx = wallet.createUCoinTransactionRaw(txParams);
         logger.info("生成交易Hex:"+tx);
