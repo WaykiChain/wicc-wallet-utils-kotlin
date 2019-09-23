@@ -15,13 +15,16 @@ import org.bitcoinj.core.VarInt
  * fee Minimum 0.001 wicc
  */
 class WaykiCdpStakeTxParams(nValidHeight: Long, fees: Long = 1000L,
-                            val userId: String, userPubKey: String, val cdpTxid: String? = cdpHash,
+                            val userId: String, userPubKey: String, var cdpTxid: String,
                             feeSymbol: String, val assetMap:Map<String,Long>,val sCoinSymbol: String,
                            val sCoinToMint: Long) :
         BaseSignTxParams(feeSymbol, userPubKey, null, nValidHeight, fees, WaykiTxType.TX_CDPSTAKE, 1) {
 
     override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()
+       if(cdpTxid.isEmpty()) {
+           cdpTxid=cdpHash
+       }
         val cdpTxHex = Utils.HEX.decode(cdpTxid).reversedArray()
         val pubKey = Utils.HEX.decode(userPubKey)
         ss.add(VarInt(nVersion).encodeInOldWay())
@@ -52,6 +55,9 @@ class WaykiCdpStakeTxParams(nValidHeight: Long, fees: Long = 1000L,
     override fun serializeTx(): String {
         assert(signature != null)
         val sigSize = signature!!.size
+        if(cdpTxid.isEmpty()) {
+            cdpTxid=cdpHash
+        }
         val cdpTxHex = Utils.HEX.decode(cdpTxid).reversedArray()
         val pubKey = Utils.HEX.decode(userPubKey)
         val ss = HashWriter()

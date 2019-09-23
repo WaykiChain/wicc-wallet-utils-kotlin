@@ -101,13 +101,13 @@ class TestTransaction {
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val pubKey = srcKey.publicKeyAsHex  //user publickey hex string
-        val nValidHeight = 727745L
+        val nValidHeight = 26188L
         val coinSymbol = CoinType.WICC.type  //coind symbol
         val coinAmount = 10000L    //transfer amount
         val feeSymbol = CoinType.WICC.type
         val fees = 100000L
         val regid = "0-1"
-        val destAddr = "wNDue1jHcgRSioSDL4o1AzXz3D72gCMkP6"
+        val destAddr = "wLKf2NqwtHk3BfzK5wMDfbKYN1SC3weyR4"
         val memo = "转账"
 
         val dest1=UCoinDest(LegacyAddress.fromBase58(netParams,destAddr),coinSymbol,coinAmount)
@@ -210,11 +210,11 @@ class TestTransaction {
     * */
     @Test
     fun testGenerateCdpStakeTx() {
-        val nValidHeight = 283308L
+        val nValidHeight = 5003L
         val fee = 100000L
         val userId = "0-1" //wallet regid
-        val cdpTxid = "009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
-        val feeSymbol = CoinType.WICC.type  //fee symbol
+        val cdpTxid = ""//"009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
+        val feeSymbol = CoinType.WUSD.type  //fee symbol
         val bCoinSymbol = CoinType.WICC.type //stake coin symbol
         val sCoinSymbol = CoinType.WUSD.type  // get coind symbol
         val bCoinToStake = 100000000L  //stake amount
@@ -240,7 +240,7 @@ class TestTransaction {
    * */
     @Test
     fun testRedeemCdpTx() {
-        val nValidHeight = 283308L
+        val nValidHeight = 29908L
         val fee = 100000L
         val userId = "0-1" //wallet regid
         val cdpTxid = "009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
@@ -438,7 +438,7 @@ class TestTransaction {
     * */
     @Test
     fun testCAssetIssueTx(){
-        val nValidHeight = 713621L
+        val nValidHeight = 30108L
         val fee = 10000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
@@ -449,8 +449,8 @@ class TestTransaction {
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
 
-        val symbol="STOKENF"
-        val ownerAddress = LegacyAddress.fromBase58(netParams, "wLKf2NqwtHk3BfzK5wMDfbKYN1SC3weyR4")
+        val symbol="STOKEND"
+        val ownerAddress = LegacyAddress.fromBase58(netParams, "wNDue1jHcgRSioSDL4o1AzXz3D72gCMkP6")
         val asset=CAsset(symbol,ownerAddress,"SS TOKEN",1000000000000000,true)
         val txParams = WaykiAssetIssueTxParams(nValidHeight,userPubKey, fee, userId,
                 feeSymbol,asset)
@@ -467,7 +467,7 @@ class TestTransaction {
    * */
     @Test
     fun testCAssetUpdateTx(){
-        val nValidHeight = 571812L
+        val nValidHeight = 29908L
         val fee = 10000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
@@ -478,14 +478,14 @@ class TestTransaction {
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
 
-        val ownerAddress = LegacyAddress.fromBase58(netParams, "wLKf2NqwtHk3BfzK5wMDfbKYN1SC3weyR4")
-       // val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,ownerAddress)  //update asset owner
+        val ownerAddress = LegacyAddress.fromBase58(netParams, "wNDue1jHcgRSioSDL4o1AzXz3D72gCMkP6")
+        val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,ownerAddress)  //update asset owner
 
        // val asset=AssetUpdateData(AssetUpdateType.NAME,"TestCoin") // update asset name
 
-       val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L) //update asset number
+       //val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L) //update asset number
         val txParams = WaykiAssetUpdateTxParams(nValidHeight,userPubKey, fee, userId,
-                feeSymbol,"STOKEN",asset)
+                feeSymbol,"STOKENF",asset)
         txParams.signTx(srcKey)
         val tx = wallet.createAssetUpdateRaw(txParams)
         logger.info(tx)
