@@ -11,6 +11,7 @@ import org.bitcoinj.core.Utils
 import org.junit.Test
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.util.*
 
 
 class TestTransaction {
@@ -18,6 +19,7 @@ class TestTransaction {
     /*
     * 账户注册交易,新版本已基本废弃，可改用公钥注册，免注册费用
     * Account registration transaction, the new version has been abandoned, you can use public key registration, free registration fee
+     * fee Minimum 0.1 wicc
     * */
     @Test
     fun testGenerateRegisterAccountTxForTestNet() {
@@ -28,7 +30,7 @@ class TestTransaction {
         val key = DumpedPrivateKey.fromBase58(netParams, privKeyWiF).key
         logger.info("            ${key.publicKeyAsHex}")
 
-        val txParams = WaykiRegisterAccountTxParams(key.publicKeyAsHex, null, 429821, 10000, CoinType.WICC.type)
+        val txParams = WaykiRegisterAccountTxParams(key.publicKeyAsHex, null, 429821, 10000000, CoinType.WICC.type)
         txParams.signTx(key)
         val tx = wallet.createRegisterTransactionRaw(txParams)
         logger.info("${tx.length} - $tx")
@@ -38,7 +40,7 @@ class TestTransaction {
     /*
     * 测试网转账交易
     * Test network transfer
-    * fee Minimum 0.0001 wicc
+    * fee Minimum 0.1 wicc
     * */
     @Test
     fun testGenerateCommonTxForTestNet() {
@@ -50,7 +52,7 @@ class TestTransaction {
         val pubKey = srcKey.publicKeyAsHex
         val destAddr = "wWTStcDL4gma6kPziyHhFGAP6xUzKpA5if"
         val memo="test transfer"
-        val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 34550, pubKey,10000,
+        val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 34550, pubKey,100000000,
                 1100000000000, "", destAddr,memo)
         txParams.signTx(srcKey)
         val tx = wallet.createCommonTransactionRaw(txParams)
@@ -60,7 +62,7 @@ class TestTransaction {
     /*
     * 主网转账交易
     * Main network transfer
-    * fee Minimum 0.0001 wicc
+    * fee Minimum 0.1 wicc
     * */
     @Test
     fun testGenerateCommonTxForMainNet() {
@@ -90,7 +92,7 @@ class TestTransaction {
     /*
    * 多币种转账交易 ,支持多种币种转账
    * Test nUniversal Coin Transfer Tx
-   * fee Minimum 0.0001 wicc
+   * fee Minimum 0.01 wicc
    * */
     @Test
     fun testGenerateUCoinTransferTx() {
@@ -100,15 +102,19 @@ class TestTransaction {
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val pubKey = srcKey.publicKeyAsHex  //user publickey hex string
-        val nValidHeight = 440601L
+        val nValidHeight = 26188L
         val coinSymbol = CoinType.WICC.type  //coind symbol
-        val coinAmount = 100000000L    //transfer amount
+        val coinAmount = 10000L    //transfer amount
         val feeSymbol = CoinType.WICC.type
-        val fees = 100000L
-        val regid = ""
-        val destAddr = "wWXYkAhNdNdv5LBEavQB1aUJeYqApNc2YW"
+        val fees = 10000000L
+        val regid = "0-1"
+        val destAddr = "wLKf2NqwtHk3BfzK5wMDfbKYN1SC3weyR4"
         val memo = "转账"
-        val txParams = WaykiUCoinTxParams(WaykiNetworkType.TEST_NET, nValidHeight, regid, pubKey, destAddr, coinSymbol, coinAmount, feeSymbol, fees, memo)
+
+        val dest1=UCoinDest(LegacyAddress.fromBase58(netParams,destAddr),coinSymbol,coinAmount)
+        val dests= arrayListOf<UCoinDest>(dest1)
+
+        val txParams = WaykiUCoinTxParams(nValidHeight, regid, pubKey, dests.toList() , feeSymbol, fees, memo)
         txParams.signTx(srcKey)
         val tx = wallet.createUCoinTransactionRaw(txParams)
         logger.info("$tx")
@@ -117,7 +123,7 @@ class TestTransaction {
     /*
     * 投票交易
     * Voting transaction
-    * fee Minimum 0.0001 wicc
+    * fee Minimum 0.01 wicc
     * */
     @Test
     fun testGenerateDelegateTx() {
@@ -152,7 +158,7 @@ class TestTransaction {
     /*
     * 多币种合约调用交易
     * Contract transaction sample
-    * fee Minimum 0.0001 wicc
+    * fee Minimum 0.01 wicc
     * */
     @Test
     fun testGenerateUCoinContractTx() {
@@ -166,8 +172,8 @@ class TestTransaction {
         val value = 100000000L
         val appid = "450687-1"
         val contractByte = ContractUtil.hexString2binaryString("f001")
-        val txParams = WaykiUCoinContractTxParams(srcKey.publicKeyAsHex, 494454,
-                100000, value, "926152-1",
+        val txParams = WaykiUCoinContractTxParams(srcKey.publicKeyAsHex, 727702,
+                100000, value, "0-1",
                 appid, contractByte, CoinType.WICC.type,CoinType.WUSD.type)
         txParams.signTx(srcKey)
         val tx = wallet.createUCoinContractInvokeRaw(txParams)
@@ -177,7 +183,7 @@ class TestTransaction {
     /*
     * 合约调用交易
     * Contract transaction sample
-    * fee Minimum 0.0001 wicc
+    * fee Minimum 0.01 wicc
     * */
     @Test
     fun testGenerateContractTx() {
@@ -188,7 +194,7 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val regId = "926152-1"
         val appId = "128711-1"
-        val wrc20Amount = 10000L // transfer 10000 WRC
+        val wrc20Amount = 100000000L // transfer 10000 WRC
         val destAddress="wNPWqv9bvFCnMm1ddiQdH7fUwUk2Qgrs2N"
         val contractByte = ContractUtil.transferWRC20Contract(wrc20Amount,destAddress)
         val txParams = WaykiContractTxParams(srcKey.publicKeyAsHex, 494454, 100000, 0, regId, appId, contractByte, CoinType.WICC.type)
@@ -201,15 +207,15 @@ class TestTransaction {
     /*
     * 创建,追加cdp交易
     * Create or append an  cdp transaction
-    * fee Minimum 0.001 wicc
+    * fee Minimum 0.01 wicc
     * */
     @Test
     fun testGenerateCdpStakeTx() {
-        val nValidHeight = 283308L
-        val fee = 100000L
+        val nValidHeight = 5003L
+        val fee = 10000000L
         val userId = "0-1" //wallet regid
-        val cdpTxid = "009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
-        val feeSymbol = CoinType.WICC.type  //fee symbol
+        val cdpTxid = ""//"009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
+        val feeSymbol = CoinType.WUSD.type  //fee symbol
         val bCoinSymbol = CoinType.WICC.type //stake coin symbol
         val sCoinSymbol = CoinType.WUSD.type  // get coind symbol
         val bCoinToStake = 100000000L  //stake amount
@@ -221,7 +227,8 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-        val txParams = WaykiCdpStakeTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, bCoinSymbol, sCoinSymbol, bCoinToStake, sCoinToMint)
+        val map= mapOf<String,Long>(Pair(bCoinSymbol,bCoinToStake));
+        val txParams = WaykiCdpStakeTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, map ,sCoinSymbol,sCoinToMint)
         txParams.signTx(srcKey)
         val tx = wallet.createCdpStakeTransactionRaw(txParams)
         logger.info(tx)
@@ -230,16 +237,17 @@ class TestTransaction {
     /*
    * 赎回cdp交易
    * Redeem cdp transaction
-   * fee Minimum 0.001 wicc
+   * fee Minimum 0.01 wicc
    * */
     @Test
     fun testRedeemCdpTx() {
-        val nValidHeight = 283308L
-        val fee = 100000L
+        val nValidHeight = 29908L
+        val fee = 10000000L
         val userId = "0-1" //wallet regid
         val cdpTxid = "009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val sCoinsToRepay = 50000000L  //repay amount
+        val redeemSymbol = CoinType.WICC.type  //redeem asset symbol
         val bCoinsToRedeem = 100000000L   //redeem amount
 
         val wallet = LegacyWallet()
@@ -248,7 +256,8 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-        val txParams = WaykiCdpRedeemTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, sCoinsToRepay, bCoinsToRedeem)
+        val map= mapOf<String,Long>(Pair(redeemSymbol,bCoinsToRedeem));
+        val txParams = WaykiCdpRedeemTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, sCoinsToRepay, map)
         txParams.signTx(srcKey)
         val tx = wallet.createCdpRedeemTransactionRaw(txParams)
         logger.info(tx)
@@ -257,24 +266,24 @@ class TestTransaction {
     /*
    * 清算cdp交易
    * Liquidate cdp transaction
-   * fee Minimum 0.001 wicc
+   * fee Minimum 0.01 wicc
    * */
     @Test
     fun testLiquidateCdpTx() {
         val nValidHeight = 283308L
-        val fee = 100000L
+        val fee = 10000000L
         val userId = "0-1" //wallet regid
         val cdpTxid = "009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val sCoinsToLiquidate = 10000000L  //Liquidate amount
-
+        val liquidateAssetSymbol = CoinType.WICC.type  //Asset symbol
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-        val txParams = WaykiCdpLiquidateTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, sCoinsToLiquidate)
+        val txParams = WaykiCdpLiquidateTxParams(nValidHeight, fee, userId, userPubKey, cdpTxid, feeSymbol, sCoinsToLiquidate,liquidateAssetSymbol)
         txParams.signTx(srcKey)
         val tx = wallet.createCdpLiquidateTransactionRaw(txParams)
         logger.info(tx)
@@ -283,12 +292,12 @@ class TestTransaction {
     /*
   * Dex 限价买单交易
   * Dex limit price transaction
-  * fee Minimum 0.0001 wicc
+  * fee Minimum 0.001 wicc
   * */
     @Test
     fun testDexBuyLimitTx() {
         val nValidHeight = 283308L
-        val fee = 100000L
+        val fee = 10000000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val wallet = LegacyWallet()
@@ -312,12 +321,12 @@ class TestTransaction {
     /*
     * Dex 限价卖单交易
     * Dex limit sell price transaction
-    * fee Minimum 0.0001 wicc
+    * fee Minimum 0.001 wicc
    * */
     @Test
     fun testDexSellLimitTx() {
         val nValidHeight = 283308L
-        val fee = 100000L
+        val fee = 10000000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val wallet = LegacyWallet()
@@ -341,12 +350,12 @@ class TestTransaction {
     /*
      *  Dex 市价买单交易
      * Dex market buy price transaction
-     * fee Minimum 0.0001 wicc
+     * fee Minimum 0.001 wicc
     * */
     @Test
     fun testDexMarketBuyLimitTx() {
         val nValidHeight = 283308L
-        val fee = 100000L
+        val fee = 10000000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val wallet = LegacyWallet()
@@ -370,12 +379,12 @@ class TestTransaction {
     /*
      *  Dex 市价卖单交易
      * Dex market sell price transaction
-     * fee Minimum 0.0001 wicc
+     * fee Minimum 0.001 wicc
     * */
     @Test
     fun testDexMarketSellLimitTx() {
         val nValidHeight = 283308L
-        val fee = 100000L
+        val fee = 10000000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val wallet = LegacyWallet()
@@ -399,12 +408,12 @@ class TestTransaction {
     /*
     *  Dex 取消挂单交易
     * Dex cancel order tx
-    * fee Minimum 0.0001 wicc
+    * fee Minimum 0.001 wicc
    * */
     @Test
     fun testDexCancelOrderTx() {
         val nValidHeight = 283308L
-        val fee = 100000L
+        val fee = 1000000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val wallet = LegacyWallet()
@@ -427,11 +436,13 @@ class TestTransaction {
     * Asset release
     * symbol 大写字母A-Z 1-7 位 [A_Z]
     * Symbol Capital letter A-Z 1-7 digits [A_Z]
+    * fee Minimum 0.01 wicc
+    * account - 550 wicc
     * */
     @Test
     fun testCAssetIssueTx(){
-        val nValidHeight = 571812L
-        val fee = 10000L
+        val nValidHeight = 30108L
+        val fee = 1000000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val wallet = LegacyWallet()
@@ -441,8 +452,9 @@ class TestTransaction {
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
 
-        val symbol="STOKEN"
-        val asset=CAsset(symbol,"0-1","SS TOKEN",1000000000000000,true)
+        val symbol="STOKEND"
+        val ownerAddress = LegacyAddress.fromBase58(netParams, "wNDue1jHcgRSioSDL4o1AzXz3D72gCMkP6")
+        val asset=CAsset(symbol,ownerAddress,"SS TOKEN",1000000000000000,true)
         val txParams = WaykiAssetIssueTxParams(nValidHeight,userPubKey, fee, userId,
                 feeSymbol,asset)
         txParams.signTx(srcKey)
@@ -455,11 +467,13 @@ class TestTransaction {
    * Asset Update
    * asset_symbol 大写字母A-Z 1-7 位 [A_Z]
    * Symbol Capital letter A-Z 1-7 digits [A_Z]
+   * fee Minimum 0.01 wicc
+   * account - 110 wicc
    * */
     @Test
     fun testCAssetUpdateTx(){
-        val nValidHeight = 571812L
-        val fee = 10000L
+        val nValidHeight = 29908L
+        val fee = 1000000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
         val wallet = LegacyWallet()
@@ -468,11 +482,15 @@ class TestTransaction {
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-       // val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,"0-2")  //update asset owner
-        //val asset=AssetUpdateData(AssetUpdateType.NAME,"TestCoin") // update asset name
-        val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L) //update asset number
+
+        val ownerAddress = LegacyAddress.fromBase58(netParams, "wNDue1jHcgRSioSDL4o1AzXz3D72gCMkP6")
+        val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,ownerAddress)  //update asset owner
+
+       // val asset=AssetUpdateData(AssetUpdateType.NAME,"TestCoin") // update asset name
+
+       //val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L) //update asset number
         val txParams = WaykiAssetUpdateTxParams(nValidHeight,userPubKey, fee, userId,
-                feeSymbol,"STOKEN",asset)
+                feeSymbol,"STOKENF",asset)
         txParams.signTx(srcKey)
         val tx = wallet.createAssetUpdateRaw(txParams)
         logger.info(tx)
@@ -494,7 +512,7 @@ class TestTransaction {
         val file=File("hello.lua")
         val contractByte = file.readBytes() ;
         val description = "description script"
-        val txParams = WaykiDeployContractTxParams( 663832, 1100000000, regId,
+        val txParams = WaykiDeployContractTxParams( 723575, 1100000000, regId,
                 contractByte,  description)
         txParams.signTx(srcKey)
         val tx = wallet.createDeployContractRaw(txParams)

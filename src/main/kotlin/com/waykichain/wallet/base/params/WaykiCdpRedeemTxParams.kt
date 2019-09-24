@@ -16,7 +16,7 @@ import org.bitcoinj.core.VarInt
  */
 class WaykiCdpRedeemTxParams(nValidHeight: Long, fees: Long = 1000L,
                             val userId: String, userPubKey: String, val cdpTxid: String? = cdpHash,
-                            feeSymbol: String, val sCoinsToRepay: Long, val bCoinsToRedeem: Long) :
+                            feeSymbol: String, val sCoinsToRepay: Long, val assetMap:Map<String,Long>) :
         BaseSignTxParams(feeSymbol, userPubKey, null, nValidHeight, fees, WaykiTxType.TX_CDPREDEEM, 1) {
 
     override fun getSignatureHash(): ByteArray {
@@ -31,7 +31,8 @@ class WaykiCdpRedeemTxParams(nValidHeight: Long, fees: Long = 1000L,
                 .add(VarInt(fees).encodeInOldWay())
                 .add(cdpTxHex)
                 .add(VarInt(sCoinsToRepay).encodeInOldWay())
-                .add(VarInt(bCoinsToRedeem).encodeInOldWay())
+                .add(VarInt(assetMap?.size.toLong()).encodeInOldWay())
+                .addCdpAssets(assetMap)
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
         val hashStr = Utils.HEX.encode(hash)
         System.out.println("hash: $hashStr")
@@ -60,7 +61,8 @@ class WaykiCdpRedeemTxParams(nValidHeight: Long, fees: Long = 1000L,
                 .add(VarInt(fees).encodeInOldWay())
                 .add(cdpTxHex)
                 .add(VarInt(sCoinsToRepay).encodeInOldWay())
-                .add(VarInt(bCoinsToRedeem).encodeInOldWay())
+                .add(VarInt(assetMap?.size.toLong()).encodeInOldWay())
+                .addCdpAssets(assetMap)
                 .add(VarInt(sigSize.toLong()).encodeInOldWay())
                 .add(signature)
 

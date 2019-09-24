@@ -1,6 +1,7 @@
 package com.waykichain.wallet.base.params
 
 import com.waykichain.wallet.base.HashWriter
+import com.waykichain.wallet.base.UCoinDest
 import com.waykichain.wallet.base.WaykiNetworkType
 import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.types.encodeInOldWay
@@ -11,11 +12,10 @@ import org.bitcoinj.core.*
  * destAddr: 20-byte PubKeyHash
  * fee Minimum 0.001 wicc
  */
-class WaykiUCoinTxParams(networkType: WaykiNetworkType, nValidHeight: Long, val userId: String, userPubKey: String,
-                         val toUserId: String,val coinSymbol: String,val coinAmount: Long,feeSymbol: String,fees: Long,val memo: String) :
+class WaykiUCoinTxParams( nValidHeight: Long, val userId: String, userPubKey: String,
+                         val dests:List<UCoinDest>, feeSymbol: String, fees: Long, val memo: String) :
         BaseSignTxParams(feeSymbol, userPubKey, null, nValidHeight, fees, WaykiTxType.TX_UCOIN_TRANSFER, 1) {
-    val netParams = if (networkType == WaykiNetworkType.MAIN_NET) WaykiMainNetParams.instance else WaykiTestNetParams.instance
-    val legacyAddress = LegacyAddress.fromBase58(netParams, toUserId)
+
     override fun getSignatureHash(): ByteArray {
         val ss = HashWriter()
         val pubKey = Utils.HEX.decode(userPubKey)
@@ -23,12 +23,9 @@ class WaykiUCoinTxParams(networkType: WaykiNetworkType, nValidHeight: Long, val 
                 .add(nTxType.value)
                 .add(VarInt(nValidHeight).encodeInOldWay())
                 .writeUserId(userId, pubKey)
-                .add(VarInt(legacyAddress.hash.size.toLong()).encodeInOldWay())
-                .add(legacyAddress.hash)
-                .add(coinSymbol)
-                .add(VarInt(coinAmount).encodeInOldWay())
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
+                .addUCoinDestAddr(dests)
                 .add(memo)
 
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
@@ -54,12 +51,9 @@ class WaykiUCoinTxParams(networkType: WaykiNetworkType, nValidHeight: Long, val 
                 .add(VarInt(nVersion).encodeInOldWay())
                 .add(VarInt(nValidHeight).encodeInOldWay())
                 .writeUserId(userId, pubKey)
-                .add(VarInt(legacyAddress.hash.size.toLong()).encodeInOldWay())
-                .add(legacyAddress.hash)
-                .add(coinSymbol)
-                .add(VarInt(coinAmount).encodeInOldWay())
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
+                .addUCoinDestAddr(dests)
                 .add(memo)
                 .add(VarInt(sigSize.toLong()).encodeInOldWay())
                 .add(signature)

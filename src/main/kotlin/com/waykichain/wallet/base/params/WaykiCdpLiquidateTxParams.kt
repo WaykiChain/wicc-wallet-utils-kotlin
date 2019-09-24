@@ -16,7 +16,7 @@ import org.bitcoinj.core.VarInt
  */
 class WaykiCdpLiquidateTxParams(nValidHeight: Long, fees: Long = 1000L,
                              val userId: String, userPubKey: String, val cdpTxid: String? = cdpHash,
-                             feeSymbol: String, val sCoinsToLiquidate: Long) :
+                             feeSymbol: String, val sCoinsToLiquidate: Long,val liquidateAssetSymbol:String) :
         BaseSignTxParams(feeSymbol, userPubKey, null, nValidHeight, fees, WaykiTxType.TX_CDPLIQUIDATE, 1) {
 
     override fun getSignatureHash(): ByteArray {
@@ -30,6 +30,7 @@ class WaykiCdpLiquidateTxParams(nValidHeight: Long, fees: Long = 1000L,
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(cdpTxHex)
+                .add(liquidateAssetSymbol)
                 .add(VarInt(sCoinsToLiquidate).encodeInOldWay())
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
         val hashStr = Utils.HEX.encode(hash)
@@ -58,6 +59,7 @@ class WaykiCdpLiquidateTxParams(nValidHeight: Long, fees: Long = 1000L,
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(cdpTxHex)
+                .add(liquidateAssetSymbol)
                 .add(VarInt(sCoinsToLiquidate).encodeInOldWay())
                 .add(VarInt(sigSize.toLong()).encodeInOldWay())
                 .add(signature)

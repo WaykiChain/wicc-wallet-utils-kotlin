@@ -20,8 +20,11 @@ import com.waykichain.wallet.base.types.encodeInOldWay
 import com.waykichain.wallet.util.longToBytes
 import com.waykichain.wallet.util.unLongToIntByteArray
 import com.waykichain.wallet.util.unLongToShortByteArray
+import org.bitcoinj.core.Base58
+import org.bitcoinj.core.LegacyAddress
 import org.bitcoinj.core.VarInt
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 class HashWriter : ByteArrayOutputStream() {
 
@@ -38,6 +41,15 @@ class HashWriter : ByteArrayOutputStream() {
     fun add(data: ByteArray?): HashWriter {
         if (data != null)
             this.write(data)
+        return this
+    }
+
+    fun addCdpAssets(map:Map<String,Long>):HashWriter{
+        map.forEach{
+            item->
+            this.add(item.key)
+            this.add(VarInt(item.value).encodeInOldWay())
+        }
         return this
     }
 
@@ -87,7 +99,8 @@ class HashWriter : ByteArrayOutputStream() {
         val buff = HashWriter()
         val mintable = if (asset.minTable) 1 else 0
         buff.add(asset.symbol)
-        buff.writeRegId(asset.ownerRegid)
+        buff.writeCompactSize(asset.ownerAddress.hash.size.toLong())
+        buff.write(asset.ownerAddress.hash)
         buff.add(asset.name)
         buff.write(mintable)
         buff.write(VarInt(asset.totalSupply).encodeInOldWay())
@@ -99,7 +112,9 @@ class HashWriter : ByteArrayOutputStream() {
         when (data.enumAsset.type) {
             1 -> {
                 this.write(1)
-                this.parseRegId(data.value.toString())
+                val addrBytes=(data.value as LegacyAddress).hash
+                this.writeCompactSize(addrBytes.size.toLong())
+                this.write(addrBytes)
             };
             2 -> {
                 this.write(2)
@@ -170,6 +185,18 @@ class HashWriter : ByteArrayOutputStream() {
             else -> true
         }
     }
+
+    fun addUCoinDestAddr(dests:List<UCoinDest>):HashWriter{
+        this.write(VarInt(dests.size.toLong()).encodeInOldWay())
+        for (dest in dests) {
+            val aa=dest.destAddress.hash
+            this.write(VarInt(aa.size.toLong()).encodeInOldWay())
+            this.write(dest.destAddress.hash)
+            this.add(dest.coinSymbol)
+            this.write(VarInt(dest.transferAmount).encodeInOldWay())
+        }
+        return this
+    }
 }
 
 const val cdpHash = "0000000000000000000000000000000000000000000000000000000000000000"
@@ -177,4 +204,5 @@ const val SYMBOL_MATCH="[A-Z]{1,7}$"
 
 data class WaykiRegId(var regHeight: Long, var regIndex: Long)
 data class OperVoteFund(var voteType: Int, var pubKey: ByteArray, var voteValue: Long)
-data class CAsset(var symbol: String, var ownerRegid: String, var name: String, var totalSupply: Long, var minTable: Boolean)
+data class UCoinDest(var destAddress: LegacyAddress, var coinSymbol: String, var transferAmount: Long)
+data class CAsset(var symbol: String, var ownerAddress: LegacyAddress, var name: String, var totalSupply: Long, var minTable: Boolean)
