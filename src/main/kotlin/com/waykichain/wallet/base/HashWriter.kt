@@ -200,7 +200,7 @@ class HashWriter : ByteArrayOutputStream() {
 }
 
 const val cdpHash = "0000000000000000000000000000000000000000000000000000000000000000"
-const val SYMBOL_MATCH="[A-Z]{1,7}$"
+const val SYMBOL_MATCH="[A-Z]{6,7}$"
 
 data class WaykiRegId(var regHeight: Long, var regIndex: Long)
 data class OperVoteFund(var voteType: Int, var pubKey: ByteArray, var voteValue: Long)

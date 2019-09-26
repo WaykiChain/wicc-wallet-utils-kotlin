@@ -214,7 +214,7 @@ class TestTransaction {
         val nValidHeight = 5003L
         val fee = 10000000L
         val userId = "0-1" //wallet regid
-        val cdpTxid = ""//"009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
+        val cdpTxid = "009c0e665acdd9e8ae754f9a51337b85bb8996980a93d6175b61edccd3cdc144" //wallet cdp create tx hash
         val feeSymbol = CoinType.WUSD.type  //fee symbol
         val bCoinSymbol = CoinType.WICC.type //stake coin symbol
         val sCoinSymbol = CoinType.WUSD.type  // get coind symbol
@@ -452,7 +452,7 @@ class TestTransaction {
         //if no wallet regid ,you can use wallet public key
         val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
 
-        val symbol="STOKEND"
+        val symbol="STOTTT"
         val ownerAddress = LegacyAddress.fromBase58(netParams, "wNDue1jHcgRSioSDL4o1AzXz3D72gCMkP6")
         val asset=CAsset(symbol,ownerAddress,"SS TOKEN",1000000000000000,true)
         val txParams = WaykiAssetIssueTxParams(nValidHeight,userPubKey, fee, userId,
