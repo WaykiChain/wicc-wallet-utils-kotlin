@@ -441,7 +441,7 @@ class TestTransaction {
     * */
     @Test
     fun testCAssetIssueTx(){
-        val nValidHeight = 8510L
+        val nValidHeight = 11375L
         val fee = 1000000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
@@ -449,12 +449,8 @@ class TestTransaction {
         val netParams = WaykiTestNetParams.instance
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
-        //if no wallet regid ,you can use wallet public key
-       // val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-
-        val symbol="STOTTT"
-        val ownerAddress = LegacyAddress.fromBase58(netParams, "wNDue1jHcgRSioSDL4o1AzXz3D72gCMkP6")
-        val asset=CAsset(symbol,ownerAddress,"SS TOKEN",1000000000000000,true)
+        val symbol="STOOOOO"
+        val asset=CAsset(symbol,"0-1","SS TOKEN",1000000000000000,true)
         val txParams = WaykiAssetIssueTxParams(nValidHeight, fee, userId,
                 feeSymbol,asset)
         txParams.signTx(srcKey)
@@ -472,7 +468,7 @@ class TestTransaction {
    * */
     @Test
     fun testCAssetUpdateTx(){
-        val nValidHeight = 29908L
+        val nValidHeight = 11443L
         val fee = 1000000L
         val userId = "0-1" //wallet regid
         val feeSymbol = CoinType.WICC.type  //fee symbol
@@ -480,17 +476,13 @@ class TestTransaction {
         val netParams = WaykiTestNetParams.instance
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
-        //if no wallet regid ,you can use wallet public key
-        //val userPubKey = srcKey.publicKeyAsHex //wallet publickey hex string
-
-        val ownerAddress = LegacyAddress.fromBase58(netParams, "wNDue1jHcgRSioSDL4o1AzXz3D72gCMkP6")
-        val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,ownerAddress)  //update asset owner
+        val asset=AssetUpdateData(AssetUpdateType.OWNER_UID,"0-2")  //update asset owner
 
        // val asset=AssetUpdateData(AssetUpdateType.NAME,"TestCoin") // update asset name
 
        //val asset=AssetUpdateData(AssetUpdateType.MINT_AMOUNT,200000000L) //update asset number
         val txParams = WaykiAssetUpdateTxParams(nValidHeight, fee, userId,
-                feeSymbol,"STOKENF",asset)
+                feeSymbol,"STOOOOO",asset)
         txParams.signTx(srcKey)
         val tx = wallet.createAssetUpdateRaw(txParams)
         logger.info(tx)
