@@ -26,15 +26,15 @@ import org.waykichain.wallet.util.TokenException
  * srcRegId: (regHeight-regIndex)
  * destAddr: 20-byte PubKeyHash
  */
-class WaykiAssetIssueTxParams( nValidHeight: Long,pubKey:String, fees: Long,val srcRegId: String, feeSymbol: String,val asset:CAsset):
-        BaseSignTxParams(feeSymbol,pubKey, null, nValidHeight, fees, WaykiTxType.ASSET_ISSUE_TX, 1) {
+class WaykiAssetIssueTxParams( nValidHeight: Long, fees: Long,val srcRegId: String, feeSymbol: String,val asset:CAsset):
+        BaseSignTxParams(feeSymbol,null, null, nValidHeight, fees, WaykiTxType.ASSET_ISSUE_TX, 1) {
     override fun getSignatureHash(): ByteArray {
-        val publicKey= Utils.HEX.decode(userPubKey)
+
         val ss = HashWriter()
         ss.add(VarInt(nVersion).encodeInOldWay())
                 .add(nTxType.value)
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .writeUserId(srcRegId,publicKey)
+                .writeRegId(srcRegId)
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
                 .addAsset(asset)
@@ -59,12 +59,11 @@ class WaykiAssetIssueTxParams( nValidHeight: Long,pubKey:String, fees: Long,val 
         val symbolMatch=asset.symbol.matches(SYMBOL_MATCH.toRegex())
         if(!symbolMatch) throw TokenException(Messages.SYMBOLNOTMATCH)
         val sigSize = signature!!.size
-        val publicKey=Utils.HEX.decode(userPubKey)
         val ss = HashWriter()
         ss.add(VarInt(nTxType.value.toLong()).encodeInOldWay())
                 .add(VarInt(nVersion).encodeInOldWay())
                 .add(VarInt(nValidHeight).encodeInOldWay())
-                .writeUserId(srcRegId,publicKey)
+                .writeRegId(srcRegId)
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
                 .addAsset(asset)
