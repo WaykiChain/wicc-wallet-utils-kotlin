@@ -121,7 +121,7 @@ class TestWallet {
     @Test
     fun testImportPrivKey() {
         val params = WaykiTestNetParams.instance //测试链
-        val privKeyWiF = "YAHcraeGRDpvwBWVccV7NLGAU6uK39nNUTip8srbJSu6HKSTfDcC"
+        val privKeyWiF = "Y7UiVRpTAZNDtZakSHZwebHD6romu9jcuj1tjjujzwbSqdKLCEQZ"//"YBb6tdJvQyD8VwxJ4HUjDfpcpmFc359uGFQLbegaaKr6FJY863iw"//"YAHcraeGRDpvwBWVccV7NLGAU6uK39nNUTip8srbJSu6HKSTfDcC"
         val address = "wbCG5rXEbEHQaw1FD9pbK1iUsBobxrbiJM"
 
         val key = DumpedPrivateKey.fromBase58(params, privKeyWiF).key
