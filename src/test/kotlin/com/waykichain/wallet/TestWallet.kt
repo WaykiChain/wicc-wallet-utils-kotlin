@@ -152,4 +152,15 @@ class TestWallet {
         val hexStr =  Utils.HEX.encode(bytes)
        // System.out.println(hexStr)
     }
+
+    @Test
+    fun checkWalletAddress(){
+        val netParams = WaykiTestNetParams.instance //网络类型 （WaykiMainNetParams.instance 正式网）
+        val address="wZCst8wFgxiaNptqhheMvRugdngMJMZAKL" //维基钱包地址
+        try {
+            val legacyAddress= LegacyAddress.fromBase58(netParams,address) //地址检测
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
 }
