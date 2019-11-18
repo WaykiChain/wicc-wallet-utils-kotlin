@@ -113,4 +113,12 @@ interface LegacyWalletInterface {
     fun createDeployContractRaw(params: WaykiDeployContractTxParams): String {
         return  params.serializeTx()
     }
+
+    fun createSignMessage(params: WaykiSignMsgParams): WaykiSignMsgParams.SignResult {
+        return  params.serializeSignature()
+    }
+
+    fun verifyMsgSignature(params: WaykiVerifyMsgSignParams): WaykiVerifyMsgSignParams.VerifyMsgSignatureResult {
+        return  params.verifyMsgSignature()
+    }
 }

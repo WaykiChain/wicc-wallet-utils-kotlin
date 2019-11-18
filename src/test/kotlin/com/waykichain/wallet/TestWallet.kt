@@ -20,10 +20,11 @@ package com.waykichain.wallet
 import com.waykichain.wallet.base.WaykiNetworkType
 import com.waykichain.wallet.base.WaykiRegId
 import com.waykichain.wallet.base.params.WaykiMainNetParams
+import com.waykichain.wallet.base.params.WaykiSignMsgParams
 import com.waykichain.wallet.base.params.WaykiTestNetParams
+import com.waykichain.wallet.base.params.WaykiVerifyMsgSignParams
 import com.waykichain.wallet.base.types.encodeInOldWay
 import com.waykichain.wallet.impl.LegacyWallet
-import com.waykichain.wallet.util.ContractUtil
 import org.bitcoinj.core.*
 import org.bitcoinj.wallet.DeterministicKeyChain
 import org.bitcoinj.wallet.DeterministicSeed
@@ -151,5 +152,49 @@ class TestWallet {
         val bytes = ss.toByteArray()
         val hexStr =  Utils.HEX.encode(bytes)
        // System.out.println(hexStr)
+    }
+
+    @Test
+    fun checkWalletAddress() {
+        val netParams = WaykiTestNetParams.instance //网络类型 （WaykiMainNetParams.instance 正式网）
+        val address = "wZCst8wFgxiaNptqhheMvRugdngMJMZAKL" //维基钱包地址
+        try {
+            val legacyAddress = LegacyAddress.fromBase58(netParams, address) //地址检测
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    @Test
+    fun testSignMessage() {
+        //地址:wX7cC6qK6RQCLShCevpeciqQaQNEtqLRa8
+        //钱包地址对应的私钥:Y8WXc3RYw4TRxdGEpTLPd5GR7VrsAvRgCdiZMZakwFyVST1P7NnC
+        //公钥:034edcac8efda301a0919cdf2feeb0376bfcd2a1a29b5d094e5e9ce7a580c82fcc (压缩后)
+        val msg = "WaykiChain" //原始数据,由开发者后台生成传给前端,生成规则由开发者自己决定
+        val privateKey = "Y8WXc3RYw4TRxdGEpTLPd5GR7VrsAvRgCdiZMZakwFyVST1P7NnC"
+
+        val wallet = LegacyWallet()
+        val netParams = WaykiTestNetParams.instance
+        val srcKey = DumpedPrivateKey.fromBase58(netParams, privateKey).key
+
+        val msgParams = WaykiSignMsgParams(msg)
+        msgParams.signatureMsg(srcKey)
+        val signResult = wallet.createSignMessage(msgParams)
+        logger.info("\nsignResult.publicKey: ${signResult.publicKey} \nsignResult.signature: ${signResult.signature} \n")
+    }
+
+    @Test
+    fun testVerifyMsgSignature() {
+
+        val signature = "3044022024fafdf62a8414ad28c96354cc310daffee04e8ad46276420bdaafe1aa35091e02205b2c1b1a1e7fe97a74f2e3dc16f790a28cafea2ec40911fd40cff856899a851e"
+        val publicKey = "034edcac8efda301a0919cdf2feeb0376bfcd2a1a29b5d094e5e9ce7a580c82fcc"
+        val msg = "WaykiChain"
+
+        val wallet = LegacyWallet()
+        val netParams = WaykiTestNetParams.instance
+        val msgParams = WaykiVerifyMsgSignParams(signature,publicKey,msg,netParams)
+        val verifyMsgSignatureResult = wallet.verifyMsgSignature(msgParams)
+
+        logger.info("\nVerifyMsgSignatureResult.publicKey: ${verifyMsgSignatureResult.isValid} \nVerifyMsgSignatureResult.address: ${verifyMsgSignatureResult.address} \n")
     }
 }

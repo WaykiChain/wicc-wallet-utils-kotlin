@@ -93,4 +93,13 @@ class LegacyWallet: LegacyWalletInterface {
     override fun createDeployContractRaw(params: WaykiDeployContractTxParams): String {
         return  params.serializeTx()
     }
+
+    override fun createSignMessage(params: WaykiSignMsgParams): WaykiSignMsgParams.SignResult  {
+        return  params.serializeSignature()
+    }
+
+    override fun verifyMsgSignature(params: WaykiVerifyMsgSignParams): WaykiVerifyMsgSignParams.VerifyMsgSignatureResult {
+        return  params.verifyMsgSignature()
+    }
+
 }
