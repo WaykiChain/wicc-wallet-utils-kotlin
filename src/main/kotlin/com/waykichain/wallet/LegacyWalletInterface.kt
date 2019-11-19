@@ -19,6 +19,7 @@ package com.waykichain.wallet
 import com.waykichain.wallet.base.WalletAddress
 import com.waykichain.wallet.base.WaykiNetworkType
 import com.waykichain.wallet.base.params.*
+import org.bitcoinj.core.NetworkParameters
 
 interface LegacyWalletInterface {
 
@@ -120,5 +121,9 @@ interface LegacyWalletInterface {
 
     fun verifyMsgSignature(params: WaykiVerifyMsgSignParams): WaykiVerifyMsgSignParams.VerifyMsgSignatureResult {
         return  params.verifyMsgSignature()
+    }
+
+    fun parseUCoinTransactionRaw(params: String, net: NetworkParameters): BaseSignTxParams{
+        return WaykiUCoinTxParams.unSerializeTx(params, net)
     }
 }

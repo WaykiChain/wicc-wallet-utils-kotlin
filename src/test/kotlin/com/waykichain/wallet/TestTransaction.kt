@@ -511,4 +511,16 @@ class TestTransaction {
         logger.info(tx)
     }
 
+    @Test
+    fun testParseUCoinTransferTx() {
+        val wallet = LegacyWallet()
+        val netParams = WaykiTestNetParams.instance
+        val str = "0b0180cb4c020001045749434383e1ac000114079b9296a00a2b655787fa90e66ec3cde4bf1c8c0457494343cd1006e8bdace8b4a646304402206bf8be4b8c6526ae7c8a5266227f23a5bbee18937e05706aea33c3af3c914264022059e19cd8067a47393779c61431b6f683f74457a25625285ad16f76f091ce2e96"
+        val params = wallet.parseUCoinTransactionRaw(str, netParams)
+        logger.info(params.toString())
+    }
+
+
+
+
 }

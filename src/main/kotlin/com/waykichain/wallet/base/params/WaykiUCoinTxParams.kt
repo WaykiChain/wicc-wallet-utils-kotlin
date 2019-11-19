@@ -1,9 +1,6 @@
 package com.waykichain.wallet.base.params
 
-import com.waykichain.wallet.base.HashWriter
-import com.waykichain.wallet.base.UCoinDest
-import com.waykichain.wallet.base.WaykiNetworkType
-import com.waykichain.wallet.base.WaykiTxType
+import com.waykichain.wallet.base.*
 import com.waykichain.wallet.base.types.encodeInOldWay
 import org.bitcoinj.core.*
 
@@ -61,4 +58,24 @@ class WaykiUCoinTxParams( nValidHeight: Long, val userId: String, userPubKey: St
         val hexStr = Utils.HEX.encode(ss.toByteArray())
         return hexStr
     }
+
+    companion object {
+        fun unSerializeTx(param: String, params: NetworkParameters): BaseSignTxParams {
+            val ss = HashReader(Utils.HEX.decode(param))
+            val nTxType = WaykiTxType.init(ss.readVarInt().value.toInt())
+            val nVersion = ss.readVarInt().value
+            val nValidHeight = ss.readVarInt().value
+            val array = ss.readUserId()
+            val userId = array[0]
+            val pubKey = array[1]
+            val feeSymbol = ss.readString()
+            val fees = ss.readVarInt().value
+            val dests = ArrayList<UCoinDest>()
+            ss.readUCoinDestAddr(dests, params)
+            val memo = ss.readString()
+            val signature = ss.readByteArray()
+            return WaykiUCoinTxParams(nValidHeight, userId, pubKey, dests, feeSymbol,fees, memo)
+        }
+    }
+
 }
