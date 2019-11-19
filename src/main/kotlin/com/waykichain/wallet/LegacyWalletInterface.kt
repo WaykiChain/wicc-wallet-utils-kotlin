@@ -139,6 +139,9 @@ interface LegacyWalletInterface {
                 ret = WaykiRegisterAccountTxParams.unSerializeTx(ss)
                 ret.nTxType = nTxType
             }
+            WaykiTxType.UCONTRACT_INVOKE_TX ->{
+                ret = WaykiUCoinContractTxParams.unSerializeTx(ss)
+            }
             else ->{
                 ret = WaykiRegisterAccountTxParams.unSerializeTx(ss)
             }
