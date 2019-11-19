@@ -16,10 +16,13 @@
 
 package com.waykichain.wallet
 
+import com.waykichain.wallet.base.HashReader
 import com.waykichain.wallet.base.WalletAddress
 import com.waykichain.wallet.base.WaykiNetworkType
+import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.params.*
 import org.bitcoinj.core.NetworkParameters
+import org.bitcoinj.core.Utils
 
 interface LegacyWalletInterface {
 
@@ -123,11 +126,26 @@ interface LegacyWalletInterface {
         return params.verifyMsgSignature()
     }
 
-    fun parseUCoinTransactionRaw(params: String, net: NetworkParameters): BaseSignTxParams {
-        return WaykiUCoinTxParams.unSerializeTx(params, net)
-    }
-
-    fun parseRegisterTransactionRaw(rawtx: String): BaseSignTxParams {
-        return WaykiRegisterAccountTxParams.unSerializeTx(rawtx)
+    fun parseTransactionRaw(rawtx: String, params: NetworkParameters): BaseSignTxParams {
+        val ss = HashReader(Utils.HEX.decode(rawtx))
+        var ret:BaseSignTxParams
+        val nTxType = WaykiTxType.init(ss.readVarInt().value.toInt())
+        when(nTxType){
+            WaykiTxType.TX_UCOIN_TRANSFER ->{
+                ret = WaykiUCoinTxParams.unSerializeTx(ss, params)
+                ret.nTxType = nTxType
+            }
+            WaykiTxType.TX_REGISTERACCOUNT ->{
+                ret = WaykiRegisterAccountTxParams.unSerializeTx(ss)
+                ret.nTxType = nTxType
+            }
+            WaykiTxType.UCONTRACT_INVOKE_TX ->{
+                ret = WaykiUCoinContractTxParams.unSerializeTx(ss)
+            }
+            else ->{
+                ret = WaykiRegisterAccountTxParams.unSerializeTx(ss)
+            }
+        }
+        return ret
     }
 }

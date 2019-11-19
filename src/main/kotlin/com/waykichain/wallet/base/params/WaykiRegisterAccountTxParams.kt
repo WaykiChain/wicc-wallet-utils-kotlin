@@ -80,9 +80,9 @@ class WaykiRegisterAccountTxParams(userPubKey: String, minerPubKey: ByteArray?, 
     }
 
     companion object {
-        fun unSerializeTx(param: String): BaseSignTxParams {
-            val ss = HashReader(Utils.HEX.decode(param))
-            val nTxType = WaykiTxType.init(ss.readVarInt().value.toInt())
+        fun unSerializeTx(ss: HashReader): BaseSignTxParams {
+            //val ss = HashReader(Utils.HEX.decode(param))
+           // val nTxType = WaykiTxType.init(ss.readVarInt().value.toInt())
             val nVersion = ss.readVarInt().value
             val nValidHeight = ss.readVarInt().value
             val userPubKey = ss.readPubKey()
@@ -90,10 +90,23 @@ class WaykiRegisterAccountTxParams(userPubKey: String, minerPubKey: ByteArray?, 
             val fees = ss.readVarInt().value
             val signature = ss.readByteArray()
             val ret = WaykiRegisterAccountTxParams(userPubKey, null, nValidHeight, fees, "" )
-            ret.nTxType = nTxType
+            //ret.nTxType = nTxType
             ret.nVersion = nVersion
             ret.signature = signature
             return ret
         }
     }
+
+    override fun toString(): String {
+        val builder = StringBuilder()
+        builder.append("[nTxType]=").append(nTxType).append("\n")
+                .append("[nVersion]=").append(nVersion).append("\n")
+                .append("[nValidHeight]=").append(nValidHeight).append("\n")
+                .append("[pubKey]=").append(userPubKey).append("\n")
+                .append("[fees]=").append(fees).append("\n")
+                .append("[signature]=").append(Utils.HEX.encode(signature)).append("\n")
+
+        return builder.toString()
+    }
+
 }
