@@ -521,9 +521,9 @@ class TestTransaction {
     }
 
     @Test
-    fun parseRegisterTransactionTx() {
+    fun testParseRegisterTransactionTx() {
         val wallet = LegacyWallet()
-        val str =""
+        val str ="0201999c7d2102a722a3a94fb41d92bcf9d54cd76ea40c8b0c223d6f0570389b775120c5e487640083e1ac0046304402205304902f6ae8470e7c294b8abe7fdd5a9847d8980914234c9ddb9b6098e473d002200ad2d0238292285394447905cb20b7275cd2daf3a68d1237a1200982b99172bc"
         val params = wallet.parseRegisterTransactionRaw(str)
         logger.info(params.toString())
     }
