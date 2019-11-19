@@ -74,7 +74,11 @@ class WaykiUCoinTxParams( nValidHeight: Long, val userId: String, userPubKey: St
             ss.readUCoinDestAddr(dests, params)
             val memo = ss.readString()
             val signature = ss.readByteArray()
-            return WaykiUCoinTxParams(nValidHeight, userId, pubKey, dests, feeSymbol,fees, memo)
+            val ret =  WaykiUCoinTxParams(nValidHeight, userId, pubKey, dests, feeSymbol, fees, memo)
+            ret.nTxType = nTxType
+            ret.nVersion = nVersion
+            ret.signature = signature
+            return ret
         }
     }
 
