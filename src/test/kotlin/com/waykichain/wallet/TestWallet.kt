@@ -190,10 +190,10 @@ class TestWallet {
         val publicKey = "034edcac8efda301a0919cdf2feeb0376bfcd2a1a29b5d094e5e9ce7a580c82fcc"
         val msg = "WaykiChain"
 
-        val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
+      //  val netParams = WaykiMainNetParams.instance
         val msgParams = WaykiVerifyMsgSignParams(signature,publicKey,msg,netParams)
-        val verifyMsgSignatureResult = wallet.verifyMsgSignature(msgParams)
+        val verifyMsgSignatureResult = LegacyWallet().verifyMsgSignature(msgParams)
 
         logger.info("\nVerifyMsgSignatureResult.publicKey: ${verifyMsgSignatureResult.isValid} \nVerifyMsgSignatureResult.address: ${verifyMsgSignatureResult.address} \n")
     }
