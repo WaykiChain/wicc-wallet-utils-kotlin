@@ -61,69 +61,73 @@ interface LegacyWalletInterface {
     /**
      * offline creation of Cdp Liquidate Transaction raw data
      */
-     fun createCdpLiquidateTransactionRaw(params: WaykiCdpLiquidateTxParams): String {
-        return  params.serializeTx()
+    fun createCdpLiquidateTransactionRaw(params: WaykiCdpLiquidateTxParams): String {
+        return params.serializeTx()
     }
 
     /**
      * offline creation of UCoin Transaction raw data
      */
     fun createUCoinTransactionRaw(params: WaykiUCoinTxParams): String {
-        return  params.serializeTx()
+        return params.serializeTx()
     }
 
     /**
      * offline creation of Dex limit Transaction raw data
      */
     fun createDexLimitTransactionRaw(params: WaykiDexLimitTxParams): String {
-        return  params.serializeTx()
+        return params.serializeTx()
     }
 
     /**
      * offline creation of Dex market Transaction raw data
      */
-     fun createDexMarketTransactionRaw(params: WaykiDexMarketTxParams): String {
-        return  params.serializeTx()
+    fun createDexMarketTransactionRaw(params: WaykiDexMarketTxParams): String {
+        return params.serializeTx()
     }
 
     /**
      * offline creation of Dex cancel order Transaction raw data
      */
-     fun createDexCancelOrderTransactionRaw(params: WaykiDexCancelOrderTxParams): String {
-        return  params.serializeTx()
+    fun createDexCancelOrderTransactionRaw(params: WaykiDexCancelOrderTxParams): String {
+        return params.serializeTx()
     }
 
     /**
      * offline creation of UCoin contract Invoke
      */
-     fun createUCoinContractInvokeRaw(params: WaykiUCoinContractTxParams): String {
-        return  params.serializeTx()
+    fun createUCoinContractInvokeRaw(params: WaykiUCoinContractTxParams): String {
+        return params.serializeTx()
     }
 
     /*
     *
     * */
-     fun createAssetIssueRaw(params: WaykiAssetIssueTxParams): String {
-        return  params.serializeTx()
+    fun createAssetIssueRaw(params: WaykiAssetIssueTxParams): String {
+        return params.serializeTx()
     }
 
     fun createAssetUpdateRaw(params: WaykiAssetUpdateTxParams): String {
-        return  params.serializeTx()
+        return params.serializeTx()
     }
 
     fun createDeployContractRaw(params: WaykiDeployContractTxParams): String {
-        return  params.serializeTx()
+        return params.serializeTx()
     }
 
     fun createSignMessage(params: WaykiSignMsgParams): WaykiSignMsgParams.SignResult {
-        return  params.serializeSignature()
+        return params.serializeSignature()
     }
 
     fun verifyMsgSignature(params: WaykiVerifyMsgSignParams): WaykiVerifyMsgSignParams.VerifyMsgSignatureResult {
-        return  params.verifyMsgSignature()
+        return params.verifyMsgSignature()
     }
 
-    fun parseUCoinTransactionRaw(params: String, net: NetworkParameters): BaseSignTxParams{
+    fun parseUCoinTransactionRaw(params: String, net: NetworkParameters): BaseSignTxParams {
         return WaykiUCoinTxParams.unSerializeTx(params, net)
+    }
+
+    fun parseRegisterTransactionRaw(rawtx: String): BaseSignTxParams {
+        return WaykiRegisterAccountTxParams.unSerializeTx(rawtx)
     }
 }

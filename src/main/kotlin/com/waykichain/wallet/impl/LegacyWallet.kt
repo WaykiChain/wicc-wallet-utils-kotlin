@@ -107,4 +107,10 @@ class LegacyWallet: LegacyWalletInterface {
         return WaykiUCoinTxParams.unSerializeTx(rawtx, net)
     }
 
+    override fun parseRegisterTransactionRaw(rawtx:String): BaseSignTxParams {
+        return  WaykiRegisterAccountTxParams.unSerializeTx(rawtx)
+    }
+
+
+
 }

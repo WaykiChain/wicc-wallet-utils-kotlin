@@ -520,5 +520,13 @@ class TestTransaction {
         logger.info(params.toString())
     }
 
+    @Test
+    fun parseRegisterTransactionTx() {
+        val wallet = LegacyWallet()
+        val str =""
+        val params = wallet.parseRegisterTransactionRaw(str)
+        logger.info(params.toString())
+    }
+
 
 }
