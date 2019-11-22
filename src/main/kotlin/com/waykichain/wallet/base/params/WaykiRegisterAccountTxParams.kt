@@ -73,7 +73,7 @@ class WaykiRegisterAccountTxParams(userPubKey: String, minerPubKey: ByteArray?, 
                 .add(0)
                 .add(minerPubKey)
                 .add(VarInt(fees).encodeInOldWay())
-                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .writeCompactSize(sigSize.toLong())
                 .add(signature)
 
         val bytes = ss.toByteArray()

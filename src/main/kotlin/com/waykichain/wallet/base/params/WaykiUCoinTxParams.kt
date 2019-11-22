@@ -55,7 +55,7 @@ class WaykiUCoinTxParams( nValidHeight: Long, val userId: String, userPubKey: St
                 .add(VarInt(fees).encodeInOldWay())
                 .addUCoinDestAddr(dests)
                 .add(memo)
-                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .writeCompactSize(sigSize.toLong())
                 .add(signature)
 
         val hexStr = Utils.HEX.encode(ss.toByteArray())

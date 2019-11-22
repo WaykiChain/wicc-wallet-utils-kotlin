@@ -60,7 +60,7 @@ class WaykiDexLimitTxParams(nValidHeight: Long, fees: Long,val userId: String, u
                 .add(assetSymbol)
                 .add(VarInt(assetAmount).encodeInOldWay())
                 .add(VarInt(price).encodeInOldWay())
-                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .writeCompactSize(sigSize.toLong())
                 .add(signature)
 
         val hexStr = Utils.HEX.encode(ss.toByteArray())

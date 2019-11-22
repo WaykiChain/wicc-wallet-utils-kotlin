@@ -60,7 +60,7 @@ class WaykiDeployContractTxParams( nValidHeight: Long, fees: Long, val srcRegId:
         ss.writeScript(vContract!!,description)
         ss.write(VarInt(fees).encodeInOldWay())
         val sigSize = signature!!.size
-        ss.write(VarInt(sigSize.toLong()).encodeInOldWay())
+        ss.writeCompactSize(sigSize.toLong())
         ss.write(signature)
         val hexStr =  Utils.HEX.encode(ss.toByteArray())
         return hexStr

@@ -99,10 +99,10 @@ class TestTransaction {
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
 
-        val srcPrivKeyWiF = "Y7UiVRpTAZNDtZakSHZwebHD6romu9jcuj1tjjujzwbSqdKLCEQZ"//"Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
+        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val pubKey = srcKey.publicKeyAsHex  //user publickey hex string
-        val nValidHeight = 299860L
+        val nValidHeight = 1184008L
         val coinSymbol = CoinType.WICC.type  //coind symbol
         val coinAmount = 10000L    //transfer amount
         val feeSymbol = CoinType.WICC.type
