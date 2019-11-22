@@ -122,7 +122,7 @@ class TestWallet {
     @Test
     fun testImportPrivKey() {
         val params = WaykiTestNetParams.instance //测试链
-        val privKeyWiF = "YAHcraeGRDpvwBWVccV7NLGAU6uK39nNUTip8srbJSu6HKSTfDcC"
+        val privKeyWiF = "Y7UiVRpTAZNDtZakSHZwebHD6romu9jcuj1tjjujzwbSqdKLCEQZ"//"YBb6tdJvQyD8VwxJ4HUjDfpcpmFc359uGFQLbegaaKr6FJY863iw"//"YAHcraeGRDpvwBWVccV7NLGAU6uK39nNUTip8srbJSu6HKSTfDcC"
         val address = "wbCG5rXEbEHQaw1FD9pbK1iUsBobxrbiJM"
 
         val key = DumpedPrivateKey.fromBase58(params, privKeyWiF).key
@@ -155,12 +155,12 @@ class TestWallet {
     }
 
     @Test
-    fun checkWalletAddress() {
+    fun checkWalletAddress(){
         val netParams = WaykiTestNetParams.instance //网络类型 （WaykiMainNetParams.instance 正式网）
-        val address = "wZCst8wFgxiaNptqhheMvRugdngMJMZAKL" //维基钱包地址
+        val address="wZCst8wFgxiaNptqhheMvRugdngMJMZAKL" //维基钱包地址
         try {
-            val legacyAddress = LegacyAddress.fromBase58(netParams, address) //地址检测
-        } catch (e: Exception) {
+            val legacyAddress= LegacyAddress.fromBase58(netParams,address) //地址检测
+        }catch (e:Exception){
             e.printStackTrace()
         }
     }

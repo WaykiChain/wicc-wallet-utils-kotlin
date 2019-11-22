@@ -58,7 +58,7 @@ class WaykiDexMarketTxParams(nValidHeight: Long, fees: Long,val userId: String, 
                 .add(coinSymbol)
                 .add(assetSymbol)
                 .add(VarInt(assetAmount).encodeInOldWay())
-                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .writeCompactSize(sigSize.toLong())
                 .add(signature)
 
         val hexStr = Utils.HEX.encode(ss.toByteArray())

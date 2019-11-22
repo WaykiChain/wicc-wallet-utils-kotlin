@@ -67,7 +67,7 @@ class WaykiAssetIssueTxParams( nValidHeight: Long, fees: Long,val srcRegId: Stri
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
                 .addAsset(asset)
-                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .writeCompactSize(sigSize.toLong())
                 .add(signature)
 
         val hexStr = Utils.HEX.encode(ss.toByteArray())
