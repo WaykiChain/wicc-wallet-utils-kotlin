@@ -16,13 +16,11 @@
 
 package com.waykichain.wallet.base.params
 
+import com.waykichain.wallet.base.HashReader
 import com.waykichain.wallet.base.HashWriter
 import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.types.encodeInOldWay
-import org.bitcoinj.core.ECKey
-import org.bitcoinj.core.Sha256Hash
-import org.bitcoinj.core.Utils
-import org.bitcoinj.core.VarInt
+import org.bitcoinj.core.*
 
 class WaykiRegisterAccountTxParams(userPubKey: String, minerPubKey: ByteArray?, nValidHeight: Long, fees: Long,feeSymbol:String):
         BaseSignTxParams(feeSymbol,userPubKey, minerPubKey, nValidHeight, fees, WaykiTxType.TX_REGISTERACCOUNT, 1) {
@@ -80,4 +78,35 @@ class WaykiRegisterAccountTxParams(userPubKey: String, minerPubKey: ByteArray?, 
         val hexStr =  Utils.HEX.encode(bytes)
         return hexStr
     }
+
+    companion object {
+        fun unSerializeTx(ss: HashReader): BaseSignTxParams {
+            //val ss = HashReader(Utils.HEX.decode(param))
+           // val nTxType = WaykiTxType.init(ss.readVarInt().value.toInt())
+            val nVersion = ss.readVarInt().value
+            val nValidHeight = ss.readVarInt().value
+            val userPubKey = ss.readPubKey()
+            ss.read()// 0
+            val fees = ss.readVarInt().value
+            val signature = ss.readByteArray()
+            val ret = WaykiRegisterAccountTxParams(userPubKey, null, nValidHeight, fees, "" )
+            //ret.nTxType = nTxType
+            ret.nVersion = nVersion
+            ret.signature = signature
+            return ret
+        }
+    }
+
+    override fun toString(): String {
+        val builder = StringBuilder()
+        builder.append("[nTxType]=").append(nTxType).append("\n")
+                .append("[nVersion]=").append(nVersion).append("\n")
+                .append("[nValidHeight]=").append(nValidHeight).append("\n")
+                .append("[pubKey]=").append(userPubKey).append("\n")
+                .append("[fees]=").append(fees).append("\n")
+                .append("[signature]=").append(Utils.HEX.encode(signature)).append("\n")
+
+        return builder.toString()
+    }
+
 }
