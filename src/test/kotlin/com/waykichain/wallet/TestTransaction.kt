@@ -4,11 +4,13 @@ import com.waykichain.wallet.base.*
 import com.waykichain.wallet.base.params.*
 import com.waykichain.wallet.impl.LegacyWallet
 import com.waykichain.wallet.util.ContractUtil
-import org.bitcoinj.core.*
+import org.bitcoinj.core.DumpedPrivateKey
+import org.bitcoinj.core.ECKey
+import org.bitcoinj.core.LegacyAddress
+import org.bitcoinj.core.Utils
 import org.junit.Test
 import org.slf4j.LoggerFactory
 import java.io.File
-import java.util.*
 
 
 class TestTransaction {
@@ -512,7 +514,7 @@ class TestTransaction {
     fun testParseTransactionRaw() {
         val wallet = LegacyWallet()
         val netParams = WaykiTestNetParams.instance
-        var rawtx = "0b0180cb4c020001045749434383e1ac000114079b9296a00a2b655787fa90e66ec3cde4bf1c8c0457494343cd1006e8bdace8b4a646304402206bf8be4b8c6526ae7c8a5266227f23a5bbee18937e05706aea33c3af3c914264022059e19cd8067a47393779c61431b6f683f74457a25625285ad16f76f091ce2e96"
+        var rawtx = "0b0180cb4c21036c5397f3227a1e209952829d249b7ad0f615e43b763ac15e3a6f52627a10df21045749434383e1ac000114079b9296a00a2b655787fa90e66ec3cde4bf1c8c0457494343cd1006e8bdace8b4a647304502210097cfa3068593913894fceeddc724e0848fb7c2012d406e3d3f21eab9211d208702203bd0835017bccd054a3770d6c838925760cc3de70ac646919705192f7c160751"
         var ret = wallet.parseTransactionRaw(rawtx, netParams)
         logger.info(ret.toString())
 
