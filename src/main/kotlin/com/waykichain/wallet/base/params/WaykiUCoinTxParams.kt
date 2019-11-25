@@ -1,9 +1,12 @@
 package com.waykichain.wallet.base.params
 
-import com.waykichain.wallet.base.*
+import com.google.common.base.Strings
+import com.waykichain.wallet.base.HashReader
+import com.waykichain.wallet.base.HashWriter
+import com.waykichain.wallet.base.UCoinDest
+import com.waykichain.wallet.base.WaykiTxType
 import com.waykichain.wallet.base.types.encodeInOldWay
 import org.bitcoinj.core.*
-import java.nio.charset.Charset
 
 /**
  * srcRegId: (regHeight-regIndex PubKeyHash)
@@ -88,8 +91,8 @@ class WaykiUCoinTxParams( nValidHeight: Long, val userId: String, userPubKey: St
         builder.append("[nTxType]=").append(nTxType).append("\n")
                 .append("[nVersion]=").append(nVersion).append("\n")
                 .append("[nValidHeight]=").append(nValidHeight).append("\n")
-                .append("[userId]=").append(userId).append("\n")
-                .append("[pubKey]=").append(userPubKey).append("\n")
+                .append("[userId]=").append(if(Strings.isNullOrEmpty(userId)) userPubKey else userId).append("\n")
+                //.append("[pubKey]=").append(userPubKey).append("\n")
                 .append("[feeSymbol]=").append(feeSymbol).append("\n")
                 .append("[fees]=").append(fees).append("\n")
                 .append("[memo]=").append(memo).append("\n")
