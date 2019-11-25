@@ -22,6 +22,7 @@ import com.waykichain.wallet.base.WaykiNetworkType
 import com.waykichain.wallet.base.params.*
 import org.bitcoinj.core.ECKey
 import org.bitcoinj.core.LegacyAddress
+import org.bitcoinj.core.NetworkParameters
 
 class LegacyWallet: LegacyWalletInterface {
 
@@ -101,5 +102,4 @@ class LegacyWallet: LegacyWalletInterface {
     override fun verifyMsgSignature(params: WaykiVerifyMsgSignParams): WaykiVerifyMsgSignParams.VerifyMsgSignatureResult {
         return  params.verifyMsgSignature()
     }
-
 }

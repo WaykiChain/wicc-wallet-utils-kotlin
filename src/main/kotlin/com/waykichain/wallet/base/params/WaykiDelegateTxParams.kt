@@ -48,7 +48,7 @@ class WaykiDelegateTxParams(val srcRegId: String,pubKey:String,  var voteLists: 
                 .writeUserId(srcRegId,publicKey)
                 .add(voteLists)
                 .add(VarInt(fees).encodeInOldWay())
-                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .writeCompactSize(sigSize.toLong())
                 .add(signature)
 
         val hexStr = Utils.HEX.encode(ss.toByteArray())

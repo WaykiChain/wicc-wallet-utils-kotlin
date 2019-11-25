@@ -4,10 +4,7 @@ import com.waykichain.wallet.base.*
 import com.waykichain.wallet.base.params.*
 import com.waykichain.wallet.impl.LegacyWallet
 import com.waykichain.wallet.util.ContractUtil
-import org.bitcoinj.core.DumpedPrivateKey
-import org.bitcoinj.core.ECKey
-import org.bitcoinj.core.LegacyAddress
-import org.bitcoinj.core.Utils
+import org.bitcoinj.core.*
 import org.junit.Test
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -52,8 +49,8 @@ class TestTransaction {
         val pubKey = srcKey.publicKeyAsHex
         val destAddr = "wWTStcDL4gma6kPziyHhFGAP6xUzKpA5if"
         val memo="test transfer"
-        val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 34550, pubKey,100000000,
-                1100000000000, "", destAddr,memo)
+        val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 166690, pubKey,100000000,
+                100000000, "32714-5", destAddr,memo)
         txParams.signTx(srcKey)
         val tx = wallet.createCommonTransactionRaw(txParams)
         logger.info("${tx.length} - $tx")
@@ -102,12 +99,12 @@ class TestTransaction {
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val pubKey = srcKey.publicKeyAsHex  //user publickey hex string
-        val nValidHeight = 26188L
+        val nValidHeight = 1184008L
         val coinSymbol = CoinType.WICC.type  //coind symbol
         val coinAmount = 10000L    //transfer amount
         val feeSymbol = CoinType.WICC.type
         val fees = 10000000L
-        val regid = "0-1"
+        val regid = ""
         val destAddr = "wLKf2NqwtHk3BfzK5wMDfbKYN1SC3weyR4"
         val memo = "转账"
 
@@ -173,7 +170,7 @@ class TestTransaction {
         val appid = "450687-1"
         val contractByte = ContractUtil.hexString2binaryString("f001")
         val txParams = WaykiUCoinContractTxParams(srcKey.publicKeyAsHex, 727702,
-                100000, value, "0-1",
+                1000000, value, "0-1",
                 appid, contractByte, CoinType.WICC.type,CoinType.WUSD.type)
         txParams.signTx(srcKey)
         val tx = wallet.createUCoinContractInvokeRaw(txParams)
@@ -509,6 +506,23 @@ class TestTransaction {
         txParams.signTx(srcKey)
         val tx = wallet.createDeployContractRaw(txParams)
         logger.info(tx)
+    }
+
+    @Test
+    fun testParseTransactionRaw() {
+        val wallet = LegacyWallet()
+        val netParams = WaykiTestNetParams.instance
+        var rawtx = "0b0180cb4c020001045749434383e1ac000114079b9296a00a2b655787fa90e66ec3cde4bf1c8c0457494343cd1006e8bdace8b4a646304402206bf8be4b8c6526ae7c8a5266227f23a5bbee18937e05706aea33c3af3c914264022059e19cd8067a47393779c61431b6f683f74457a25625285ad16f76f091ce2e96"
+        var ret = wallet.parseTransactionRaw(rawtx, netParams)
+        logger.info(ret.toString())
+
+        rawtx = "0201999c7d2102a722a3a94fb41d92bcf9d54cd76ea40c8b0c223d6f0570389b775120c5e487640083e1ac0046304402205304902f6ae8470e7c294b8abe7fdd5a9847d8980914234c9ddb9b6098e473d002200ad2d0238292285394447905cb20b7275cd2daf3a68d1237a1200982b99172bc"
+        ret = wallet.parseTransactionRaw(rawtx, netParams)
+        logger.info(ret.toString())
+
+        rawtx = "0f01abb416020001049abf7f0102f001858c2004574943430457555344aed6c100473045022100c9bc3579329d6a63a96fce8271ff7c09700f82fbbefcba37f59cd6ddb2bf79b70220476864326646346e5d2a34f2b0e326f2a1ec4f4114ca3513d69d8fdea6d7471c"
+        ret = wallet.parseTransactionRaw(rawtx, netParams)
+        logger.info(ret.toString())
     }
 
 }

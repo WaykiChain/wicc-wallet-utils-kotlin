@@ -37,7 +37,7 @@ class WaykiContractTxParams(userPubKey: String, nValidHeight: Long, fees: Long, 
         ss.writeRegId(destRegId)
         ss.write(VarInt(fees).encodeInOldWay())
         ss.write(VarInt(value).encodeInOldWay())
-        ss.write(VarInt(vContract!!.size.toLong()).encodeInOldWay())
+        ss.writeCompactSize(vContract!!.size.toLong())//(VarInt(vContract!!.size.toLong()).encodeInOldWay())
         ss.write(vContract)
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
         val hashStr = Utils.HEX.encode(hash)
@@ -64,10 +64,10 @@ class WaykiContractTxParams(userPubKey: String, nValidHeight: Long, fees: Long, 
         ss.writeRegId(destRegId)
         ss.write(VarInt(fees).encodeInOldWay())
         ss.write(VarInt(value).encodeInOldWay())
-        ss.write(VarInt(vContract!!.size.toLong()).encodeInOldWay())
+        ss.writeCompactSize(vContract!!.size.toLong())
         ss.write(vContract)
         val sigSize = signature!!.size
-        ss.write(VarInt(sigSize.toLong()).encodeInOldWay())
+        ss.writeCompactSize(sigSize.toLong())
         ss.write(signature)
         val hexStr =  Utils.HEX.encode(ss.toByteArray())
         return hexStr

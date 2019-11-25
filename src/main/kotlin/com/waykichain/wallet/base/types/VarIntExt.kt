@@ -17,6 +17,7 @@
 package com.waykichain.wallet.base.types
 
 import org.bitcoinj.core.VarInt
+import java.io.ByteArrayInputStream
 
 fun VarInt.encodeInOldWay(): ByteArray {
     val size = size()
@@ -52,4 +53,16 @@ fun VarInt.size(): Int {
         n = (n shr 7) - 1
     }
     return ret
+}
+
+fun VarInt.decode(array: ByteArrayInputStream):VarInt {
+    var n: Long = 0
+    while (true) {
+        val c: Long
+        c = array.read().toLong()
+        n = (n shl 7).or(c.and(0x7F))
+        if (c.and(0x80) != 0L)
+            n++
+        else return VarInt(n)
+    }
 }
