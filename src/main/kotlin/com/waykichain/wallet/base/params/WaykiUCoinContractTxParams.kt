@@ -42,7 +42,7 @@ class WaykiUCoinContractTxParams(userPubKey: String, nValidHeight: Long, fees: L
 
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
         val hashStr = Utils.HEX.encode(hash)
-        System.out.println("hash: $hashStr")
+       // System.out.println("hash: $hashStr")
 
         return hash
     }

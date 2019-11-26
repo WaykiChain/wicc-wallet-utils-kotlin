@@ -19,6 +19,7 @@ package com.waykichain.wallet.base.params
 import com.waykichain.wallet.base.CoinType
 import com.waykichain.wallet.base.WaykiTxType
 import org.bitcoinj.core.ECKey
+import org.bitcoinj.core.Utils
 
 abstract class BaseSignTxParams(var feeSymbol: String=CoinType.WICC.type,
                                 var userPubKey: String?,
@@ -30,6 +31,10 @@ abstract class BaseSignTxParams(var feeSymbol: String=CoinType.WICC.type,
     abstract fun getSignatureHash():  ByteArray
     abstract fun signTx(key: ECKey): ByteArray
     abstract fun serializeTx(): String
+
+    public fun getTxid():String {
+        return Utils.HEX.encode(this.getSignatureHash().reversedArray())
+    }
 
     var signature: ByteArray? = null
 }
