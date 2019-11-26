@@ -51,8 +51,8 @@ class TestTransaction {
         val pubKey = srcKey.publicKeyAsHex
         val destAddr = "wWTStcDL4gma6kPziyHhFGAP6xUzKpA5if"
         val memo="test transfer"
-        val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 34550, pubKey,100000000,
-                1100000000000, "", destAddr,memo)
+        val txParams = WaykiCommonTxParams(WaykiNetworkType.TEST_NET, 166690, pubKey,100000000,
+                100000000, "32714-5", destAddr,memo)
         txParams.signTx(srcKey)
         val tx = wallet.createCommonTransactionRaw(txParams)
         logger.info("${tx.length} - $tx")
@@ -101,12 +101,12 @@ class TestTransaction {
         val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
         val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
         val pubKey = srcKey.publicKeyAsHex  //user publickey hex string
-        val nValidHeight = 26188L
+        val nValidHeight = 1184008L
         val coinSymbol = CoinType.WICC.type  //coind symbol
         val coinAmount = 10000L    //transfer amount
         val feeSymbol = CoinType.WICC.type
         val fees = 10000000L
-        val regid = "0-1"
+        val regid = ""
         val destAddr = "wLKf2NqwtHk3BfzK5wMDfbKYN1SC3weyR4"
         val memo = "转账"
 
@@ -172,7 +172,7 @@ class TestTransaction {
         val appid = "450687-1"
         val contractByte = ContractUtil.hexString2binaryString("f001")
         val txParams = WaykiUCoinContractTxParams(srcKey.publicKeyAsHex, 727702,
-                100000, value, "0-1",
+                1000000, value, "0-1",
                 appid, contractByte, CoinType.WICC.type,CoinType.WUSD.type)
         txParams.signTx(srcKey)
         val tx = wallet.createUCoinContractInvokeRaw(txParams)

@@ -55,7 +55,7 @@ class HashWriter : ByteArrayOutputStream() {
 
     /** Vote: "$voteType-$pubKey-$votes" */
     fun add(operVoteFund: Array<OperVoteFund>): HashWriter {
-        this.write(VarInt(operVoteFund.size.toLong()).encodeInOldWay())
+        this.writeCompactSize(operVoteFund.size.toLong())
         for (oper in operVoteFund) {
             this.write(VarInt(oper.voteType.toLong()).encodeInOldWay())
             this.write(VarInt(33).encodeInOldWay())
@@ -138,7 +138,7 @@ class HashWriter : ByteArrayOutputStream() {
         return this
     }
 
-    fun writeCompactSize(len: Long) {
+    fun writeCompactSize(len: Long) :HashWriter{
         if (len < 253) {
             val arr = ByteArray(1)
             arr[0] = len.toByte()
@@ -160,6 +160,7 @@ class HashWriter : ByteArrayOutputStream() {
             val arr2 = len.longToBytes()
             this.write(arr2)
         }
+        return this
     }
 
     fun parseRegId(regId: String): WaykiRegId? {

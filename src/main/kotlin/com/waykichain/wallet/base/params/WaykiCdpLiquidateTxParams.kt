@@ -61,7 +61,7 @@ class WaykiCdpLiquidateTxParams(nValidHeight: Long, fees: Long = 1000L,
                 .add(cdpTxHex)
                 .add(liquidateAssetSymbol)
                 .add(VarInt(sCoinsToLiquidate).encodeInOldWay())
-                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .writeCompactSize(sigSize.toLong())
                 .add(signature)
 
         val hexStr = Utils.HEX.encode(ss.toByteArray())

@@ -55,7 +55,7 @@ class WaykiDexCancelOrderTxParams(nValidHeight: Long, fees: Long,val userId: Str
                 .add(feeSymbol)
                 .add(VarInt(fees).encodeInOldWay())
                 .add(orderIdByte)
-                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .writeCompactSize(sigSize.toLong())
                 .add(signature)
 
         val hexStr = Utils.HEX.encode(ss.toByteArray())

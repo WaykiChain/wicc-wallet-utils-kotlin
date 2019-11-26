@@ -72,7 +72,7 @@ class WaykiCdpStakeTxParams(nValidHeight: Long, fees: Long = 1000L,
                 .addCdpAssets(assetMap)
                 .add(sCoinSymbol)
                 .add(VarInt(sCoinToMint).encodeInOldWay())
-                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .writeCompactSize(sigSize.toLong())
                 .add(signature)
 
         val hexStr = Utils.HEX.encode(ss.toByteArray())

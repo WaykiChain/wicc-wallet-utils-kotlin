@@ -1,5 +1,6 @@
 package com.waykichain.wallet.base.params
 
+import com.sun.org.apache.xpath.internal.operations.Bool
 import org.bitcoinj.core.*
 
 
@@ -8,9 +9,16 @@ class WaykiVerifyMsgSignParams(val signature:String ,val publicKey:String ,val m
     var address : String? = null
     var isValid : Boolean = false
 
-    fun checkPublicKey(): Boolean {
+    fun checkParams():Boolean{
+        if ((publicKey.length != 66) || (signature.length % 2 != 0)){
+            println("The length of publicKey or signature error")
+            return false
+        }
+        return true
+    }
 
-        return ECKey.isPubKeyCanonical(Utils.HEX.decode(publicKey))
+    fun checkPublicKey(): Boolean {
+        return this.checkParams() && ECKey.isPubKeyCanonical(Utils.HEX.decode(publicKey))
     }
 
    fun getAddressFromPublicKey(): String? {

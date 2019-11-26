@@ -69,7 +69,7 @@ class WaykiAssetUpdateTxParams(nValidHeight: Long, fees: Long, val srcRegId: Str
                 .add(VarInt(fees).encodeInOldWay())
                 .add(asset_symbol)
                 .updateAsset(asset)
-                .add(VarInt(sigSize.toLong()).encodeInOldWay())
+                .writeCompactSize(sigSize.toLong())
                 .add(signature)
 
         val hexStr = Utils.HEX.encode(ss.toByteArray())
