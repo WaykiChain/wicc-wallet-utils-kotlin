@@ -30,7 +30,7 @@ class WaykiUCoinTxParams( nValidHeight: Long, val userId: String, userPubKey: St
                 .add(memo)
 
         val hash = Sha256Hash.hashTwice(ss.toByteArray())
-        val hashStr = Utils.HEX.encode(hash)
+        val hashStr = Utils.HEX.encode(hash.reversedArray())
         System.out.println("hash: $hashStr")
 
         return hash
@@ -104,7 +104,5 @@ class WaykiUCoinTxParams( nValidHeight: Long, val userId: String, userPubKey: St
         }
         return builder.toString()
     }
-
-
 
 }
