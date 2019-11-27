@@ -197,4 +197,14 @@ class TestWallet {
 
         logger.info("\nVerifyMsgSignatureResult.publicKey: ${verifyMsgSignatureResult.isValid} \nVerifyMsgSignatureResult.address: ${verifyMsgSignatureResult.address} \n")
     }
+
+    @Test
+    fun testPubkeyToAddress(){
+        val netParams = WaykiTestNetParams.instance //网络类型 （WaykiMainNetParams.instance 正式网）
+        val publicKey = "02843852b3bb75a79923eb6d95713e5662f824cb4705b0ef31a4c3045fd941cb68"
+        val ecKey=ECKey.fromPublicOnly(Utils.HEX.decode(publicKey))
+        val address = LegacyAddress.fromKey(netParams,ecKey).toBase58()
+        logger.info(address)
+
+    }
 }
