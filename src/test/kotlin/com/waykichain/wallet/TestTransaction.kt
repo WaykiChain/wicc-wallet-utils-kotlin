@@ -83,6 +83,7 @@ class TestTransaction {
         val txParams = WaykiCommonTxParams(WaykiNetworkType.MAIN_NET, 1926165, pubKey,10000, 10000,
                 "926152-1", destAddr, memo)
         txParams.signTx(srcKey)
+        txParams.getTxid()
         val tx = wallet.createCommonTransactionRaw(txParams)
         logger.info("${tx.length} - $tx")
     }
@@ -510,6 +511,11 @@ class TestTransaction {
         logger.info(tx)
     }
 
+    /*
+    * 解析 rawtx(目前只支持注册，转账，合约调用)
+    * parse transaction tx
+    * */
+
     @Test
     fun testParseTransactionRaw() {
         val wallet = LegacyWallet()
@@ -531,5 +537,39 @@ class TestTransaction {
         logger.info("txid=" + ret.getTxid()+"\n")
         logger.info(ret.nVersion.toString()+"\n") // parse into a class , visit the property
     }
+
+    /*
+    * 从多币种转账交易 ,支持多种币种转账中获取txid
+    * Test get txid from nUniversal Coin Transfer Tx
+    * fee Minimum 0.01 wicc
+    * */
+    @Test
+    fun testGetTxid() {
+        val wallet = LegacyWallet()
+        val netParams = WaykiTestNetParams.instance
+
+        val srcPrivKeyWiF = "Y6J4aK6Wcs4A3Ex4HXdfjJ6ZsHpNZfjaS4B9w7xqEnmFEYMqQd13"
+        val srcKey = DumpedPrivateKey.fromBase58(netParams, srcPrivKeyWiF).key
+        val pubKey = srcKey.publicKeyAsHex  //user publickey hex string
+        val nValidHeight = 1184008L
+        val coinSymbol = CoinType.WICC.type  //coind symbol
+        val coinAmount = 10000L    //transfer amount
+        val feeSymbol = CoinType.WICC.type
+        val fees = 10000000L
+        val regid = ""
+        val destAddr = "wLKf2NqwtHk3BfzK5wMDfbKYN1SC3weyR4"
+        val memo = "转账"
+
+        val dest1=UCoinDest(LegacyAddress.fromBase58(netParams,destAddr),coinSymbol,coinAmount)
+        val dests= arrayListOf<UCoinDest>(dest1)
+
+        val txParams = WaykiUCoinTxParams(nValidHeight, regid, pubKey, dests.toList() , feeSymbol, fees, memo)
+        txParams.signTx(srcKey)
+        val tx = wallet.createUCoinTransactionRaw(txParams)
+        logger.info("txid = " + txParams.getTxid()) // get txid from the transaction class
+    }
+
+
+
 
 }
