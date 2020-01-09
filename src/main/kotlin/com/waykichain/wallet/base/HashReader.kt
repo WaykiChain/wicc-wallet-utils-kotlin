@@ -11,9 +11,9 @@ import java.io.ByteArrayInputStream
 class HashReader(buf: ByteArray) : ByteArrayInputStream(buf) {
 
     fun readString():String{
-        val len = VarInt(0).decode(this)
-        val array = ByteArray(len.value.toInt())
-        this.read(array,0, len.value.toInt())
+        val len = this.readCompactSize().toInt()//VarInt(0).decode(this)
+        val array = ByteArray(len)//len.value.toInt())
+        this.read(array,0, len)//.value.toInt())
         return String(array)
     }
 
@@ -21,7 +21,35 @@ class HashReader(buf: ByteArray) : ByteArrayInputStream(buf) {
         return VarInt(0).decode(this)
     }
 
-
+    fun readCompactSize():Long{
+        var cSize=0L
+        val chSize=this.read()
+        if (chSize < 253){
+            cSize = chSize.toLong()
+        }else if (chSize == 253){
+            var  xSize:Short
+            xSize=this.read().toShort()
+            cSize = xSize.toLong()
+            if (cSize < 253)
+                throw Exception("non-canonical ReadCompactSize()");
+        }else if (chSize == 254)
+        {
+            var xSize:Int
+            xSize=this.read()
+            cSize = xSize.toLong()
+            if (cSize < 0x10000)
+                throw Exception("non-canonical ReadCompactSize()");
+        }else{
+            var xSize:Long
+            xSize=this.read().toLong()
+            cSize = xSize.toLong()
+            if (cSize < 0x100000000L)
+                throw Exception("non-canonical ReadCompactSize()")
+        }
+        if (cSize > Long.MAX_VALUE)
+            throw Exception("ReadCompactSize() : size too large")
+        return cSize
+    }
 
     fun readRegId(): String {
         val regIdLen = this.readVarInt()
@@ -66,9 +94,9 @@ class HashReader(buf: ByteArray) : ByteArrayInputStream(buf) {
     }
 
     fun readByteArray() :ByteArray{
-        val len = this.readVarInt()
-        val array = ByteArray(len.value.toInt())
-        this.read(array,0, len.value.toInt())
+        val len = this.readCompactSize().toInt()//readVarInt()
+        val array = ByteArray(len)//.value.toInt())
+        this.read(array,0, len)//.value.toInt())
         return array
     }
 }
