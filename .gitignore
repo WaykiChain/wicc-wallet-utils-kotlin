@@ -5,3 +5,6 @@ out
 .DS_Store
 *.iml
 test/kotlin/com/waykichain/wallet/RunWallet.kt
+.vscode
+.settings
+.project
