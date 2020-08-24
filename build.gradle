@@ -19,10 +19,11 @@ plugins {
     id 'com.stehno.natives' version '0.3.1'
     id "com.jfrog.bintray" version "1.7"
     id 'maven'
+    id 'maven-publish'
 }
 
-version '2.0'
 group 'com.waykichain'
+version '2.0'
 
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
@@ -30,7 +31,7 @@ apply plugin: "com.stehno.natives"
 apply plugin: "kotlin"
 apply plugin: 'java-library'
 apply plugin: 'maven'
-
+apply plugin: 'maven-publish'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -82,6 +83,26 @@ dependencies {
     testImplementation 'org.fusesource.leveldbjni:leveldbjni-all:1.8'
     testImplementation 'junit:junit:4.12'
     testCompile 'junit:junit:4.12'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+artifacts {
+    archives sourcesJar
+}
+
+publishing {
+    publications {
+        Production(MavenPublication) {
+//            artifact("$buildDir/outputs/aar/${this.pkgArtifactId}-release.aar")
+            artifacts {
+                archives sourcesJar
+            }
+            version this.version
+        }
+    }
 }
 
 bintray {
